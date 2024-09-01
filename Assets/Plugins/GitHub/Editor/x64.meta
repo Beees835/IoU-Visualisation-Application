@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 04f182d86fac2e34a93df6cdbe453077
+=======
+guid: dfbe8f32f1525814792509b951d0757d
+>>>>>>> emily_frontend
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
