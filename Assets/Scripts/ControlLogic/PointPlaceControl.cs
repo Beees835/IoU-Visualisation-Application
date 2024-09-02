@@ -14,6 +14,7 @@ public class PointPlaceControl : MonoBehaviour
     private GameObject prefab;
     private Vector3? lastPosition = null; 
     private bool lockedFirstShape= false;
+    
     public void PlacePrefabAtMousePosition()
     {
         // Check if the mouse is over a Button UI element

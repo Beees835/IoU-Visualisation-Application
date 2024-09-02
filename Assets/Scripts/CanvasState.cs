@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class CanvasState : MonoBehaviour
 {
@@ -40,6 +41,9 @@ public class CanvasState : MonoBehaviour
     // Variables
     public int shapeCount;
     public DrawStates drawState;
+    public bool beginCalculatingIoUStatus = false;
+    public string uiState = "";
+    public TMP_Text textMeshPro;
 
     // Awake is called when the script instance is being loaded
     private void Awake()
@@ -65,8 +69,18 @@ public class CanvasState : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        uiState =   "Current Shape Count: " + shapeCount + "\n" + 
+                    "Current Draw State: " + this.drawState + "\n" +
+                    "Should start calc IoU: " + beginCalculatingIoUStatus;
+
+        if (textMeshPro != null) {
+            textMeshPro.text = uiState;
+        }
+        else {
+            Debug.LogError("TMP_Text reference not found");
+        }
         // Example code for using drawState
-        // if (drawState == DrawStates.DRAW_STATE) 
+        // if (drawState == DrawStates.DRAW_STATE) sss
         // {
         //     //code here
         // }
@@ -78,5 +92,9 @@ public class CanvasState : MonoBehaviour
         // {
         //     //code here
         // }
+    }
+
+    public void beginCalculatingIoU() {
+        beginCalculatingIoUStatus = true;
     }
 }
