@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+// using CameraController = CameraController;
 
 public class BtnFunctions : MonoBehaviour
 {
@@ -22,4 +23,13 @@ public class BtnFunctions : MonoBehaviour
         Scene currentScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(currentScene.name);
     }
+
+    public void ZoomIn() {
+        Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize - 1, 5, 15);
+    }
+
+    public void ZoomOut() {
+        Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize + 1, 5, 15);
+    }
+
 }
