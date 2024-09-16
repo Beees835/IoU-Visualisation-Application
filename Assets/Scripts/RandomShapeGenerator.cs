@@ -1,48 +1,39 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShapeGenerator : MonoBehaviour
+public class RandomShapeGenerator : MonoBehaviour
 {
     public Material lineMaterial; // Assign this in the Unity Inspector
     public GameObject vertexPrefab; // Assign the prefab for vertex points in the Unity Inspector
-    private List<GameObject> allShapes = new List<GameObject>(); // List to store all shapes created
-
-    public void GenerateTriangle()
+    public List<GameObject> allShapes = new List<GameObject>(); // List to store all shapes created
+    
+    public void GenerateRandomShape()
     {
-        GenerateShape(3, "Triangle");
-    }
-
-    public void GenerateSquare()
-    {
-        GenerateShape(4, "Square");
-    }
-
-    public void GeneratePentagon()
-    {
-        GenerateShape(5, "Pentagon");
-    }
-
-    public void GenerateHexagon()
-    {
-        GenerateShape(6, "Hexagon");
+        int vertexCount = Random.Range(3, 14); // Randomize vertex count between 3 and 14
+        GenerateShape(vertexCount, "RandomShape");
     }
 
     private void GenerateShape(int vertexCount, string shapeName)
     {
         GameObject shapeObject = new GameObject(shapeName + "Object");
-        allShapes.Add(shapeObject);     // Add to the list of all shapes
-        shapeObject.AddComponent<Drag>();    // Make shape draggable 
+        shapeObject.AddComponent<Drag>(); 
+        allShapes.Add(shapeObject); 
+
         List<Vector2> vertices = new List<Vector2>();
         List<GameObject> vertexObjects = new List<GameObject>();
 
-        // Define the vertices for the shape
+        // Define the vertices for a regular convex polygon with random variations
         float angleStep = 360f / vertexCount;
-        float radius = 1f; // Radius for regular polygons
+        float radius = 1f; // Base radius for regular polygons
+
         for (int i = 0; i < vertexCount; i++)
         {
-            float angleInDegrees = angleStep * i;
+            // Introduce random variations in the angle to make the shape more irregular but still convex
+            float angleInDegrees = angleStep * i + Random.Range(-angleStep / 8, angleStep / 8);
             float angleInRadians = angleInDegrees * Mathf.Deg2Rad;
-            vertices.Add(new Vector2(Mathf.Cos(angleInRadians) * radius, Mathf.Sin(angleInRadians) * radius));
+            float randomRadius = radius * Random.Range(0.8f, 1.2f); // Randomize radius slightly
+
+            vertices.Add(new Vector2(Mathf.Cos(angleInRadians) * randomRadius, Mathf.Sin(angleInRadians) * randomRadius));
         }
 
         // Draw lines and create vertex points
@@ -60,7 +51,7 @@ public class ShapeGenerator : MonoBehaviour
         for (int i = 0; i < vertices.Count; i++)
         {
             Vector2 start = vertices[i];
-            Vector2 end = vertices[(i + 1) % vertices.Count];
+            Vector2 end = vertices[(i + 1) % vertices.Count]; // Ensure the shape is closed by connecting the last vertex to the first
             DrawLine(start, end, shapeObject);
         }
     }
