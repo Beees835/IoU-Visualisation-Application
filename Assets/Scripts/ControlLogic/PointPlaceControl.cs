@@ -13,15 +13,23 @@ public class PointPlaceControl : MonoBehaviour
     public float closeThreshold = 0.1f; // Threshold distance to close the shape
 
     private GameObject prefab;
-    private List<Vector3> points = new List<Vector3>();
+    private List<List<Vector3>> allShapes = new List<List<Vector3>>(); // Stores all shapes' points
+    private List<Vector3> currentShape = new List<Vector3>(); // Stores points for the current shape
     private bool lockedFirstShape = false;
+    private int draggedPointIndex = -1; // Index of the point being dragged
+    private bool isDragging = false; // Whether we are currently dragging a point
+    private List<List<GameObject>> allPrefabs = new List<List<GameObject>>(); // Stores all prefabs for each shape
+    private List<GameObject> currentPrefabs = new List<GameObject>(); // Stores prefabs for the current shape
 
+
+    // Function to trigger point placement or modification
     public void PlacePrefabAtMousePosition()
     {
         if (IsPointerOverUIButton())
         {
             return;
         }
+
         if (CanvasState.Instance.shapeCount == 1)
         {
             prefab = prefabShape1;
@@ -31,17 +39,94 @@ public class PointPlaceControl : MonoBehaviour
             if (!lockedFirstShape)
             {
                 lockedFirstShape = true;
-                points.Clear();  // Reset the points list when switching to shape2
+                currentShape = new List<Vector3>();  
             }
             prefab = prefabShape2;
         }
+
+        if (CanvasState.Instance.drawState == CanvasState.DrawStates.MODIFY_STATE)
+        {
+            HandleModifyState();
+        }
         else
         {
-            Debug.LogError("Prefab not assigned.");
-            return;
+            AddNewPoint();
         }
+    }
 
-        // Get the mouse position in screen space and convert to world space
+
+    public void HandleModifyState()
+    {
+        if (draggedPointIndex == -1) 
+        {
+            SelectPoint();
+        }
+    }
+
+    public void DragPoint(Vector2 panDelta)
+    {
+        if (isDragging && draggedPointIndex != -1)
+        {
+            Vector3 deltaWorld = cam.ScreenToWorldPoint(new Vector3(panDelta.x, panDelta.y, 0)) - cam.ScreenToWorldPoint(Vector3.zero);
+
+            // Move the dragged point
+            currentShape[draggedPointIndex] += new Vector3(deltaWorld.x, deltaWorld.y, 0);
+
+            // Move the associated prefab
+            if (draggedPointIndex < currentPrefabs.Count)
+            {
+                currentPrefabs[draggedPointIndex].transform.position = currentShape[draggedPointIndex];
+            }
+            
+            // Redraw the shape to reflect the new positions of the points
+            RedrawShape();
+        }
+    }
+
+
+    public void StopDragging()
+    {
+        if (isDragging)
+        {
+            draggedPointIndex = -1;
+            isDragging = false;
+        }
+    }
+
+    private void SelectPoint()
+    {
+        Vector2 mouseScreenPosition = Mouse.current.position.ReadValue();
+        Vector3 mouseWorldPosition = cam.ScreenToWorldPoint(mouseScreenPosition);
+        mouseWorldPosition.z = 0f;
+
+        // Iterate through all shapes (allShapes)
+        for (int shapeIndex = 0; shapeIndex < allShapes.Count; shapeIndex++)
+        {
+            List<Vector3> shape = allShapes[shapeIndex];
+
+            // Iterate through each point in the shape
+            for (int pointIndex = 0; pointIndex < shape.Count; pointIndex++)
+            {
+                if (Vector3.Distance(mouseWorldPosition, shape[pointIndex]) <= closeThreshold + 1.0)
+                {
+                    Debug.Log("Point found for dragging");
+
+                    draggedPointIndex = pointIndex;
+                    isDragging = true;
+
+                    // Set the current shape and its corresponding prefab list
+                    currentShape = shape;
+                    currentPrefabs = allPrefabs[shapeIndex]; // Update currentPrefabs to match the selected shape
+
+                    Debug.Log($"Shape {shapeIndex}, Point {draggedPointIndex}");
+                    return;
+                }
+            }
+        }
+    }
+
+    private void AddNewPoint()
+    {
         Vector2 mouseScreenPosition = Mouse.current.position.ReadValue();
         Ray ray = cam.ScreenPointToRay(mouseScreenPosition);
         RaycastHit2D hit = Physics2D.GetRayIntersection(ray);
@@ -58,18 +143,18 @@ public class PointPlaceControl : MonoBehaviour
             spawnPosition.z = 0f;
         }
 
-        spawnPosition.z = -1f; //keeps the prefab visible
+        spawnPosition.z = -1f; // Keeps the prefab visible
 
         // Check if the point is near the first point to close the shape
-        if (points.Count > 2 && Vector3.Distance(spawnPosition, points[0]) <= closeThreshold)
+        if (currentShape.Count > 2 && Vector3.Distance(spawnPosition, currentShape[0]) <= closeThreshold)
         {
-            // Close the shape by connecting the last point to the first point
-            DrawLine(points[points.Count - 1], points[0]);
-            // Instantiate the prefab at the first point position to complete the shape
-            Instantiate(prefab, points[0], Quaternion.identity);
+            DrawLine(currentShape[currentShape.Count - 1], currentShape[0]);
+            
+            allShapes.Add(new List<Vector3>(currentShape));
+            allPrefabs.Add(new List<GameObject>(currentPrefabs));
 
-            // To next shape
-            points.Clear();
+            currentShape.Clear();
+            currentPrefabs.Clear(); 
             lockedFirstShape = false;
             CanvasState.Instance.shapeCount++;
             return;
@@ -77,13 +162,15 @@ public class PointPlaceControl : MonoBehaviour
 
         if (IsConvexWithNewPoint(spawnPosition))
         {
-            points.Add(spawnPosition);
-            Instantiate(prefab, spawnPosition, Quaternion.identity);
+            currentShape.Add(spawnPosition);
+            
+            // Instantiate the prefab at the point and store it in currentPrefabs
+            GameObject newPrefab = Instantiate(prefab, spawnPosition, Quaternion.identity);
+            currentPrefabs.Add(newPrefab);
 
-            // Draw lines between the stored points
-            if (points.Count > 1)
+            if (currentShape.Count > 1)
             {
-                DrawLine(points[points.Count - 2], points[points.Count - 1]);
+                DrawLine(currentShape[currentShape.Count - 2], currentShape[currentShape.Count - 1]);
             }
         }
         else
@@ -92,20 +179,43 @@ public class PointPlaceControl : MonoBehaviour
         }
     }
 
+
+    private void RedrawShape()
+    {
+        // Clear existing lines
+        foreach (var line in GameObject.FindGameObjectsWithTag("Line"))
+        {
+            Destroy(line);
+        }
+
+        // Draw lines for all the stored shapes
+        foreach (var shape in allShapes)
+        {
+            for (int i = 0; i < shape.Count; i++)
+            {
+                Vector3 start = shape[i];
+                Vector3 end = shape[(i + 1) % shape.Count];
+                DrawLine(start, end);
+            }
+        }
+
+        // Draw lines for the current shape being created/modified
+        for (int i = 0; i < currentShape.Count; i++)
+        {
+            Vector3 start = currentShape[i];
+            Vector3 end = currentShape[(i + 1) % currentShape.Count];
+            DrawLine(start, end);
+        }
+    }
+
     private bool IsConvexWithNewPoint(Vector3 newPoint)
     {
-        // If there are fewer than 2 points, any new point will maintain convexity
-        if (points.Count < 2)
+        if (currentShape.Count < 2)
         {
             return true;
         }
 
-        // Clone the list and add the new point
-        // probably not optimal? will have to implement a better way to do this later
-        List<Vector3> testPoints = new List<Vector3>(points) { newPoint };
-
-        // Check convexity by examining the cross product signs
-        //Checks if it is continously turning in a consistent direciton
+        List<Vector3> testPoints = new List<Vector3>(currentShape) { newPoint };
         bool isConvex = true;
         int n = testPoints.Count;
 
@@ -122,11 +232,11 @@ public class PointPlaceControl : MonoBehaviour
 
             if (i == 0)
             {
-                isConvex = crossProductZ > 0; 
+                isConvex = crossProductZ > 0;
             }
             else if ((crossProductZ > 0) != isConvex)
             {
-                return false; 
+                return false;
             }
         }
 
@@ -135,8 +245,9 @@ public class PointPlaceControl : MonoBehaviour
 
     private void DrawLine(Vector3 start, Vector3 end)
     {
-        // Create a new GameObject for the line
         GameObject line = new GameObject("Line");
+        line.tag = "Line";
+
         LineRenderer lineRenderer = line.AddComponent<LineRenderer>();
 
         lineRenderer.material = lineMaterial;
