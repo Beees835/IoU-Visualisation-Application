@@ -126,8 +126,7 @@ public class InputController : MonoBehaviour
                 {
                     selectedShape.Prefabs[draggedPointIndex].transform.position = selectedShape.Points[draggedPointIndex];
                 }
-
-                // Redraw the shape to reflect the new positions of the points
+                
                 ShapeRenderer.Instance.RedrawAllShapes();
             }
             else

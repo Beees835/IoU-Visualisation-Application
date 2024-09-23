@@ -290,6 +290,8 @@ GameObject:
   - component: {fileID: 104920589}
   - component: {fileID: 104920588}
   - component: {fileID: 104920592}
+  - component: {fileID: 104920593}
+  - component: {fileID: 104920594}
   m_Layer: 5
   m_Name: WorkingCanvas
   m_TagString: Untagged
@@ -399,6 +401,32 @@ MonoBehaviour:
   beginCalculatingIoUStatus: 0
   uiState: 
   textMeshPro: {fileID: 1909817002}
+--- !u!114 &104920593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 104920587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04f2412a9d2734475a3661fea1bc30b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &104920594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 104920587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2216c0eeb14bb4e828332844244771b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vertexCount: 5
+  PrefabShape1: {fileID: 1473709619147884113, guid: b73f91f45f74a4579ae55b8b750d63b9, type: 3}
 --- !u!1 &170259596
 GameObject:
   m_ObjectHideFlags: 0
@@ -2620,7 +2648,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 957394693}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 104920592}
+        m_TargetAssemblyTypeName: CanvasState, Assembly-CSharp
+        m_MethodName: beginCalculatingIoU
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &957394693
 MonoBehaviour:
   m_ObjectHideFlags: 0

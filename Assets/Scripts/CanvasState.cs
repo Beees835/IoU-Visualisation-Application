@@ -82,6 +82,11 @@ public class CanvasState : MonoBehaviour
         if (this.shapeCount >= 3) {
             this.drawState = DrawStates.MODIFY_STATE;
         }
+        
+        if (shapeCount >= 2 && !beginCalculatingIoUStatus)
+        {
+            beginCalculatingIoUStatus = true;
+        }
         // Example code for using drawState
         // if (drawState == DrawStates.DRAW_STATE) sss
         // {
@@ -99,5 +104,7 @@ public class CanvasState : MonoBehaviour
 
     public void beginCalculatingIoU() {
         beginCalculatingIoUStatus = true;
+        this.drawState = DrawStates.LOCK_STATE;
     }
+
 }
