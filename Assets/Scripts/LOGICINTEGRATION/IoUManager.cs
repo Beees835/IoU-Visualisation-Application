@@ -33,7 +33,15 @@ public class IoUManager : MonoBehaviour
         Vector2[] poly1 = ConvertShapePointsToVector2Array(shape1.Points);
         Vector2[] poly2 = ConvertShapePointsToVector2Array(shape2.Points);
 
-        float iou = CalculateIoU(poly1, poly2);
+        Vector2[] intersectionPoints = GetIntersectionPoints(poly1, poly2);
+
+        float area1 = CalculatePolygonArea(poly1);
+        float area2 = CalculatePolygonArea(poly2);
+
+        float iou = CalculateIoU(area1, area2, intersectionPoints);
+
+        // Highlight the intersection after the calculation
+        HighlightIntersection(intersectionPoints);
 
         Debug.Log("IoU between shape 1 and shape 2: " + iou);
     }
@@ -49,13 +57,8 @@ public class IoUManager : MonoBehaviour
     }
     
     // Method to calculate and display IoU between two polygons
-    public float CalculateIoU(Vector2[] poly1, Vector2[] poly2)
-    {
-        float area1 = CalculatePolygonArea(poly1);
-        float area2 = CalculatePolygonArea(poly2);
-
-        Vector2[] intersectionPoints = GetIntersectionPoints(poly1, poly2);
-
+    public static float CalculateIoU(float area1, float area2, Vector2[]  intersectionPoints)
+    { 
         if (intersectionPoints.Length < 3)
         {
             return 0f; // No intersection
@@ -63,9 +66,6 @@ public class IoUManager : MonoBehaviour
 
         float intersectionArea = CalculatePolygonArea(intersectionPoints);
         float unionArea = area1 + area2 - intersectionArea;
-
-        // Highlight the intersection after the calculation
-        HighlightIntersection(intersectionPoints);
 
         return intersectionArea / unionArea;
     }
@@ -164,7 +164,7 @@ public class IoUManager : MonoBehaviour
 
 
     // Supporting method to check if a point is inside a polygon
-    private static bool IsPointInPolygon(Vector2 point, Vector2[] polygon)
+    public static bool IsPointInPolygon(Vector2 point, Vector2[] polygon)
     {
         bool isInside = false;
         int j = polygon.Length - 1;
@@ -215,7 +215,7 @@ public class IoUManager : MonoBehaviour
     }
 
     // Get the intersection point between two line segments
-    private static Vector2? GetIntersectionPoint(Vector2 a1, Vector2 a2, Vector2 b1, Vector2 b2)
+    public static Vector2? GetIntersectionPoint(Vector2 a1, Vector2 a2, Vector2 b1, Vector2 b2)
     {
         Vector2 r = a2 - a1;
         Vector2 s = b2 - b1;
