@@ -3,7 +3,6 @@ using UnityEngine;
 using static IoUManager;
 using static TestingFunctions;
 using System;
-using UnityEngine.UIElements;
 
 public class IntersectionTest
 {
@@ -49,7 +48,7 @@ public class IntersectionTest
                         realArea = (width - offset) * length;
                     }
 
-                    calcArea = IoUManager.CalculatePolygonArea(IoUManager.GetIntersectionPoints(polygon1, polygon2));
+                    calcArea = CalculatePolygonArea(GetIntersectionPoints(polygon1, polygon2));
 
                     closeEnough &= AreCloseEnough(realArea, calcArea);
 
