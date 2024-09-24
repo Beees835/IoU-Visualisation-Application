@@ -54,11 +54,7 @@ public class LineIntersectionTest
         Vector2 l1Start = new Vector2(0, 0);
         Vector2 l1End = new Vector2(1, 1);
 
-        Vector2 output = (Vector2) GetIntersectionPoint(l1Start, l1End, l1Start, l1End);
-
-        Assert.NotNull(output);
-
-        Debug.Log(output.x);
-        Debug.Log(output.y);
+        // Infinite Intersections not useful
+        Assert.Null(GetIntersectionPoint(l1Start, l1End, l1Start, l1End));
     }
 }

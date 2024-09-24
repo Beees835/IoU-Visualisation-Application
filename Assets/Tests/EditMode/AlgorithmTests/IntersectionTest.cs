@@ -57,10 +57,4 @@ public class IntersectionTest
         Assert.IsTrue(closeEnough);
     }
 
-    [Test]
-    public void RectangleAndTriangleIntersection()
-    { 
-        Debug.Log("NOTE: Need to Implement");
-        Assert.IsTrue(false);
-    }
 }

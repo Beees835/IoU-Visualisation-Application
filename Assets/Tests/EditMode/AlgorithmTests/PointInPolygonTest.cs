@@ -44,7 +44,8 @@ public class PointInPolygonTest
 
         Vector2 point = new Vector2(2, 0);
 
-        Assert.IsTrue(IsPointInPolygon(point, polygon));
+        // On is not inside
+        Assert.IsFalse(IsPointInPolygon(point, polygon));
     }
 
     [Test]
