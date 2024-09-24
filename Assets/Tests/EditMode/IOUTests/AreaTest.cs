@@ -8,7 +8,7 @@ using UnityEngine.UIElements;
 public class AreaTest
 {
     [Test]
-    public void CalculateAreaRectangle()
+    public void RectangleArea()
     {
         Vector2[] polygon = new Vector2[4];
 
@@ -40,7 +40,7 @@ public class AreaTest
     }
 
     [Test]
-    public void CalculateAreaTriangle()
+    public void TriangleArea()
     {
         Vector2[] polygon = new Vector2[3];
 
@@ -92,7 +92,7 @@ public class AreaTest
     }
 
     [Test]
-    public void CalculateAreaComplex()
+    public void ComplexAre()
     {
         // Triangle stacked on a square
 

@@ -54,14 +54,14 @@ public class IoUManager : MonoBehaviour
         float area1 = CalculatePolygonArea(poly1);
         float area2 = CalculatePolygonArea(poly2);
 
-        List<Vector2> intersectionPoints = GetIntersectionPoints(poly1, poly2);
+        Vector2[] intersectionPoints = GetIntersectionPoints(poly1, poly2);
 
-        if (intersectionPoints.Count < 3)
+        if (intersectionPoints.Length < 3)
         {
             return 0f; // No intersection
         }
 
-        float intersectionArea = CalculatePolygonArea(intersectionPoints.ToArray());
+        float intersectionArea = CalculatePolygonArea(intersectionPoints);
         float unionArea = area1 + area2 - intersectionArea;
 
         // Highlight the intersection after the calculation
@@ -71,7 +71,7 @@ public class IoUManager : MonoBehaviour
     }
 
     // Method to get intersection points between two polygons
-    private List<Vector2> GetIntersectionPoints(Vector2[] poly1, Vector2[] poly2)
+    public static Vector2[] GetIntersectionPoints(Vector2[] poly1, Vector2[] poly2)
     {
         List<Vector2> intersectionPoints = new List<Vector2>();
 
@@ -114,20 +114,20 @@ public class IoUManager : MonoBehaviour
 
         if (intersectionPoints.Count < 3)
         {
-            return new List<Vector2>(); // No valid intersection
+            return new List<Vector2>().ToArray(); // No valid intersection
         }
 
-        return SortPointsClockwise(intersectionPoints);
+        return SortPointsClockwise(intersectionPoints).ToArray();
     }
 
     // Method to highlight the intersection area
-    private void HighlightIntersection(List<Vector2> intersectionPoints)
+    private void HighlightIntersection(Vector2[] intersectionPoints)
     {
-        if (intersectionPoints.Count < 3)
+        if (intersectionPoints.Length < 3)
             return;
 
         // Log the intersection points count
-        Debug.Log("Highlighting intersection with " + intersectionPoints.Count + " points.");
+        Debug.Log("Highlighting intersection with " + intersectionPoints.Length + " points.");
 
         GameObject intersectionObject = new GameObject("Intersection");
         MeshFilter meshFilter = intersectionObject.AddComponent<MeshFilter>();
@@ -139,14 +139,14 @@ public class IoUManager : MonoBehaviour
 
         Mesh mesh = new Mesh();
 
-        Vector3[] vertices = new Vector3[intersectionPoints.Count];
-        for (int i = 0; i < intersectionPoints.Count; i++)
+        Vector3[] vertices = new Vector3[intersectionPoints.Length];
+        for (int i = 0; i < intersectionPoints.Length; i++)
         {
             vertices[i] = new Vector3(intersectionPoints[i].x, intersectionPoints[i].y, -0.5f); // Use a slight negative z-value to ensure visibility
         }
 
-        int[] triangles = new int[(intersectionPoints.Count - 2) * 3];
-        for (int i = 0; i < intersectionPoints.Count - 2; i++)
+        int[] triangles = new int[(intersectionPoints.Length - 2) * 3];
+        for (int i = 0; i < intersectionPoints.Length - 2; i++)
         {
             triangles[i * 3] = 0;
             triangles[i * 3 + 1] = i + 1;
@@ -164,7 +164,7 @@ public class IoUManager : MonoBehaviour
 
 
     // Supporting method to check if a point is inside a polygon
-    private bool IsPointInPolygon(Vector2 point, Vector2[] polygon)
+    private static bool IsPointInPolygon(Vector2 point, Vector2[] polygon)
     {
         bool isInside = false;
         int j = polygon.Length - 1;
@@ -200,7 +200,7 @@ public class IoUManager : MonoBehaviour
     }
 
     // Sort the intersection points in a clockwise order
-    private List<Vector2> SortPointsClockwise(List<Vector2> points)
+    private static List<Vector2> SortPointsClockwise(List<Vector2> points)
     {
         Vector2 center = Vector2.zero;
         foreach (var point in points)
@@ -215,7 +215,7 @@ public class IoUManager : MonoBehaviour
     }
 
     // Get the intersection point between two line segments
-    private Vector2? GetIntersectionPoint(Vector2 a1, Vector2 a2, Vector2 b1, Vector2 b2)
+    private static Vector2? GetIntersectionPoint(Vector2 a1, Vector2 a2, Vector2 b1, Vector2 b2)
     {
         Vector2 r = a2 - a1;
         Vector2 s = b2 - b1;
