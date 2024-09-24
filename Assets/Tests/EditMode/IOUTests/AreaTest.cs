@@ -3,55 +3,39 @@ using UnityEngine;
 using static IoUManager;
 using static TestingFunctions;
 using System;
+using UnityEngine.UIElements;
 
 public class AreaTest
 {
-    // A Test behaves as an ordinary method
-    [Test]
-    public void CalculateAreaSquare()
-    {
-
-        Vector2[] polygon = new Vector2[4];
-
-        int length = 2;
-        int width = 2;
-
-
-        // Create shape points
-        polygon[0] = new Vector2(0, 0);
-        polygon[1] = new Vector2(length, 0);
-        polygon[2] = new Vector2(length, width);
-        polygon[3] = new Vector2(0, width);
-
-        float realArea = length * width;
-
-        float calcArea = IoUManager.CalculatePolygonArea(polygon);
-
-        bool closeEnough = AreCloseEnough(realArea, calcArea);
-        Assert.IsTrue(closeEnough);
-    }
-
     [Test]
     public void CalculateAreaRectangle()
     {
-
         Vector2[] polygon = new Vector2[4];
 
-        int length = 2;
-        int width = 4;
+        float length, width;
+        float realArea, calcArea;
+        int max = 10;
+        bool closeEnough = true;
 
+        for (float i=1;i<max;i=i+0.1f)
+        {
+            for (float j =1;j<max; j = j + 0.1f)
+            {
+                length = i;
+                width = j;
+                // Create shape points
+                polygon[0] = new Vector2(0, 0);
+                polygon[1] = new Vector2(length, 0);
+                polygon[2] = new Vector2(length, width);
+                polygon[3] = new Vector2(0, width);
 
-        // Create shape points
-        polygon[0] = new Vector2(0, 0);
-        polygon[1] = new Vector2(length, 0);
-        polygon[2] = new Vector2(length, width);
-        polygon[3] = new Vector2(0, width);
+                realArea = length * width;
 
-        float realArea = length * width;
+                calcArea = IoUManager.CalculatePolygonArea(polygon);
 
-        float calcArea = IoUManager.CalculatePolygonArea(polygon);
-
-        bool closeEnough = AreCloseEnough(realArea, calcArea);
+                closeEnough &= AreCloseEnough(realArea, calcArea);
+            }
+        }
         Assert.IsTrue(closeEnough);
     }
 
@@ -60,22 +44,93 @@ public class AreaTest
     {
         Vector2[] polygon = new Vector2[3];
 
-        int width = 3;
-        int height = 2;
+        float height, width;
+        float realArea, calcArea;
+        int max = 10;
+        bool closeEnough = true;
 
+        // Isosceles
+        for (float i = 1; i < max; i = i + 0.1f)
+        {
+            for (float j = 1; j < max; j = j + 0.1f)
+            {
+                width = i;
+                height = j;
 
-        // Create shape points
-        polygon[0] = new Vector2(0, 0);
-        polygon[1] = new Vector2(width, 0);
-        polygon[2] = new Vector2(width - 0.5f * width, height);
+                // Create shape points
+                polygon[0] = new Vector2(0, 0);
+                polygon[1] = new Vector2(width, 0);
+                polygon[2] = new Vector2(width - 0.5f * width, height);
 
-        float realArea = 0.5f * width * height;
+                realArea = 0.5f * width * height;
 
-        float calcArea = IoUManager.CalculatePolygonArea(polygon);
+                calcArea = IoUManager.CalculatePolygonArea(polygon);
 
+                closeEnough &= AreCloseEnough(realArea, calcArea);
+            }
+        }
 
-        bool closeEnough = AreCloseEnough(realArea, calcArea);
+        // Equilateral
+        for (float i = 1; i < max; i = i + 0.1f)
+        {
+            width = i;
+            height = (float)(Math.Sqrt(3) / 2) * width;
+
+            // Create shape points
+            polygon[0] = new Vector2(0, 0);
+            polygon[1] = new Vector2(width, 0);
+            polygon[2] = new Vector2(width - 0.5f * width, height);
+
+            realArea = 0.5f * width * height;
+
+            calcArea = IoUManager.CalculatePolygonArea(polygon);
+
+            closeEnough &= AreCloseEnough(realArea, calcArea);
+        }
+
         Assert.IsTrue(closeEnough);
     }
 
+    [Test]
+    public void CalculateAreaComplex()
+    {
+        // Triangle stacked on a square
+
+        Vector2[] polygon = new Vector2[5];
+
+        float width, squareHeight, triangleHeight;
+        float realArea, calcArea;
+        float max = 5;
+        bool closeEnough = true;
+
+        for (float i = 1; i < max; i = i + 0.1f)
+        {
+            for (float j = 1; j < max; j = j + 0.1f)
+            {
+                for (float k = 1; j < max; j = j + 0.1f)
+                {
+                    width = i;
+                    squareHeight = j;
+                    triangleHeight = k;
+
+                    // Create shape points
+                    polygon[0] = new Vector2(0, 0);
+                    polygon[1] = new Vector2(width, 0);
+                    polygon[2] = new Vector2(width, squareHeight);
+                    polygon[3] = new Vector2(width - 0.5f * width, squareHeight + triangleHeight);
+                    polygon[4] = new Vector2(0, squareHeight);
+
+                    float squareArea = width * squareHeight;
+                    float triangleArea = 0.5f * width * triangleHeight;
+
+                    realArea = squareArea + triangleArea;
+
+                    calcArea = IoUManager.CalculatePolygonArea(polygon);
+
+                    closeEnough &= AreCloseEnough(realArea, calcArea);
+                }
+            }
+            Assert.IsTrue(closeEnough);
+        }
+    }
 }
