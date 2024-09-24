@@ -3,7 +3,6 @@ using UnityEngine;
 using static IoUManager;
 using static TestingFunctions;
 using System;
-using UnityEngine.UIElements;
 
 public class AreaTest
 {
@@ -31,7 +30,7 @@ public class AreaTest
 
                 realArea = length * width;
 
-                calcArea = IoUManager.CalculatePolygonArea(polygon);
+                calcArea = CalculatePolygonArea(polygon);
 
                 closeEnough &= AreCloseEnough(realArea, calcArea);
             }
@@ -64,7 +63,7 @@ public class AreaTest
 
                 realArea = 0.5f * width * height;
 
-                calcArea = IoUManager.CalculatePolygonArea(polygon);
+                calcArea = CalculatePolygonArea(polygon);
 
                 closeEnough &= AreCloseEnough(realArea, calcArea);
             }
@@ -83,7 +82,7 @@ public class AreaTest
 
             realArea = 0.5f * width * height;
 
-            calcArea = IoUManager.CalculatePolygonArea(polygon);
+            calcArea = CalculatePolygonArea(polygon);
 
             closeEnough &= AreCloseEnough(realArea, calcArea);
         }
@@ -125,7 +124,7 @@ public class AreaTest
 
                     realArea = squareArea + triangleArea;
 
-                    calcArea = IoUManager.CalculatePolygonArea(polygon);
+                    calcArea = CalculatePolygonArea(polygon);
 
                     closeEnough &= AreCloseEnough(realArea, calcArea);
                 }
