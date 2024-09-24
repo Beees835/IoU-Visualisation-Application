@@ -185,7 +185,7 @@ public class IoUManager : MonoBehaviour
     }
 
     // Method to calculate the polygon area
-    private float CalculatePolygonArea(Vector2[] polygon)
+    public static float CalculatePolygonArea(Vector2[] polygon)
     {
         float area = 0f;
         int j = polygon.Length - 1;
