@@ -65,11 +65,19 @@ public class ShapeRenderer : MonoBehaviour
         lineRenderer.endWidth = LineWidth;
     }
 
-    private void ClearAllLines()
+    public void ClearAllLines()
     {
         foreach (var line in GameObject.FindGameObjectsWithTag("Line"))
         {
             Destroy(line);
         }
     }
+
+    public void ClearAllPoints()
+    {
+        foreach (var point in GameObject.FindGameObjectsWithTag("Point"))
+        {
+            Destroy(point);
+        }
+    }   
 }
