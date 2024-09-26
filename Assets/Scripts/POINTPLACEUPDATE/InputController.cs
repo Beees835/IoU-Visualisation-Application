@@ -23,6 +23,10 @@ public class InputController : MonoBehaviour
             return;
         }
 
+        if (CanvasState.Instance.drawState == CanvasState.DrawStates.LOCK_STATE) {
+            return;
+        }
+
         // Logic to select the correct prefab
         if (CanvasState.Instance.shapeCount == 1)
         {
