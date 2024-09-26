@@ -12,6 +12,7 @@ public class IoUManager : MonoBehaviour
         {
             CalculateIoUForShapes();
             CanvasState.Instance.beginCalculatingIoUStatus = false; // Reset the flag
+            CanvasState.Instance.shapeCount += 1; // Add a shape for the intersection
         }
     }
 
