@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 public class InputHandler : MonoBehaviour
 {
     public CameraController cameraController;
-    public PointPlaceControl pointPlaceControl;
+    public InputController inputController;
 
     private GeneralControls controls;
     private bool isPanning = false;
@@ -21,6 +21,7 @@ public class InputHandler : MonoBehaviour
         controls.DefaultMapping.PanCameraLock.canceled += OnPanUnlock;
         controls.DefaultMapping.PanCameraMove.performed += OnPanMove;
         controls.DefaultMapping.PlacePoint.performed += OnPlacePoint;
+        controls.DefaultMapping.PlacePoint.canceled += OnStopPlacePoint;
 
         controls.DefaultMapping.Enable();
     }
@@ -32,6 +33,7 @@ public class InputHandler : MonoBehaviour
         controls.DefaultMapping.PanCameraLock.canceled -= OnPanUnlock;
         controls.DefaultMapping.PanCameraMove.performed -= OnPanMove;
         controls.DefaultMapping.PlacePoint.performed -= OnPlacePoint;
+        controls.DefaultMapping.PlacePoint.canceled -= OnStopPlacePoint;
 
         controls.DefaultMapping.Disable();
     }
@@ -50,22 +52,29 @@ public class InputHandler : MonoBehaviour
     private void OnPanUnlock(InputAction.CallbackContext context)
     {
         isPanning = false;
+        inputController?.StopDragging();
     }
 
     private void OnPanMove(InputAction.CallbackContext context)
     {
+        Vector2 panValue = context.ReadValue<Vector2>();
         if (isPanning)
         {
-            Vector2 panValue = context.ReadValue<Vector2>();
             cameraController.HandlePan(panValue);
+        }
+        else
+        {
+            inputController?.DragPoint(panValue);
         }
     }
 
     private void OnPlacePoint(InputAction.CallbackContext context)
     {
-        if (pointPlaceControl != null)
-        {
-            pointPlaceControl.PlacePrefabAtMousePosition();
-        }
+        inputController?.PlacePrefabAtMousePosition();
+    }
+
+    private void OnStopPlacePoint(InputAction.CallbackContext context)
+    {
+        inputController?.StopDragging();
     }
 }
