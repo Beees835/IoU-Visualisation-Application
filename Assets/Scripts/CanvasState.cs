@@ -79,13 +79,14 @@ public class CanvasState : MonoBehaviour
         else {
             Debug.LogError("TMP_Text reference not found");
         }
-        if (this.shapeCount >= 3) {
-            this.drawState = DrawStates.MODIFY_STATE;
+
+        if (shapeCount >= MAX_SHAPE_COUNT) {
+            drawState = DrawStates.LOCK_STATE;
         }
-        
-        if (shapeCount >= 2 && !beginCalculatingIoUStatus)
+
+        if (shapeCount == MAX_SHAPE_COUNT && !beginCalculatingIoUStatus)
         {
-            beginCalculatingIoUStatus = true;
+            beginCalculatingIoU(); // Adds an extra shape (intersection shape)
         }
         // Example code for using drawState
         // if (drawState == DrawStates.DRAW_STATE) sss
