@@ -27,9 +27,4 @@ public class ZoomOutBtnScript : MonoBehaviour
         _slider.value = maxZoom - val;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
