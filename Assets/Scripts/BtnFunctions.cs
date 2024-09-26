@@ -5,6 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class BtnFunctions : MonoBehaviour
 {
+
+    public float minZoom = 5f;
+    public float maxZoom = 15f;
     
     //Structure goes something like this
     public void LockShape()
@@ -22,4 +25,5 @@ public class BtnFunctions : MonoBehaviour
         Scene currentScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(currentScene.name);
     }
+
 }
