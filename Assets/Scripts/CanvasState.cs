@@ -69,16 +69,16 @@ public class CanvasState : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        uiState =   "Current Shape Count: " + shapeCount + "\n" + 
-                    "Current Draw State: " + this.drawState + "\n" +
-                    "Should start calc IoU: " + beginCalculatingIoUStatus;
+        // uiState =   "Current Shape Count: " + shapeCount + "\n" + 
+        //             "Current Draw State: " + this.drawState + "\n" +
+        //             "Should start calc IoU: " + beginCalculatingIoUStatus;
 
-        if (textMeshPro != null) {
-            textMeshPro.text = uiState;
-        }
-        else {
-            Debug.LogError("TMP_Text reference not found");
-        }
+        // if (textMeshPro != null) {
+        //     textMeshPro.text = uiState;
+        // }
+        // else {
+        //     Debug.LogError("TMP_Text reference not found");
+        // }
         if (this.shapeCount >= 3) {
             this.drawState = DrawStates.MODIFY_STATE;
         }
