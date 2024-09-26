@@ -16,7 +16,7 @@ public class IoUTest
 
         float area = CalculatePolygonArea(polygon);
 
-        float output = CalculateIoU(area, area, polygon);
+        float output = CalculateIoU(area, area, polygon)[2];
         AreCloseEnough(1, output);
     }
 
@@ -28,7 +28,7 @@ public class IoUTest
         // Placeholder value shouldn't matter
         float area = 5;
 
-        float output = CalculateIoU(area, area, polygon);
+        float output = CalculateIoU(area, area, polygon)[2];
         AreCloseEnough(0, output);
     }
 
@@ -47,7 +47,7 @@ public class IoUTest
         float rectangleArea = width * width;
         float triangleArea = 0.5f * width * width;
 
-        float output = CalculateIoU(rectangleArea, triangleArea, polygon);
+        float output = CalculateIoU(rectangleArea, triangleArea, polygon)[2];
 
         AreCloseEnough(0.5f, output);
     }
