@@ -22,12 +22,6 @@ public class CalcIoUBtnScript : MonoBehaviour
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void OpenPanel()
     {
         if (_iouPanel != null)
