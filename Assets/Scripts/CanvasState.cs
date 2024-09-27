@@ -85,7 +85,7 @@ public class CanvasState : MonoBehaviour
         
         if (shapeCount >= 2 && !beginCalculatingIoUStatus)
         {
-            beginCalculatingIoUStatus = true;
+            beginCalculatingIoU(); // Adds an extra shape (intersection shape)
         }
         // Example code for using drawState
         // if (drawState == DrawStates.DRAW_STATE) sss
@@ -106,5 +106,4 @@ public class CanvasState : MonoBehaviour
         beginCalculatingIoUStatus = true;
         this.drawState = DrawStates.LOCK_STATE;
     }
-
 }
