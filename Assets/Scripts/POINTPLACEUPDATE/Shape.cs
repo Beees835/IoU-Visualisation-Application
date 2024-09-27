@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Shape
 {
-    public List<Vector3> Points { get; private set; } = new List<Vector3>();
-    public List<GameObject> Prefabs { get; private set; } = new List<GameObject>();
+    public List<Vector3> Points { get; set; } = new List<Vector3>();
+    public List<GameObject> Prefabs { get; set; } = new List<GameObject>();
     public bool IsClosed { get; set; } = false; 
 
     public Shape() { }
