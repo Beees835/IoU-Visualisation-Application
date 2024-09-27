@@ -17,30 +17,30 @@ public class UndoScript : MonoBehaviour
     {
         int numActions = ActionManager.Instance.GetNumberOfActions();
         Debug.Log("Number of actions: " + numActions);
+        ActionManager.UserAction lastAction = ActionManager.Instance.ActionStack.Peek();
         if (numActions > 0)
         {
-            if (ActionManager.Instance.ActionStack.Peek() == ActionManager.UserAction.DRAW_POINT)
+            switch(lastAction)
             {
-                // A singular point (no line) has been drawn to start a new shape. now undo it
-                ShapeManager.Instance.CurrentShape.Points.Clear();
-                foreach (GameObject pf in ShapeManager.Instance.CurrentShape.Prefabs)
-                {
-                    Destroy(pf);
-                }
+                case ActionManager.UserAction.DRAW_POINT:
+                    // A singular point (no line) has been drawn to start a new shape. now undo it
+                    ShapeManager.Instance.CurrentShape.Points.Clear();
+                    break;
+
+                case ActionManager.UserAction.DRAW_LINE:
+                    // undo the last line drawn
+                    GameObject lastLine = ShapeManager.Instance.CurrentLines[ShapeManager.Instance.CurrentLines.Count - 1];
+                    ShapeManager.Instance.CurrentLines.RemoveAt(ShapeManager.Instance.CurrentLines.Count - 1);
+                    Destroy(lastLine);
+
+                    ShapeManager.Instance.CurrentShape.Points.RemoveAt(ShapeManager.Instance.CurrentShape.Points.Count - 1);
+                    break;
             }
-            else if (ActionManager.Instance.ActionStack.Peek() == ActionManager.UserAction.DRAW_LINE)
-            {
-                GameObject lastLine = ShapeManager.Instance.CurrentLines[ShapeManager.Instance.CurrentLines.Count - 1];
-                ShapeManager.Instance.CurrentLines.RemoveAt(ShapeManager.Instance.CurrentLines.Count - 1);
-                Destroy(lastLine);
+            GameObject pf = ShapeManager.Instance.CurrentShape.Prefabs[ShapeManager.Instance.CurrentShape.Prefabs.Count - 1];
+            ShapeManager.Instance.CurrentShape.Prefabs.RemoveAt(ShapeManager.Instance.CurrentShape.Prefabs.Count - 1);
+            Destroy(pf);
 
-                GameObject pf = ShapeManager.Instance.CurrentShape.Prefabs[ShapeManager.Instance.CurrentShape.Prefabs.Count - 1];
-                ShapeManager.Instance.CurrentShape.Prefabs.RemoveAt(ShapeManager.Instance.CurrentShape.Prefabs.Count - 1);
-                Destroy(pf);
-
-                ShapeManager.Instance.CurrentShape.Points.RemoveAt(ShapeManager.Instance.CurrentShape.Points.Count - 1);
-
-            }
+            ActionManager.Instance.ActionStack.Pop();
         }
     }
 
