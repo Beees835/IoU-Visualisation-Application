@@ -1,9 +1,12 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
 public class IoUManager : MonoBehaviour
 {
-    private List<GameObject> intersectionObjects = new List<GameObject>();
+    private static List<GameObject> intersectionObjects = new List<GameObject>();
 
     private void Update()
     {
@@ -17,14 +20,14 @@ public class IoUManager : MonoBehaviour
     }
 
     // Method to calculate and display IoU between two shapes from ShapeManager
-    public void CalculateIoUForShapes()
+    public static string CalculateIoUForShapes()
     {
         List<Shape> allShapes = ShapeManager.Instance.AllShapes;
 
         if (allShapes.Count < 2)
         {
             Debug.LogWarning("Not enough shapes to calculate IoU.");
-            return;
+            return "Not enough shapes to calculate IoU";
         }
 
         // Assuming we calculate IoU between the first two shapes
@@ -39,15 +42,17 @@ public class IoUManager : MonoBehaviour
         float area1 = CalculatePolygonArea(poly1);
         float area2 = CalculatePolygonArea(poly2);
 
-        float iou = CalculateIoU(area1, area2, intersectionPoints);
+        float[] iouValues = CalculateIoU(area1, area2, intersectionPoints);
 
         // Highlight the intersection after the calculation
         HighlightIntersection(intersectionPoints);
 
-        Debug.Log("IoU between shape 1 and shape 2: " + iou);
+        Debug.Log("IoU between shape 1 and shape 2: " + iouValues[2]);
+        string msg = "Shape 1 Area:  {0} \nShape 2 Area: {1} \n Area of Union: {2} \n Area of Intersection: {3} \n IoU: {4}";
+        return string.Format(msg, area1, area2, iouValues[0], iouValues[1], iouValues[2]);
     }
 
-    private Vector2[] ConvertShapePointsToVector2Array(List<Vector3> points)
+    private static Vector2[] ConvertShapePointsToVector2Array(List<Vector3> points)
     {
         Vector2[] result = new Vector2[points.Count];
         for (int i = 0; i < points.Count; i++)
@@ -58,17 +63,24 @@ public class IoUManager : MonoBehaviour
     }
     
     // Method to calculate and display IoU between two polygons
-    public static float CalculateIoU(float area1, float area2, Vector2[]  intersectionPoints)
+    public static float[] CalculateIoU(float area1, float area2, Vector2[]  intersectionPoints)
     { 
+        float[] iouValues = new float[3];
         if (intersectionPoints.Length < 3)
         {
-            return 0f; // No intersection
+            iouValues[0] = area1 + area2;
+            iouValues[1] = 0f;
+            iouValues[2] = 0f;
+            return iouValues;
         }
 
         float intersectionArea = CalculatePolygonArea(intersectionPoints);
         float unionArea = area1 + area2 - intersectionArea;
 
-        return intersectionArea / unionArea;
+        iouValues[0] = unionArea;
+        iouValues[1] = intersectionArea;
+        iouValues[2] = intersectionArea / unionArea;
+        return iouValues;
     }
 
     // Method to get intersection points between two polygons
@@ -122,7 +134,7 @@ public class IoUManager : MonoBehaviour
     }
 
     // Method to highlight the intersection area
-    private void HighlightIntersection(Vector2[] intersectionPoints)
+    private static void HighlightIntersection(Vector2[] intersectionPoints)
     {
         if (intersectionPoints.Length < 3)
             return;
