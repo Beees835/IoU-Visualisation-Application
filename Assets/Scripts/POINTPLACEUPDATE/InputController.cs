@@ -23,6 +23,7 @@ public class InputController : MonoBehaviour
             return;
         }
 
+        
         // Logic to select the correct prefab
         if (CanvasState.Instance.shapeCount == 1)
         {
@@ -34,13 +35,16 @@ public class InputController : MonoBehaviour
             //ShapeManager.Instance.StartNewShape();
         }
 
-        if (CanvasState.Instance.drawState == CanvasState.DrawStates.MODIFY_STATE)
+        switch (CanvasState.Instance.drawState)
         {
-            HandleModifyState();
-        }
-        else
-        {
-            AddNewPoint();
+            case CanvasState.DrawStates.LOCK_STATE:
+                break;
+            case CanvasState.DrawStates.MODIFY_STATE:
+                HandleModifyState();
+                break;
+            case CanvasState.DrawStates.DRAW_STATE:
+                AddNewPoint();
+                break;
         }
     }
 
