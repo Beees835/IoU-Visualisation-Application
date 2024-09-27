@@ -22,14 +22,15 @@ public class DeleteCurrShapeScript : MonoBehaviour
 
     public void DeleteCurrShape()
     {
-        if (ShapeManager.Instance.AllShapes.Count > 0)
+        if (ShapeManager.Instance.AllShapes.Count > -1)
         {
-            //ShapeManager.Instance.AllShapes.RemoveAt(ShapeManager.Instance.AllShapes.Count - 1);
             ShapeManager.Instance.CurrentShape.Points.Clear();
+            foreach (GameObject pf in ShapeManager.Instance.CurrentShape.Prefabs)
+            {
+                Destroy(pf);
+            }
             ShapeRenderer.Instance.ClearCurrentLines();
             CanvasState.Instance.drawState = CanvasState.DrawStates.DRAW_STATE;
-            //CanvasState.Instance.shapeCount -= 1;
-            //ShapeManager.Instance.CurrentShape = ShapeManager.Instance.AllShapes[ShapeManager.Instance.AllShapes.Count - 1];
         }
     }
 }
