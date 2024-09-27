@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RandomConvexPolygon : MonoBehaviour
+public class DefaultShape : MonoBehaviour
 {
     // Commented out variables related to old rendering logic
     // private List<Vector2> vertices = new List<Vector2>();
@@ -51,30 +51,34 @@ public class RandomConvexPolygon : MonoBehaviour
 
     List<Vector2> GenerateConvexPolygon()
     {
-        // Commented out class-level variable; using local variable instead
-        // vertices.Clear();
         List<Vector2> points = new List<Vector2>();
 
-        // Generate random points
+        // Define the canvas size 
+        float canvasWidth = 10.0f;
+        float canvasHeight = 10.0f;
+
+        // Calculate 8% margin 
+        // Make it a bit higher to avoid more extreme cases 
+        float marginX = canvasWidth * 0.08f; 
+        float marginY = canvasHeight * 0.08f; 
+
+        // Calculate the canvas limits with margin included
+        float xMin = -canvasWidth / 2 + marginX; 
+        float xMax = canvasWidth / 2 - marginX;  
+        float yMin = -canvasHeight / 2 + marginY; 
+        float yMax = canvasHeight / 2 - marginY;  
+
+        // Generate random points within the canvas bounds
         for (int i = 0; i < vertexCount; i++)
         {
-            points.Add(new Vector2(Random.Range(-5.0f, 5.0f), Random.Range(-5.0f, 5.0f)));
+            points.Add(new Vector2(Random.Range(xMin, xMax), Random.Range(yMin, yMax)));
         }
-
-        // Sort vertices to form a convex hull
-        // The sorting process allows the algorithm to process points in a systematic order
-        // excluding any points that would cause the polygon to be non-convex.
-
-        // vertices.Sort((a, b) => a.x.CompareTo(b.x)); // Commented out old code
-        // Vector2[] sortedVertices = ConvexHull(vertices).ToArray();
+        
         List<Vector2> convexHull = ConvexHull(points);
-
-        // Update the vertices list with the convex hull vertices
-        // It replaces the original list of vertices with those that form the convex hull
-        // vertices = new List<Vector2>(convexHull); // Commented out; we're returning convexHull directly
 
         return convexHull;
     }
+
 
     // Convex hull algorithm using Andrew's monotone chain algorithm
     public static List<Vector2> ConvexHull(List<Vector2> points)
