@@ -13,7 +13,7 @@ public class CanvasState : MonoBehaviour
         LOCK_STATE
     };
 
-    private const int MAX_SHAPE_COUNT = 2;
+    public const int MAX_SHAPE_COUNT = 2;
 
     // Singleton instance
     private static CanvasState _instance;
@@ -69,21 +69,22 @@ public class CanvasState : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        uiState =   "Current Shape Count: " + shapeCount + "\n" + 
-                    "Current Draw State: " + this.drawState + "\n" +
-                    "Should start calc IoU: " + beginCalculatingIoUStatus;
 
-        if (textMeshPro != null) {
-            textMeshPro.text = uiState;
+        if (this.shapeCount >= 3) {
+            this.drawState = DrawStates.MODIFY_STATE;
         }
-        else {
-            Debug.LogError("TMP_Text reference not found");
-        }
-
-        if (shapeCount == MAX_SHAPE_COUNT && !beginCalculatingIoUStatus)
+        
+        if (shapeCount >= 2 && !beginCalculatingIoUStatus)
         {
             beginCalculatingIoU(); // Adds an extra shape (intersection shape)
         }
+
+        if (shapeCount < MAX_SHAPE_COUNT)
+        {
+            this.drawState = DrawStates.DRAW_STATE;
+        }
+
+
         // Example code for using drawState
         // if (drawState == DrawStates.DRAW_STATE) sss
         // {

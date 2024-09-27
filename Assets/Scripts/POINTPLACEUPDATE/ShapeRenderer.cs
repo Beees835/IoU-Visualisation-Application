@@ -34,6 +34,7 @@ public class ShapeRenderer : MonoBehaviour
             Vector3 start = shape.Points[pointCount - 1];
             Vector3 end = shape.Points[0];
             DrawLine(start, end);
+            ShapeManager.Instance.CurrentLines.Clear();
         }
     }
 
@@ -63,13 +64,25 @@ public class ShapeRenderer : MonoBehaviour
 
         lineRenderer.startWidth = LineWidth;
         lineRenderer.endWidth = LineWidth;
+        
+        ShapeManager.Instance.CurrentLines.Add(line);
     }
 
-    private void ClearAllLines()
+    public void ClearAllLines()
     {
         foreach (var line in GameObject.FindGameObjectsWithTag("Line"))
         {
             Destroy(line);
         }
+    }
+
+    public void ClearCurrentLines()
+    {
+        foreach (var line in ShapeManager.Instance.CurrentLines)
+        {
+            // delete the line off the screen
+            Destroy(line);
+        }
+        ShapeManager.Instance.CurrentLines.Clear();
     }
 }
