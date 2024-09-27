@@ -13,7 +13,7 @@ public class DefaultShape : MonoBehaviour
 
     void Start()
     {
-        GenerateAndAddPolygon();
+        // GenerateAndAddPolygon();
     }
 
     void GenerateAndAddPolygon()
