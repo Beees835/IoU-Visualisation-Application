@@ -70,11 +70,11 @@ public class CanvasState : MonoBehaviour
     void Update()
     {
 
-        if (this.shapeCount >= 3) {
+        if (this.shapeCount > 3) {
             this.drawState = DrawStates.MODIFY_STATE;
         }
         
-        if (shapeCount >= 2 && !beginCalculatingIoUStatus)
+        if (shapeCount > 2 && !beginCalculatingIoUStatus)
         {
             beginCalculatingIoU(); // Adds an extra shape (intersection shape)
         }
