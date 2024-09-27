@@ -24,12 +24,12 @@ public class DeleteCurrShapeScript : MonoBehaviour
     {
         if (ShapeManager.Instance.AllShapes.Count > 0)
         {
-            ShapeManager.Instance.AllShapes.RemoveAt(ShapeManager.Instance.AllShapes.Count - 1);
+            //ShapeManager.Instance.AllShapes.RemoveAt(ShapeManager.Instance.AllShapes.Count - 1);
             ShapeManager.Instance.CurrentShape.Points.Clear();
             ShapeRenderer.Instance.ClearCurrentLines();
             CanvasState.Instance.drawState = CanvasState.DrawStates.DRAW_STATE;
-            CanvasState.Instance.shapeCount -= 1;
-            ShapeManager.Instance.CurrentShape = ShapeManager.Instance.AllShapes[ShapeManager.Instance.AllShapes.Count - 1];
+            //CanvasState.Instance.shapeCount -= 1;
+            //ShapeManager.Instance.CurrentShape = ShapeManager.Instance.AllShapes[ShapeManager.Instance.AllShapes.Count - 1];
         }
     }
 }
