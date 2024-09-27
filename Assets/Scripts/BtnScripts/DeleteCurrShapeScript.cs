@@ -29,6 +29,7 @@ public class DeleteCurrShapeScript : MonoBehaviour
             ShapeRenderer.Instance.ClearCurrentLines();
             CanvasState.Instance.drawState = CanvasState.DrawStates.DRAW_STATE;
             CanvasState.Instance.shapeCount -= 1;
+            ShapeManager.Instance.CurrentShape = ShapeManager.Instance.AllShapes[ShapeManager.Instance.AllShapes.Count - 1];
         }
     }
 }
