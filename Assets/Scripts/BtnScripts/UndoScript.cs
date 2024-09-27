@@ -30,7 +30,16 @@ public class UndoScript : MonoBehaviour
             }
             else if (ActionManager.Instance.ActionStack.Peek() == ActionManager.UserAction.DRAW_LINE)
             {
-               
+                GameObject lastLine = ShapeManager.Instance.CurrentLines[ShapeManager.Instance.CurrentLines.Count - 1];
+                ShapeManager.Instance.CurrentLines.RemoveAt(ShapeManager.Instance.CurrentLines.Count - 1);
+                Destroy(lastLine);
+
+                GameObject pf = ShapeManager.Instance.CurrentShape.Prefabs[ShapeManager.Instance.CurrentShape.Prefabs.Count - 1];
+                ShapeManager.Instance.CurrentShape.Prefabs.RemoveAt(ShapeManager.Instance.CurrentShape.Prefabs.Count - 1);
+                Destroy(pf);
+
+                ShapeManager.Instance.CurrentShape.Points.RemoveAt(ShapeManager.Instance.CurrentShape.Points.Count - 1);
+
             }
         }
     }
