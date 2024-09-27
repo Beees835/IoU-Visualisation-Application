@@ -14,12 +14,6 @@ public class DeleteCurrShapeScript : MonoBehaviour
         _deleteCurrShapeBtn.onClick.AddListener(DeleteCurrShape);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void DeleteCurrShape()
     {
         if (ShapeManager.Instance.AllShapes.Count > -1)

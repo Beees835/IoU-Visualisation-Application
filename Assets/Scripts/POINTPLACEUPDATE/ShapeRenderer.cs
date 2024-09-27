@@ -66,6 +66,7 @@ public class ShapeRenderer : MonoBehaviour
         lineRenderer.endWidth = LineWidth;
         
         ShapeManager.Instance.CurrentLines.Add(line);
+        ActionManager.Instance.ActionStack.Push(ActionManager.UserAction.DRAW_LINE);
     }
 
     public void ClearAllLines()
