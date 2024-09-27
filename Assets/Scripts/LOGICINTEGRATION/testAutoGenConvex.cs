@@ -13,7 +13,7 @@ public class RandomConvexPolygon : MonoBehaviour
 
     void Start()
     {
-        GenerateAndAddPolygon();
+        // GenerateAndAddPolygon();
     }
 
     void GenerateAndAddPolygon()

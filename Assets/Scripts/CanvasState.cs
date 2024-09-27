@@ -63,7 +63,7 @@ public class CanvasState : MonoBehaviour
     void Start()
     {
         this.drawState = DrawStates.DRAW_STATE;
-        this.shapeCount = 1;
+        this.shapeCount = 2;
     }
 
     // Update is called once per frame
