@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    public float zoomSpeed = 1f;
-    public float panSpeed = 0.5f;
-    public float minZoom = 5f;
-    public float maxZoom = 15f;
+    private float zoomSpeed = 1f;
+    private float panSpeed = 0.3f;
+    private float minZoom = 5f;
+    private float maxZoom = 15f;
 
     private Camera cam;
 
@@ -22,7 +22,7 @@ public class CameraController : MonoBehaviour
 
     public void HandlePan(Vector2 panValue)
     {
-        Vector3 move = new Vector3(-panValue.x * panSpeed, -panValue.y * panSpeed, 0);
-        transform.position += move;
+        // Pan values are negative so that scroll feels correct
+        transform.position += new Vector3(-panValue.x * panSpeed, -panValue.y *panSpeed, 0);
     }
 }
