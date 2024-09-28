@@ -23,11 +23,13 @@ public class UndoScript : MonoBehaviour
             switch(lastAction)
             {
                 case ActionManager.UserAction.DRAW_POINT:
+                    Debug.Log("Undoing DRAW_POINT");
                     // A singular point (no line) has been drawn to start a new shape. now undo it
                     ShapeManager.Instance.CurrentShape.Points.Clear();
                     break;
 
                 case ActionManager.UserAction.DRAW_LINE:
+                    Debug.Log("Undoing DRAW_LINE");
                     // undo the last line drawn
                     GameObject lastLine = ShapeManager.Instance.CurrentLines[ShapeManager.Instance.CurrentLines.Count - 1];
                     ShapeManager.Instance.CurrentLines.RemoveAt(ShapeManager.Instance.CurrentLines.Count - 1);
