@@ -16,6 +16,17 @@ public class Shape
         Prefabs.Add(prefab);
     }
 
+    public void RemoveLastPoint()
+    {
+        if (Points.Count > 0)
+        {
+            Points.RemoveAt(Points.Count - 1);
+            GameObject lastPrefab = Prefabs[Prefabs.Count - 1];
+            Prefabs.RemoveAt(Prefabs.Count - 1);
+            GameObject.Destroy(lastPrefab);
+        }
+    }
+
     // Convexity check moved here
     // General convexity check with custom points
     public static bool IsConvex(List<Vector3> points)

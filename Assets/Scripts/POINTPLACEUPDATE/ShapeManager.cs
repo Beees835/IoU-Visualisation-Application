@@ -9,6 +9,7 @@ public class ShapeManager : MonoBehaviour
     public List<Shape> AllShapes { get; private set; } = new List<Shape>();
     public Shape CurrentShape { get; set; } = new Shape();
     public List <GameObject> CurrentLines { get; set; } = new List<GameObject>();
+    public List <GameObject> PrevLines { get; set; } = new List<GameObject>();
 
     private void Awake()
     {
