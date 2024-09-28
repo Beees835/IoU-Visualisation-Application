@@ -63,18 +63,18 @@ public class CanvasState : MonoBehaviour
     void Start()
     {
         this.drawState = DrawStates.DRAW_STATE;
-        this.shapeCount = 0;
+        this.shapeCount = 1;
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        if (this.shapeCount >= 3) {
+        if (this.shapeCount > 3) {
             this.drawState = DrawStates.MODIFY_STATE;
         }
         
-        if (shapeCount >= 2 && !beginCalculatingIoUStatus)
+        if (shapeCount > 2 && !beginCalculatingIoUStatus)
         {
             beginCalculatingIoU(); // Adds an extra shape (intersection shape)
         }
