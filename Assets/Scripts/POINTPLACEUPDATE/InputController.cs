@@ -61,6 +61,16 @@ public class InputController : MonoBehaviour
         Vector2 mouseScreenPosition = Mouse.current.position.ReadValue();
         Vector3 spawnPosition = GetWorldPosition(mouseScreenPosition);
 
+        // current shape hasn't been set yet, this point will be the first point
+        if (ShapeManager.Instance.CurrentShape.Prefabs.Count == 0)
+        {
+            ActionManager.Instance.ActionStack.Push(ActionManager.UserAction.DRAW_POINT);
+        }
+        else 
+        {
+            ActionManager.Instance.ActionStack.Push(ActionManager.UserAction.DRAW_LINE);
+        }
+
         // Check if the point is near the first point to close the shape
         if (ShapeManager.Instance.CurrentShape.Points.Count > 2 &&
             Vector3.Distance(spawnPosition, ShapeManager.Instance.CurrentShape.Points[0]) <= CloseThreshold)
@@ -76,11 +86,6 @@ public class InputController : MonoBehaviour
         // Add the new point to the current shape
         if (ShapeManager.Instance.CurrentShape.IsConvexWithNewPoint(spawnPosition))
         {
-            if (ShapeManager.Instance.CurrentShape.Prefabs.Count == 0)
-            {
-                // current shape hasn't been set yet, this point will be the first point
-                ActionManager.Instance.ActionStack.Push(ActionManager.UserAction.DRAW_POINT);
-            }
             GameObject newPrefab = Instantiate(currentPrefab, spawnPosition, Quaternion.identity);
             ShapeManager.Instance.AddPointToCurrentShape(spawnPosition, newPrefab);
             ShapeRenderer.Instance.RedrawAllShapes();
