@@ -26,13 +26,13 @@ public class UndoScript : MonoBehaviour
             {
                 case ActionManager.UserAction.DRAW_POINT:
                     // A singular point (no line) has been drawn to start a new shape. now undo it
+                    ShapeManager.Instance.CurrentShape.RemoveLastPoint();
                     if (CanvasState.Instance.shapeCount > 1) {
                         // if destroying the first point of shape 2, reassign the current shape to shape 1
                         ShapeManager.Instance.CurrentShape = ShapeManager.Instance.AllShapes[0];
                         ShapeManager.Instance.AllShapes.RemoveAt(ShapeManager.Instance.AllShapes.Count - 1);
                         CanvasState.Instance.shapeCount--;
                     }
-                    ShapeManager.Instance.CurrentShape.RemoveLastPoint();
                     break;
 
                 case ActionManager.UserAction.DRAW_LINE:
