@@ -34,7 +34,8 @@ public class ShapeRenderer : MonoBehaviour
             Vector3 start = shape.Points[pointCount - 1];
             Vector3 end = shape.Points[0];
             DrawLine(start, end);
-            ShapeManager.Instance.CurrentLines.Clear();
+            ShapeManager.Instance.PrevLines = ShapeManager.Instance.CurrentLines;
+            ShapeManager.Instance.CurrentLines = new List<GameObject>();
         }
     }
 
