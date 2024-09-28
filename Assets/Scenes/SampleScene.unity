@@ -2587,6 +2587,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b7b4872d3b5148d6b7d5bb2c5a25ec3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  newShapeCooldown: 0.2
+  lastShapeEndTime: 0
 --- !u!114 &684146798
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4122,8 +4124,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2060636205}
-        m_TargetAssemblyTypeName: VerticesShapeGen, Scripts
+      - m_Target: {fileID: 2060636204}
+        m_TargetAssemblyTypeName: ShapeGenerator, Scripts
         m_MethodName: GenerateShapeFromInput
         m_Mode: 1
         m_Arguments:
@@ -6558,6 +6560,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PrefabShape1: {fileID: 1473709619147884113, guid: b73f91f45f74a4579ae55b8b750d63b9, type: 3}
   lineMaterial: {fileID: 0}
+  verticesInput: {fileID: 1779759155}
+  generateButton: {fileID: 1215937570}
 --- !u!114 &2060636205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6565,7 +6569,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2060636198}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 761ce814467bdd94b83bba129d960e9e, type: 3}
   m_Name: 
