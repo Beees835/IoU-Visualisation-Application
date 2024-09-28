@@ -8,7 +8,8 @@ public class ActionManager : MonoBehaviour
     public enum UserAction 
     {
         DRAW_POINT,
-        DRAW_LINE
+        DRAW_LINE,
+        CLOSE_SHAPE
     }
     public static ActionManager Instance { get; private set; }
     public Stack<UserAction> ActionStack { get; set; } = new Stack<UserAction>();
