@@ -25,7 +25,8 @@ public class InputController : MonoBehaviour
 
         
         // Logic to select the correct prefab
-        if (CanvasState.Instance.shapeCount == 1)
+        if (CanvasState.Instance.shapeCount == 1 )
+
         {
             currentPrefab = PrefabShape1;
         }
