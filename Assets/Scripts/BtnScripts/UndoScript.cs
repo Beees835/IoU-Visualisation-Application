@@ -20,30 +20,55 @@ public class UndoScript : MonoBehaviour
         ActionManager.UserAction lastAction = ActionManager.Instance.ActionStack.Peek();
         if (numActions > 0)
         {
+            
+
             switch(lastAction)
             {
                 case ActionManager.UserAction.DRAW_POINT:
-                    Debug.Log("Undoing DRAW_POINT");
                     // A singular point (no line) has been drawn to start a new shape. now undo it
-                    ShapeManager.Instance.CurrentShape.Points.Clear();
+                    if (CanvasState.Instance.shapeCount > 1) {
+                        // if destroying the first point of shape 2, reassign the current shape to shape 1
+                        ShapeManager.Instance.CurrentShape = ShapeManager.Instance.AllShapes[0];
+                        ShapeManager.Instance.AllShapes.RemoveAt(ShapeManager.Instance.AllShapes.Count - 1);
+                        CanvasState.Instance.shapeCount--;
+                    }
+                    ShapeManager.Instance.CurrentShape.RemoveLastPoint();
                     break;
 
                 case ActionManager.UserAction.DRAW_LINE:
-                    Debug.Log("Undoing DRAW_LINE");
-                    // undo the last line drawn
-                    GameObject lastLine = ShapeManager.Instance.CurrentLines[ShapeManager.Instance.CurrentLines.Count - 1];
-                    ShapeManager.Instance.CurrentLines.RemoveAt(ShapeManager.Instance.CurrentLines.Count - 1);
-                    Destroy(lastLine);
-
-                    ShapeManager.Instance.CurrentShape.Points.RemoveAt(ShapeManager.Instance.CurrentShape.Points.Count - 1);
+                    UndoDrawLine();
+                    ShapeManager.Instance.CurrentShape.RemoveLastPoint();
+                    break;
+                
+                case ActionManager.UserAction.CLOSE_SHAPE:
+                    // the shape was closed and locked. need to undo the locked shape and last line drawn
+                    // ShapeManager.Instance.AllShapes.RemoveAt(ShapeManager.Instance.AllShapes.Count - 1);
+                    // ShapeManager.Instance.CurrentShape = ShapeManager.Instance.AllShapes[ShapeManager.];
+                    // if (CanvasState.Instance.shapeCount == 1) {
+                    //     ShapeManager.Instance.CurrentShape = ShapeManager.Instance.AllShapes[0];
+                    //     ShapeManager.Instance.AllShapes.RemoveAt(ShapeManager.Instance.AllShapes.Count - 1);
+                    // }
+                    ShapeManager.Instance.CurrentShape.IsClosed = false;
+                    ShapeManager.Instance.CurrentLines = ShapeManager.Instance.PrevLines;
+                    UndoDrawLine();
                     break;
             }
-            GameObject pf = ShapeManager.Instance.CurrentShape.Prefabs[ShapeManager.Instance.CurrentShape.Prefabs.Count - 1];
-            ShapeManager.Instance.CurrentShape.Prefabs.RemoveAt(ShapeManager.Instance.CurrentShape.Prefabs.Count - 1);
-            Destroy(pf);
 
             ActionManager.Instance.ActionStack.Pop();
         }
     }
 
+    public void UndoDrawLine()
+    {
+        // undo the last line drawn
+        GameObject lastLine = ShapeManager.Instance.CurrentLines[ShapeManager.Instance.CurrentLines.Count - 1];
+        ShapeManager.Instance.CurrentLines.RemoveAt(ShapeManager.Instance.CurrentLines.Count - 1);
+        Destroy(lastLine);
+    }
+
+    public void DestroyLastPrefab() {
+        GameObject pf = ShapeManager.Instance.CurrentShape.Prefabs[ShapeManager.Instance.CurrentShape.Prefabs.Count - 1];
+        ShapeManager.Instance.CurrentShape.Prefabs.RemoveAt(ShapeManager.Instance.CurrentShape.Prefabs.Count - 1);
+        Destroy(pf);
+    }
 }
