@@ -15,12 +15,9 @@ public class UndoScript : MonoBehaviour
 
     public void Undo() 
     {
-        int numActions = ActionManager.Instance.GetNumberOfActions();
-        Debug.Log("Number of actions: " + numActions);
-        ActionManager.UserAction lastAction = ActionManager.Instance.ActionStack.Peek();
-        if (numActions > 0)
+        if (ActionManager.Instance.ActionStack.Count > 0)
         {
-            
+            ActionManager.UserAction lastAction = ActionManager.Instance.ActionStack.Peek();
 
             switch(lastAction)
             {
@@ -32,7 +29,7 @@ public class UndoScript : MonoBehaviour
                         ShapeManager.Instance.CurrentShape = ShapeManager.Instance.AllShapes[0];
                         ShapeManager.Instance.AllShapes.RemoveAt(ShapeManager.Instance.AllShapes.Count - 1);
                         CanvasState.Instance.shapeCount--;
-                    }
+                    } 
                     break;
 
                 case ActionManager.UserAction.DRAW_LINE:
@@ -42,14 +39,19 @@ public class UndoScript : MonoBehaviour
                 
                 case ActionManager.UserAction.CLOSE_SHAPE:
                     // the shape was closed and locked. need to undo the locked shape and last line drawn
-                    // ShapeManager.Instance.AllShapes.RemoveAt(ShapeManager.Instance.AllShapes.Count - 1);
-                    // ShapeManager.Instance.CurrentShape = ShapeManager.Instance.AllShapes[ShapeManager.];
-                    // if (CanvasState.Instance.shapeCount == 1) {
-                    //     ShapeManager.Instance.CurrentShape = ShapeManager.Instance.AllShapes[0];
-                    //     ShapeManager.Instance.AllShapes.RemoveAt(ShapeManager.Instance.AllShapes.Count - 1);
-                    // }
+
+                    if (CanvasState.Instance.shapeCount > 1)
+                    {
+                        // We've closed the first shape and are now undoing it. 
+                        // Need to reassign the current shape to the second shape
+                        ShapeManager.Instance.CurrentShape = ShapeManager.Instance.AllShapes[0];
+                        ShapeManager.Instance.AllShapes.RemoveAt(ShapeManager.Instance.AllShapes.Count - 1);
+                        CanvasState.Instance.shapeCount--;
+                    }    
+
                     ShapeManager.Instance.CurrentShape.IsClosed = false;
                     ShapeManager.Instance.CurrentLines = ShapeManager.Instance.PrevLines;
+
                     UndoDrawLine();
                     break;
             }
@@ -64,11 +66,5 @@ public class UndoScript : MonoBehaviour
         GameObject lastLine = ShapeManager.Instance.CurrentLines[ShapeManager.Instance.CurrentLines.Count - 1];
         ShapeManager.Instance.CurrentLines.RemoveAt(ShapeManager.Instance.CurrentLines.Count - 1);
         Destroy(lastLine);
-    }
-
-    public void DestroyLastPrefab() {
-        GameObject pf = ShapeManager.Instance.CurrentShape.Prefabs[ShapeManager.Instance.CurrentShape.Prefabs.Count - 1];
-        ShapeManager.Instance.CurrentShape.Prefabs.RemoveAt(ShapeManager.Instance.CurrentShape.Prefabs.Count - 1);
-        Destroy(pf);
     }
 }
