@@ -1435,7 +1435,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 476111635}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2060636204}
+        m_TargetAssemblyTypeName: ShapeGenerator, Scripts
+        m_MethodName: GeneratePentagon
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &476111635
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1758,10 +1770,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14f9281a1a93e4b7990fdf932ee97bec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  zoomSpeed: 0.01
-  panSpeed: 0.5
-  minZoom: 1
-  maxZoom: 15
 --- !u!1 &543288432
 GameObject:
   m_ObjectHideFlags: 0
@@ -3961,8 +3969,6 @@ MonoBehaviour:
   m_Direction: 0
   m_MinValue: 5
   m_MaxValue: 15
-  m_MinValue: 5
-  m_MaxValue: 15
   m_WholeNumbers: 0
   m_Value: 15
   m_OnValueChanged:
@@ -4103,13 +4109,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 2060636205}
+        m_TargetAssemblyTypeName: VerticesShapeGen, Scripts
+        m_MethodName: GenerateShapeFromInput
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -5111,7 +5117,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1684382206}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2060636204}
+        m_TargetAssemblyTypeName: ShapeGenerator, Scripts
+        m_MethodName: GenerateSquare
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1684382206
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5558,7 +5576,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1812860862}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2060636204}
+        m_TargetAssemblyTypeName: ShapeGenerator, Scripts
+        m_MethodName: GenerateTriangle
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1812860862
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5812,7 +5842,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1893396491}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2060636204}
+        m_TargetAssemblyTypeName: ShapeGenerator, Scripts
+        m_MethodName: GenerateHexagon
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1893396491
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6378,6 +6420,8 @@ GameObject:
   - component: {fileID: 2060636200}
   - component: {fileID: 2060636199}
   - component: {fileID: 2060636203}
+  - component: {fileID: 2060636205}
+  - component: {fileID: 2060636204}
   m_Layer: 5
   m_Name: OverlayCanvas
   m_TagString: Untagged
@@ -6487,6 +6531,36 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minZoom: 5
   maxZoom: 15
+--- !u!114 &2060636204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2060636198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad7dfa2db63b7ee47b6cc1867486a273, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PrefabShape1: {fileID: 1473709619147884113, guid: b73f91f45f74a4579ae55b8b750d63b9, type: 3}
+  lineMaterial: {fileID: 0}
+--- !u!114 &2060636205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2060636198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 761ce814467bdd94b83bba129d960e9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PrefabShape1: {fileID: 1473709619147884113, guid: b73f91f45f74a4579ae55b8b750d63b9, type: 3}
+  lineMaterial: {fileID: 0}
+  verticesInput: {fileID: 1779759155}
+  generateButton: {fileID: 1215937570}
 --- !u!1 &2103462211
 GameObject:
   m_ObjectHideFlags: 0
