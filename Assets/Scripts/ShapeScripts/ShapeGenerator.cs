@@ -29,6 +29,12 @@ public class ShapeGenerator : MonoBehaviour
 
     private void GenerateShape(int vertexCount, string shapeName)
     {
+        if (CanvasState.Instance.shapeCount > CanvasState.MAX_SHAPE_COUNT) {
+            Debug.Log("Too many shapes already");
+            return;
+        }
+
+
         // Generate convex polygon vertices using ConvexHullManager
         List<Vector2> vertices2D = GenerateConvexPolygon(vertexCount);
 
@@ -66,6 +72,7 @@ public class ShapeGenerator : MonoBehaviour
         CenterShapeOnCanvas(shapeObject);
 
         Debug.Log($"Created {shapeName} with {vertexCount} vertices");
+        CanvasState.Instance.shapeCount += 1;
 
         // Add the generated shape GameObject to the list of all shapes
         allShapes.Add(shapeObject);

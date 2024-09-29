@@ -7,27 +7,17 @@ using UnityEngine.UI;
 public class IoUManager : MonoBehaviour
 {
     private static List<GameObject> intersectionObjects = new List<GameObject>();
-
-    private void Update()
-    {
-        // Check if we should start calculating IoU
-        if (CanvasState.Instance.beginCalculatingIoUStatus)
-        {
-            CalculateIoUForShapes();
-            CanvasState.Instance.beginCalculatingIoUStatus = false; // Reset the flag
-            CanvasState.Instance.shapeCount += 1; // Add a shape for the intersection
-        }
-    }
+    private static string defaultInfo = "Not enough shapes to calculate Intersection over Union";
+    public static string IoUInfo = defaultInfo;
 
     // Method to calculate and display IoU between two shapes from ShapeManager
-    public static string CalculateIoUForShapes()
+    public static void CalculateIoUForShapes()
     {
         List<Shape> allShapes = ShapeManager.Instance.AllShapes;
 
-        if (allShapes.Count < 2)
+        if (allShapes.Count < CanvasState.MAX_SHAPE_COUNT)
         {
             Debug.LogWarning("Not enough shapes to calculate IoU.");
-            return "Not enough shapes to calculate IoU";
         }
 
         // Assuming we calculate IoU between the first two shapes
@@ -46,10 +36,17 @@ public class IoUManager : MonoBehaviour
 
         // Highlight the intersection after the calculation
         HighlightIntersection(intersectionPoints);
+        CanvasState.Instance.shapeCount += 1; // Add a shape for the intersection
+        Debug.Log("IoU between shape 1 and shape 2: " + iouValues[2]);
 
         Debug.Log("IoU between shape 1 and shape 2: " + iouValues[2]);
         string msg = "Shape 1 Area:  {0} \nShape 2 Area: {1} \n Area of Union: {2} \n Area of Intersection: {3} \n IoU: {4}";
-        return string.Format(msg, area1, area2, iouValues[0], iouValues[1], iouValues[2]);
+        IoUInfo = string.Format(msg, area1, area2, iouValues[0], iouValues[1], iouValues[2]);
+    }
+
+    public static void resetInfo()
+    {
+        IoUInfo = defaultInfo;
     }
 
     private static Vector2[] ConvertShapePointsToVector2Array(List<Vector3> points)
@@ -172,7 +169,15 @@ public class IoUManager : MonoBehaviour
 
         meshFilter.mesh = mesh;
 
-        intersectionObjects.Add(intersectionObject);  // Track this intersection object for future removal if needed
+        if (intersectionObjects.Count > CanvasState.MAX_SHAPE_COUNT)
+        {
+            Destroy(intersectionObjects[CanvasState.MAX_SHAPE_COUNT]);
+            intersectionObjects[CanvasState.MAX_SHAPE_COUNT] = intersectionObject;
+        } else
+        {
+            intersectionObjects.Add(intersectionObject);  // Track this intersection object for future removal if needed
+
+        }
     }
 
 
