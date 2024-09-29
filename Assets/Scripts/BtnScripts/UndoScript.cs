@@ -15,7 +15,7 @@ public class UndoScript : MonoBehaviour
 
     public void Undo() 
     {
-        if (CanvasState.Instance.drawState != CanvasState.DrawStates.DRAW_STATE)
+        if (CanvasState.Instance.drawState == CanvasState.DrawStates.MODIFY_STATE)
         {
             Debug.Log("Can't undo Canvas has been locked");
             return;
@@ -74,6 +74,7 @@ public class UndoScript : MonoBehaviour
 
                     // A shape has been rando generated. Undo the last shape generated
                     ShapeManager.Instance.DeleteLastShape();
+                    ShapeRenderer.Instance.RedrawAllShapes();
                     break;
             }
 
