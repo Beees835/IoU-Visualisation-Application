@@ -5,11 +5,11 @@ using UnityEngine;
 public class ConvexHullManager : MonoBehaviour
 {
     // Convex hull algorithm using Andrew's monotone chain algorithm
-    public static List<Vector2> ConvexHull(List<Vector2> points)
+    public static List<Vector3> ConvexHull(List<Vector3> points)
     {
         // Remove duplicate points
-        HashSet<Vector2> uniquePoints = new HashSet<Vector2>(points);
-        points = new List<Vector2>(uniquePoints);
+        HashSet<Vector3> uniquePoints = new HashSet<Vector3>(points);
+        points = new List<Vector3>(uniquePoints);
 
         // A single point or empty list is already a convex hull so we can return safely
         if (points.Count <= 1)
@@ -19,7 +19,7 @@ public class ConvexHullManager : MonoBehaviour
         points.Sort((a, b) => a.x == b.x ? a.y.CompareTo(b.y) : a.x.CompareTo(b.x));
 
         // Creating Lower hull
-        List<Vector2> lower = new List<Vector2>();
+        List<Vector3> lower = new List<Vector3>();
         foreach (var p in points)
         {
             // Remove last point while it creates a non-left turn
@@ -29,7 +29,7 @@ public class ConvexHullManager : MonoBehaviour
         }
 
         // Creating Upper hull
-        List<Vector2> upper = new List<Vector2>();
+        List<Vector3> upper = new List<Vector3>();
         for (int i = points.Count - 1; i >= 0; i--)
         {
             var p = points[i];
@@ -62,7 +62,7 @@ public class ConvexHullManager : MonoBehaviour
     }
 
     // Reduce the number of vertices in the convex hull to a desired count
-    private static List<Vector2> ReduceVertices(List<Vector2> vertices, int desiredCount)
+    private static List<Vector3> ReduceVertices(List<Vector3> vertices, int desiredCount)
     {
         if (vertices.Count <= desiredCount) return vertices;
 

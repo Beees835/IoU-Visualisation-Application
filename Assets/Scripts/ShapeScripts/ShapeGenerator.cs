@@ -39,18 +39,10 @@ public class ShapeGenerator : MonoBehaviour
             return;
         }
 
-        ActionManager.Instance.ActionStack.Push(ActionManager.UserAction.GENERATE_SHAPE);
 
         // Generate convex polygon vertices using ConvexHullManager
-        List<Vector2> vertices2D = GenerateConvexPolygon(vertexCount);
+        List<Vector3> vertices3D = GenerateConvexPolygon(vertexCount);
 
-        // Convert to Vector3 for shape instantiation
-        List<Vector3> vertices3D = new List<Vector3>();
-        foreach (var v in vertices2D)
-        {
-            vertices3D.Add(new Vector3(v.x, v.y, -1f));
-        }
-        
         Shape newShape = new Shape
         {
             IsClosed = true
@@ -69,22 +61,20 @@ public class ShapeGenerator : MonoBehaviour
             newShape.AddPoint(point, newPrefab); // Add point and associated prefab to shape
         }
 
-        // Add the LineRenderer to the shape object to draw the edges
         AddLines(vertices3D);
-
-        // Center the shape on the canvas
-        CenterShapeOnCanvas(shapeObject);
 
         Debug.Log($"Created {shapeName} with {vertexCount} vertices");
 
         // Add the generated shape GameObject to the list of all shapes
         ShapeManager.Instance.AllShapes.Add(newShape);
         CanvasState.Instance.shapeCount++;
+
+        ActionManager.Instance.ActionStack.Push(ActionManager.UserAction.GENERATE_SHAPE);
     }
 
-    private List<Vector2> GenerateConvexPolygon(int vertexCount)
+    private List<Vector3> GenerateConvexPolygon(int vertexCount)
     {
-        List<Vector2> points = new List<Vector2>();
+        List<Vector3> points = new List<Vector3>();
         int extraPoints = 5; // Adding extra points to ensure sufficient points for a good hull
 
         // Define the canvas size 
@@ -104,11 +94,11 @@ public class ShapeGenerator : MonoBehaviour
         // Generate random points within the canvas bounds
         for (int i = 0; i < vertexCount + extraPoints; i++)
         {
-            points.Add(new Vector2(Random.Range(xMin, xMax), Random.Range(yMin, yMax)));
+            points.Add(new Vector3(Random.Range(xMin, xMax), Random.Range(yMin, yMax), -1f));
         }
 
         // Use ConvexHullManager to generate the convex hull
-        List<Vector2> convexHull = ConvexHullManager.ConvexHull(points);
+        List<Vector3> convexHull = ConvexHullManager.ConvexHull(points);
 
         // If the convex hull has fewer points than desired, regenerate
         if (convexHull.Count < vertexCount)
@@ -121,15 +111,7 @@ public class ShapeGenerator : MonoBehaviour
         return convexHull.GetRange(0, Mathf.Min(vertexCount, convexHull.Count));
     }
 
-    private void CenterShapeOnCanvas(GameObject shapeObject)
-    {
-        Canvas canvas = FindObjectOfType<Canvas>();
-        if (canvas != null)
-        {
-            RectTransform canvasRect = canvas.GetComponent<RectTransform>();
-            shapeObject.transform.position = canvasRect.transform.position;
-        }
-    }
+    // Add the LineRenderer to the shape object to draw the edges
     private void AddLines(List<Vector3> vertices)
     {
         for (int i = 1; i < vertices.Count; i++)
