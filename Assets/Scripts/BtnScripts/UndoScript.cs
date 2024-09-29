@@ -15,6 +15,13 @@ public class UndoScript : MonoBehaviour
 
     public void Undo() 
     {
+        if (CanvasState.Instance.drawState != CanvasState.DrawStates.DRAW_STATE)
+        {
+            Debug.Log("Can't undo Canvas has been locked");
+            return;
+        }
+
+
         if (ActionManager.Instance.ActionStack.Count > 0)
         {
             ActionManager.UserAction lastAction = ActionManager.Instance.ActionStack.Peek();
