@@ -401,7 +401,8 @@ MonoBehaviour:
   shapeCount: 0
   drawState: 0
   uiState: 
-  textMeshPro: {fileID: 1909817002}
+  PrefabShape1: {fileID: 0}
+  PrefabShape2: {fileID: 0}
 --- !u!114 &104920593
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2599,8 +2600,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf7fd85b94b0248c38be32b02cbdbcb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LineMaterial: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
-  LineWidth: 0.05
 --- !u!1 &774138552
 GameObject:
   m_ObjectHideFlags: 0
@@ -4051,6 +4050,7 @@ GameObject:
   - component: {fileID: 1215937572}
   - component: {fileID: 1215937571}
   - component: {fileID: 1215937570}
+  - component: {fileID: 1215937573}
   m_Layer: 5
   m_Name: genShapeBtn
   m_TagString: Untagged
@@ -4121,19 +4121,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1215937571}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2060636205}
-        m_TargetAssemblyTypeName: VerticesShapeGen, Scripts
-        m_MethodName: GenerateShapeFromInput
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1215937571
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4172,6 +4160,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1215937568}
   m_CullTransparentMesh: 1
+--- !u!114 &1215937573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1215937568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 761ce814467bdd94b83bba129d960e9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _verticesInput: {fileID: 1779759155}
+  _generateButton: {fileID: 1215937570}
 --- !u!1 &1282835048
 GameObject:
   m_ObjectHideFlags: 0
@@ -6541,8 +6543,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad7dfa2db63b7ee47b6cc1867486a273, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PrefabShape1: {fileID: 1473709619147884113, guid: b73f91f45f74a4579ae55b8b750d63b9, type: 3}
-  lineMaterial: {fileID: 0}
 --- !u!114 &2060636205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6555,10 +6555,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 761ce814467bdd94b83bba129d960e9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PrefabShape1: {fileID: 1473709619147884113, guid: b73f91f45f74a4579ae55b8b750d63b9, type: 3}
-  lineMaterial: {fileID: 0}
-  verticesInput: {fileID: 1779759155}
-  generateButton: {fileID: 1215937570}
+  _verticesInput: {fileID: 0}
+  _generateButton: {fileID: 0}
 --- !u!1 &2103462211
 GameObject:
   m_ObjectHideFlags: 0
