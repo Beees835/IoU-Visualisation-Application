@@ -43,21 +43,12 @@ public class ShapeGenerator : MonoBehaviour
         // Generate convex polygon vertices using ConvexHullManager
         List<Vector3> vertices3D = GenerateConvexPolygon(vertexCount);
 
-        Shape newShape = new Shape
-        {
-            IsClosed = true
-        };
-
-        // Create a new GameObject for this shape
-        GameObject shapeObject = new GameObject(shapeName + "Object");
+        Shape newShape = new Shape(true);
 
         // Add points and instantiate prefabs
         foreach (var point in vertices3D)
         {
             GameObject newPrefab = Instantiate(PrefabShape1, point, Quaternion.identity);
-            newShape.Prefabs.Add(newPrefab); // Add prefab to shape
-            newPrefab.transform.SetParent(shapeObject.transform); // Parent to the shape object
-
             newShape.AddPoint(point, newPrefab); // Add point and associated prefab to shape
         }
 
