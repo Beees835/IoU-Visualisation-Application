@@ -25,7 +25,7 @@ public class Shape
             Points.RemoveAt(Points.Count - 1);
             GameObject lastPrefab = Prefabs[Prefabs.Count - 1];
             Prefabs.RemoveAt(Prefabs.Count - 1);
-            GameObject.Destroy(lastPrefab);
+            lastPrefab.GetComponent<PointAnimation>().Close();
         }
     }
 
