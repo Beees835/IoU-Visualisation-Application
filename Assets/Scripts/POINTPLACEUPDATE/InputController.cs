@@ -23,9 +23,9 @@ public class InputController : MonoBehaviour
             return;
         }
 
-        
+
         // Logic to select the correct prefab
-        if (CanvasState.Instance.shapeCount == 0 )
+        if (CanvasState.Instance.shapeCount == 0)
 
         {
             currentPrefab = PrefabShape1;
@@ -77,12 +77,12 @@ public class InputController : MonoBehaviour
         // Add the new point to the current shape
         if (ShapeManager.Instance.CurrentShape.IsConvexWithNewPoint(spawnPosition))
         {
-             // current shape hasn't been set yet, this point will be the first point
+            // current shape hasn't been set yet, this point will be the first point
             if (ShapeManager.Instance.CurrentShape.Prefabs.Count == 0)
             {
                 ActionManager.Instance.ActionStack.Push(ActionManager.UserAction.DRAW_POINT);
             }
-            else 
+            else
             {
                 ActionManager.Instance.ActionStack.Push(ActionManager.UserAction.DRAW_LINE);
             }

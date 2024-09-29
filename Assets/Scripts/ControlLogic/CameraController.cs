@@ -23,6 +23,6 @@ public class CameraController : MonoBehaviour
     public void HandlePan(Vector2 panValue)
     {
         // Pan values are negative so that scroll feels correct
-        transform.position += new Vector3(-panValue.x * panSpeed, -panValue.y *panSpeed, 0);
+        transform.position += new Vector3(-panValue.x * panSpeed, -panValue.y * panSpeed, 0);
     }
 }

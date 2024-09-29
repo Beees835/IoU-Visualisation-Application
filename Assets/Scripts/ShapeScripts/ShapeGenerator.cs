@@ -25,7 +25,8 @@ public class ShapeGenerator : MonoBehaviour
 
     public static void GenerateShape(int vertexCount)
     {
-        if (CanvasState.Instance.shapeCount > CanvasState.MAX_SHAPE_COUNT) {
+        if (CanvasState.Instance.shapeCount > CanvasState.MAX_SHAPE_COUNT)
+        {
             Debug.Log("Too many shapes already");
             return;
         }
@@ -70,14 +71,14 @@ public class ShapeGenerator : MonoBehaviour
         float canvasHeight = 10.0f;
 
         // Calculate 8% margin 
-        float marginX = canvasWidth * 0.08f; 
-        float marginY = canvasHeight * 0.08f; 
+        float marginX = canvasWidth * 0.08f;
+        float marginY = canvasHeight * 0.08f;
 
         // Calculate the canvas limits with margin included
-        float xMin = -canvasWidth / 2 + marginX; 
-        float xMax = canvasWidth / 2 - marginX;  
-        float yMin = -canvasHeight / 2 + marginY; 
-        float yMax = canvasHeight / 2 - marginY;  
+        float xMin = -canvasWidth / 2 + marginX;
+        float xMax = canvasWidth / 2 - marginX;
+        float yMin = -canvasHeight / 2 + marginY;
+        float yMax = canvasHeight / 2 - marginY;
 
         // Generate random points within the canvas bounds
         for (int i = 0; i < vertexCount + extraPoints; i++)

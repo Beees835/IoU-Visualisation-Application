@@ -1,9 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 using UnityEngine.EventSystems;
-using UnityEngine.UIElements;
 
 public class CanvasState : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -47,7 +43,6 @@ public class CanvasState : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public DrawStates drawState;
     public string uiState = "";
     public GameObject PrefabShape1;
-    public GameObject PrefabShape2;
 
     // Awake is called when the script instance is being loaded
     private void Awake()
@@ -85,15 +80,18 @@ public class CanvasState : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     // Update is called once per frame
     void Update()
     {
-        if ( shapeCount < MAX_SHAPE_COUNT)
+        if (shapeCount < MAX_SHAPE_COUNT)
         {
             drawState = hovering ? DrawStates.DRAW_STATE : DrawStates.LOCK_STATE;
             return;
-        } else if (shapeCount == MAX_SHAPE_COUNT)
+        }
+        else if (shapeCount == MAX_SHAPE_COUNT)
         {
             this.drawState = DrawStates.LOCK_STATE;
             IoUManager.CalculateIoUForShapes();
-        } else if (this.shapeCount > MAX_SHAPE_COUNT) {
+        }
+        else if (this.shapeCount > MAX_SHAPE_COUNT)
+        {
             this.drawState = DrawStates.MODIFY_STATE;
         }
     }

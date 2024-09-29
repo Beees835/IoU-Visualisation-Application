@@ -1,8 +1,8 @@
 using NUnit.Framework;
+using System;
 using UnityEngine;
 using static IoUManager;
 using static TestingFunctions;
-using System;
 
 public class AreaTest
 {
@@ -16,9 +16,9 @@ public class AreaTest
         int max = 10;
         bool closeEnough = true;
 
-        for (float i=1;i<max;i=i+0.1f)
+        for (float i = 1; i < max; i = i + 0.1f)
         {
-            for (float j =1;j<max; j = j + 0.1f)
+            for (float j = 1; j < max; j = j + 0.1f)
             {
                 length = i;
                 width = j;
