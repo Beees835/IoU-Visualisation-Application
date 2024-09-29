@@ -29,4 +29,35 @@ public class ShapeManager : MonoBehaviour
     {
         CurrentShape.AddPoint(point, prefab);
     }
+
+    public void DeleteLastShape() {
+        foreach (var prefab in CurrentShape.Prefabs)
+        {
+            // remove points from screen
+            Destroy(prefab);
+        }
+        {
+        foreach (var line in CurrentLines)
+        {
+            // remove lines from screen
+            Destroy(line);
+        }
+
+        // reassign current shape
+        if (CanvasState.Instance.shapeCount > 1)
+        {
+            CurrentShape = AllShapes[0];
+            AllShapes.RemoveAt(AllShapes.Count - 1);
+        } 
+        else 
+        {
+            CurrentShape = new Shape();
+        }
+        CanvasState.Instance.shapeCount--;
+
+        // reassign current lines
+        CurrentLines = PrevLines;
+        
+    }
+    }
 }
