@@ -3,30 +3,27 @@ using UnityEngine;
 
 public class ShapeGenerator : MonoBehaviour
 {
-    public GameObject PrefabShape1; // Assign via the Inspector
-    public Material lineMaterial; // Assign a material for the line renderer in the Inspector
-
     public void GenerateTriangle()
     {
-        GenerateShape(3, "Triangle");
+        GenerateShape(3);
     }
 
     public void GenerateSquare()
     {
-        GenerateShape(4, "Square");
+        GenerateShape(4);
     }
 
     public void GeneratePentagon()
     {
-        GenerateShape(5, "Pentagon");
+        GenerateShape(5);
     }
 
     public void GenerateHexagon()
     {
-        GenerateShape(6, "Hexagon");
+        GenerateShape(6);
     }
 
-    private void GenerateShape(int vertexCount, string shapeName)
+    public static void GenerateShape(int vertexCount)
     {
         if (CanvasState.Instance.shapeCount > CanvasState.MAX_SHAPE_COUNT) {
             Debug.Log("Too many shapes already");
@@ -48,13 +45,13 @@ public class ShapeGenerator : MonoBehaviour
         // Add points and instantiate prefabs
         foreach (var point in vertices3D)
         {
-            GameObject newPrefab = Instantiate(PrefabShape1, point, Quaternion.identity);
+            GameObject newPrefab = Instantiate(CanvasState.Instance.PrefabShape1, point, Quaternion.identity);
             newShape.AddPoint(point, newPrefab); // Add point and associated prefab to shape
         }
 
         AddLines(vertices3D);
 
-        Debug.Log($"Created {shapeName} with {vertexCount} vertices");
+        Debug.Log($"Created shape with {vertexCount} vertices");
 
         // Add the generated shape GameObject to the list of all shapes
         ShapeManager.Instance.AllShapes.Add(newShape);
@@ -63,7 +60,7 @@ public class ShapeGenerator : MonoBehaviour
         ActionManager.Instance.ActionStack.Push(ActionManager.UserAction.GENERATE_SHAPE);
     }
 
-    private List<Vector3> GenerateConvexPolygon(int vertexCount)
+    private static List<Vector3> GenerateConvexPolygon(int vertexCount)
     {
         List<Vector3> points = new List<Vector3>();
         int extraPoints = 5; // Adding extra points to ensure sufficient points for a good hull
@@ -103,7 +100,7 @@ public class ShapeGenerator : MonoBehaviour
     }
 
     // Add the LineRenderer to the shape object to draw the edges
-    private void AddLines(List<Vector3> vertices)
+    private static void AddLines(List<Vector3> vertices)
     {
         for (int i = 1; i < vertices.Count; i++)
         {
