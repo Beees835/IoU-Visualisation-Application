@@ -31,33 +31,24 @@ public class ShapeManager : MonoBehaviour
     }
 
     public void DeleteLastShape() {
+        CurrentShape = AllShapes[AllShapes.Count - 1];
         foreach (var prefab in CurrentShape.Prefabs)
         {
             // remove points from screen
             Destroy(prefab);
         }
-        {
+    
         foreach (var line in CurrentLines)
         {
             // remove lines from screen
             Destroy(line);
         }
-
-        // reassign current shape
-        if (CanvasState.Instance.shapeCount > 0)
-        {
-            CurrentShape = AllShapes[0];
-            AllShapes.RemoveAt(AllShapes.Count - 1);
-        } 
-        else 
-        {
-            CurrentShape = new Shape();
-        }
+        
+        AllShapes.Remove(CurrentShape);
+        CurrentShape = new Shape();
         CanvasState.Instance.shapeCount--;
 
         // reassign current lines
         CurrentLines = PrevLines;
-        
-    }
     }
 }
