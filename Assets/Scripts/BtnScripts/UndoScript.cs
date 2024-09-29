@@ -74,6 +74,7 @@ public class UndoScript : MonoBehaviour
 
                     // A shape has been rando generated. Undo the last shape generated
                     ShapeManager.Instance.DeleteLastShape();
+                    ShapeRenderer.Instance.RedrawAllShapes();
                     break;
             }
 
