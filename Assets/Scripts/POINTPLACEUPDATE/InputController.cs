@@ -6,8 +6,6 @@ using UnityEngine.InputSystem;
 public class InputController : MonoBehaviour
 {
     public Camera Cam;
-    public GameObject PrefabShape1;
-    public GameObject PrefabShape2;
     public float CloseThreshold = 0.1f;
 
     private GameObject currentPrefab;
@@ -28,12 +26,11 @@ public class InputController : MonoBehaviour
         if (CanvasState.Instance.shapeCount == 0)
 
         {
-            currentPrefab = PrefabShape1;
+            currentPrefab = CanvasState.Instance.PrefabShape1;
         }
         else if (CanvasState.Instance.shapeCount == 1)
         {
-            currentPrefab = PrefabShape2;
-            //ShapeManager.Instance.StartNewShape();
+            currentPrefab = CanvasState.Instance.PrefabShape2;
         }
 
         switch (CanvasState.Instance.drawState)
