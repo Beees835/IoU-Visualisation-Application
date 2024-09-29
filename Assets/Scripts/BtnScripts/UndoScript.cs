@@ -30,6 +30,12 @@ public class UndoScript : MonoBehaviour
                         ShapeManager.Instance.AllShapes.RemoveAt(ShapeManager.Instance.AllShapes.Count - 1);
                         CanvasState.Instance.shapeCount--;
                     } 
+                    // reassign current lines as necessary
+                    if (ShapeManager.Instance.PrevLines.Count > 0)
+                    {
+                        ShapeManager.Instance.CurrentLines = ShapeManager.Instance.PrevLines;
+                        ShapeManager.Instance.PrevLines = new List<GameObject>();
+                    }
                     break;
 
                 case ActionManager.UserAction.DRAW_LINE:
@@ -53,6 +59,11 @@ public class UndoScript : MonoBehaviour
                     ShapeManager.Instance.CurrentLines = ShapeManager.Instance.PrevLines;
 
                     UndoDrawLine();
+                    break;
+
+                case ActionManager.UserAction.GENERATE_SHAPE:
+                    // A shape has been rando generated. Undo the last shape generated
+                    ShapeManager.Instance.DeleteLastShape();
                     break;
             }
 
