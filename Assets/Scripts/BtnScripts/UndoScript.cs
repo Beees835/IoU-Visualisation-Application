@@ -29,13 +29,9 @@ public class UndoScript : MonoBehaviour
                         ShapeManager.Instance.CurrentShape = ShapeManager.Instance.AllShapes[0];
                         ShapeManager.Instance.AllShapes.RemoveAt(ShapeManager.Instance.AllShapes.Count - 1);
                         CanvasState.Instance.shapeCount--;
-                    } 
-                    // reassign current lines as necessary
-                    if (ShapeManager.Instance.PrevLines.Count > 0)
-                    {
                         ShapeManager.Instance.CurrentLines = ShapeManager.Instance.PrevLines;
                         ShapeManager.Instance.PrevLines = new List<GameObject>();
-                    }
+                    } 
                     break;
 
                 case ActionManager.UserAction.DRAW_LINE:
@@ -46,7 +42,7 @@ public class UndoScript : MonoBehaviour
                 case ActionManager.UserAction.CLOSE_SHAPE:
                     // the shape was closed and locked. need to undo the locked shape and last line drawn
 
-                    if (CanvasState.Instance.shapeCount > 1)
+                    if (CanvasState.Instance.shapeCount > 0)
                     {
                         // We've closed the first shape and are now undoing it. 
                         // Need to reassign the current shape to the second shape

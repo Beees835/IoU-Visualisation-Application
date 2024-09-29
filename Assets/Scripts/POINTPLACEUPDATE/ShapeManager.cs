@@ -44,7 +44,7 @@ public class ShapeManager : MonoBehaviour
         }
 
         // reassign current shape
-        if (CanvasState.Instance.shapeCount > 1)
+        if (CanvasState.Instance.shapeCount > 0)
         {
             CurrentShape = AllShapes[0];
             AllShapes.RemoveAt(AllShapes.Count - 1);
