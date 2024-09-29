@@ -33,6 +33,12 @@ public class ShapeGenerator : MonoBehaviour
             return;
         }
 
+        if (ShapeManager.Instance.CurrentShape.Points.Count > 0)
+        {
+            Debug.Log("Can't generate a shape until the current one is finished");
+            return;
+        }
+
         ActionManager.Instance.ActionStack.Push(ActionManager.UserAction.GENERATE_SHAPE);
 
         // Generate convex polygon vertices using ConvexHullManager
@@ -65,8 +71,6 @@ public class ShapeGenerator : MonoBehaviour
 
         // Add the LineRenderer to the shape object to draw the edges
         AddLineRenderer(shapeObject, vertices3D);
-
-        // Add the new shape to ShapeManager
 
         // Center the shape on the canvas
         CenterShapeOnCanvas(shapeObject);
