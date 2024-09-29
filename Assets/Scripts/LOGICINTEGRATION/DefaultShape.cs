@@ -59,21 +59,21 @@ public class DefaultShape : MonoBehaviour
 
         // Calculate 8% margin 
         // Make it a bit higher to avoid more extreme cases 
-        float marginX = canvasWidth * 0.08f; 
-        float marginY = canvasHeight * 0.08f; 
+        float marginX = canvasWidth * 0.08f;
+        float marginY = canvasHeight * 0.08f;
 
         // Calculate the canvas limits with margin included
-        float xMin = -canvasWidth / 2 + marginX; 
-        float xMax = canvasWidth / 2 - marginX;  
-        float yMin = -canvasHeight / 2 + marginY; 
-        float yMax = canvasHeight / 2 - marginY;  
+        float xMin = -canvasWidth / 2 + marginX;
+        float xMax = canvasWidth / 2 - marginX;
+        float yMin = -canvasHeight / 2 + marginY;
+        float yMax = canvasHeight / 2 - marginY;
 
         // Generate random points within the canvas bounds
         for (int i = 0; i < vertexCount; i++)
         {
             points.Add(new Vector2(Random.Range(xMin, xMax), Random.Range(yMin, yMax)));
         }
-        
+
         List<Vector2> convexHull = ConvexHull(points);
 
         return convexHull;

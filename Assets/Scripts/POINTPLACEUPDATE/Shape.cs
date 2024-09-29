@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,7 +7,10 @@ public class Shape
     public List<GameObject> Prefabs { get; set; } = new List<GameObject>();
     public bool IsClosed { get; set; } = false;
 
-    public Shape() { }
+    public Shape(bool isClosed = false)
+    {
+        IsClosed = isClosed;
+    }
 
     public void AddPoint(Vector3 point, GameObject prefab)
     {
