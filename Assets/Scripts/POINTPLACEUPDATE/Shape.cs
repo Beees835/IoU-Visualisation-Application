@@ -6,7 +6,7 @@ public class Shape
 {
     public List<Vector3> Points { get; set; } = new List<Vector3>();
     public List<GameObject> Prefabs { get; set; } = new List<GameObject>();
-    public bool IsClosed { get; set; } = false; 
+    public bool IsClosed { get; set; } = false;
 
     public Shape() { }
 
@@ -27,7 +27,6 @@ public class Shape
         }
     }
 
-    // Convexity check moved here
     // General convexity check with custom points
     public static bool IsConvex(List<Vector3> points)
     {

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class IoUManager : MonoBehaviour
 {
-    private static List<GameObject> intersectionObjects = new List<GameObject>();
+    private static GameObject intersectionObject;
     private static string defaultInfo = "Not enough shapes to calculate Intersection over Union";
     public static string IoUInfo = defaultInfo;
 
@@ -136,24 +136,25 @@ public class IoUManager : MonoBehaviour
         if (intersectionPoints.Length < 3)
             return;
 
+        List<Vector3> vertices = new List<Vector3> ();
+        for (int i = 0; i < intersectionPoints.Length; i++)
+        {
+            // Use a slight negative z-value to ensure visibility
+            vertices.Add(new Vector3(intersectionPoints[i].x, intersectionPoints[i].y, -0.5f));
+        }
+
         // Log the intersection points count
         Debug.Log("Highlighting intersection with " + intersectionPoints.Length + " points.");
 
-        GameObject intersectionObject = new GameObject("Intersection");
-        MeshFilter meshFilter = intersectionObject.AddComponent<MeshFilter>();
-        MeshRenderer meshRenderer = intersectionObject.AddComponent<MeshRenderer>();
+        GameObject newIntersectionObject = new GameObject("Intersection");
+        MeshFilter meshFilter = newIntersectionObject.AddComponent<MeshFilter>();
+        MeshRenderer meshRenderer = newIntersectionObject.AddComponent<MeshRenderer>();
 
         // Ensure a visible shader is used
         meshRenderer.material = new Material(Shader.Find("Sprites/Default"));
         meshRenderer.material.color = Color.yellow; // Highlight with yellow color
 
         Mesh mesh = new Mesh();
-
-        Vector3[] vertices = new Vector3[intersectionPoints.Length];
-        for (int i = 0; i < intersectionPoints.Length; i++)
-        {
-            vertices[i] = new Vector3(intersectionPoints[i].x, intersectionPoints[i].y, -0.5f); // Use a slight negative z-value to ensure visibility
-        }
 
         int[] triangles = new int[(intersectionPoints.Length - 2) * 3];
         for (int i = 0; i < intersectionPoints.Length - 2; i++)
@@ -163,21 +164,18 @@ public class IoUManager : MonoBehaviour
             triangles[i * 3 + 2] = i + 2;
         }
 
-        mesh.vertices = vertices;
+        mesh.vertices = vertices.ToArray();
         mesh.triangles = triangles;
         mesh.RecalculateNormals();
 
         meshFilter.mesh = mesh;
 
-        if (intersectionObjects.Count > CanvasState.MAX_SHAPE_COUNT)
+        if (intersectionObject != null)
         {
-            Destroy(intersectionObjects[CanvasState.MAX_SHAPE_COUNT]);
-            intersectionObjects[CanvasState.MAX_SHAPE_COUNT] = intersectionObject;
-        } else
-        {
-            intersectionObjects.Add(intersectionObject);  // Track this intersection object for future removal if needed
-
+            Destroy(intersectionObject);
         }
+        // Track this intersection object for future removal if needed
+        intersectionObject = newIntersectionObject;
     }
 
 
