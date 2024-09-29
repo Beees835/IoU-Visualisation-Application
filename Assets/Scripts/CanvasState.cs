@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.EventSystems;
+using UnityEngine.UIElements;
 
 public class CanvasState : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -83,17 +84,10 @@ public class CanvasState : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     // Update is called once per frame
     void Update()
     {
-        if (!hovering)
+        if ( shapeCount < MAX_SHAPE_COUNT)
         {
-            drawState = DrawStates.LOCK_STATE;
+            drawState = hovering ? DrawStates.DRAW_STATE : DrawStates.LOCK_STATE;
             return;
-        }
-
-
-        // Allow for shape creation
-        if (shapeCount < MAX_SHAPE_COUNT)
-        {
-            this.drawState = DrawStates.DRAW_STATE;
         } else if (shapeCount == MAX_SHAPE_COUNT)
         {
             this.drawState = DrawStates.LOCK_STATE;
