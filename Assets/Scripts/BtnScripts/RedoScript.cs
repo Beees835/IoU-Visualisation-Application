@@ -24,22 +24,20 @@ public class RedoScript : MonoBehaviour
             switch(Action) {
                 case ActionManager.UserAction.DRAW_POINT:
                     Debug.Log("Redo Point Draw");
-                    if (CanvasState.Instance.shapeCount == 0)
-                    {
+                    
+                    Shape newCurrShape = ShapeManager.Instance.PrevShapes.Peek();
 
-                    }
-                    else 
-                    {
-                        // undid the first point of shape 2. need to redraw it.
-                        Shape newCurrShape = ShapeManager.Instance.PrevShapes.Peek();
-                        Vector3 point = newCurrShape.PrevPoints.Pop();
-                        newCurrShape.Points.Add(point);
-                        GameObject newPrefab = Instantiate(PrefabShape2, point, Quaternion.identity);
-                        ShapeManager.Instance.CurrentShape.Prefabs.Add(newPrefab);
+                    Vector3 point = newCurrShape.PrevPoints.Pop();
+                    newCurrShape.Points.Add(point);
 
-                        ShapeManager.Instance.CurrentShape = newCurrShape;
-                        CanvasState.Instance.shapeCount++;
-                    }
+                    GameObject pfType;
+                    pfType = CanvasState.Instance.shapeCount == 0 ? PrefabShape1 : PrefabShape2;
+
+                    GameObject newPrefab = Instantiate(pfType, point, Quaternion.identity);
+                    ShapeManager.Instance.CurrentShape.Prefabs.Add(newPrefab);
+
+                    ShapeManager.Instance.CurrentShape = newCurrShape;
+                    CanvasState.Instance.shapeCount++;
                     break;
 
                 case ActionManager.UserAction.DRAW_LINE:
