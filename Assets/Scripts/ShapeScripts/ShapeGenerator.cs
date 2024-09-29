@@ -34,6 +34,7 @@ public class ShapeGenerator : MonoBehaviour
             return;
         }
 
+        ActionManager.Instance.ActionStack.Push(ActionManager.UserAction.GENERATE_SHAPE);
 
         // Generate convex polygon vertices using ConvexHullManager
         List<Vector2> vertices2D = GenerateConvexPolygon(vertexCount);
@@ -57,6 +58,7 @@ public class ShapeGenerator : MonoBehaviour
         foreach (var point in vertices3D)
         {
             GameObject newPrefab = Instantiate(PrefabShape1, point, Quaternion.identity);
+            newShape.Prefabs.Add(newPrefab); // Add prefab to shape
             newPrefab.transform.SetParent(shapeObject.transform); // Parent to the shape object
 
             newShape.AddPoint(point, newPrefab); // Add point and associated prefab to shape
@@ -76,6 +78,7 @@ public class ShapeGenerator : MonoBehaviour
 
         // Add the generated shape GameObject to the list of all shapes
         allShapes.Add(shapeObject);
+        CanvasState.Instance.shapeCount++;
     }
 
     private List<Vector2> GenerateConvexPolygon(int vertexCount)
@@ -129,19 +132,31 @@ public class ShapeGenerator : MonoBehaviour
 
     private void AddLineRenderer(GameObject shapeObject, List<Vector3> vertices)
     {
-        LineRenderer lineRenderer = shapeObject.AddComponent<LineRenderer>();
-        lineRenderer.material = lineMaterial; // Assign the material from the Inspector
-        lineRenderer.positionCount = vertices.Count + 1; // One extra to close the loop
-        lineRenderer.startWidth = 0.05f;
-        lineRenderer.endWidth = 0.05f;
-        lineRenderer.loop = true; // To close the shape
 
-        // Set positions for the LineRenderer
-        for (int i = 0; i < vertices.Count; i++)
+        for (int i = 1; i < vertices.Count; i++)
         {
-            lineRenderer.SetPosition(i, vertices[i]);
+            GameObject line = new GameObject("Line");
+            line.tag = "Line";
+            LineRenderer lineRenderer2 = line.AddComponent<LineRenderer>();
+            lineRenderer2.material = lineMaterial;
+            lineRenderer2.positionCount = 2;
+            lineRenderer2.SetPosition(0, vertices[i - 1]);
+            lineRenderer2.SetPosition(1, vertices[i]);
+            lineRenderer2.startWidth = 0.05f;
+            lineRenderer2.endWidth = 0.05f;
+            ShapeManager.Instance.CurrentLines.Add(line);
         }
-        
-        lineRenderer.SetPosition(vertices.Count, vertices[0]);
+
+        // add the last line to close the shape
+        GameObject lastLine = new GameObject("Line");
+        lastLine.tag = "Line";
+        LineRenderer lastLineRenderer = lastLine.AddComponent<LineRenderer>();
+        lastLineRenderer.material = lineMaterial;
+        lastLineRenderer.positionCount = 2;
+        lastLineRenderer.SetPosition(0, vertices[vertices.Count - 1]);
+        lastLineRenderer.SetPosition(1, vertices[0]);
+        lastLineRenderer.startWidth = 0.05f;
+        lastLineRenderer.endWidth = 0.05f;
+        ShapeManager.Instance.CurrentLines.Add(lastLine);
     }
 }
