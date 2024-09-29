@@ -6,8 +6,8 @@ public class ShapeRenderer : MonoBehaviour
 {
     public static ShapeRenderer Instance { get; private set; }
 
-    public Material LineMaterial;
-    public float LineWidth = 0.05f;
+    public static Material LineMaterial;
+    public static float LineWidth = 0.05f;
 
     private void Awake()
     {
@@ -50,7 +50,7 @@ public class ShapeRenderer : MonoBehaviour
         DrawShape(ShapeManager.Instance.CurrentShape);
     }
 
-    private void DrawLine(Vector3 start, Vector3 end)
+    public static void DrawLine(Vector3 start, Vector3 end)
     {
         //Debug.Log("IS DRAWING LINE");
         GameObject line = new GameObject("Line");
