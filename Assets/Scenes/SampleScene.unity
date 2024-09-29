@@ -397,9 +397,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f15c6ec05a9d4cd68c5407eca3d362d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hovering: 0
   shapeCount: 0
   drawState: 0
-  beginCalculatingIoUStatus: 0
   uiState: 
   textMeshPro: {fileID: 1909817002}
 --- !u!114 &104920593
@@ -2587,8 +2587,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b7b4872d3b5148d6b7d5bb2c5a25ec3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newShapeCooldown: 0.2
-  lastShapeEndTime: 0
 --- !u!114 &684146798
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5009,8 +5007,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1.0807, y: 0.1381}
-  m_SizeDelta: {x: 50.6707, y: 28.3754}
+  m_AnchoredPosition: {x: 0.00010051, y: -0.000000029802}
+  m_SizeDelta: {x: 19.065, y: 9.1312}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1615800050
 MonoBehaviour:
@@ -6544,8 +6542,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a4175876560543b18977791ec18f87d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minZoom: 5
-  maxZoom: 15
 --- !u!114 &2060636204
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6560,8 +6556,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PrefabShape1: {fileID: 1473709619147884113, guid: b73f91f45f74a4579ae55b8b750d63b9, type: 3}
   lineMaterial: {fileID: 0}
-  verticesInput: {fileID: 1779759155}
-  generateButton: {fileID: 1215937570}
 --- !u!114 &2060636205
 MonoBehaviour:
   m_ObjectHideFlags: 0
