@@ -38,13 +38,13 @@ public class InputController : MonoBehaviour
 
         switch (CanvasState.Instance.drawState)
         {
-            case CanvasState.DrawStates.LOCK_STATE:
+            case CanvasState.DrawStates.DRAW_STATE:
+                AddNewPoint();
                 break;
             case CanvasState.DrawStates.MODIFY_STATE:
                 HandleModifyState();
                 break;
-            case CanvasState.DrawStates.DRAW_STATE:
-                AddNewPoint();
+            case CanvasState.DrawStates.LOCK_STATE:
                 break;
         }
     }
