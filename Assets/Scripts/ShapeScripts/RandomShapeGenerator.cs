@@ -16,7 +16,6 @@ public class RandomShapeGenerator : MonoBehaviour
     private void GenerateShape(int vertexCount, string shapeName)
     {
         GameObject shapeObject = new GameObject(shapeName + "Object");
-        shapeObject.AddComponent<Drag>(); 
         allShapes.Add(shapeObject); 
 
         List<Vector2> vertices = new List<Vector2>();

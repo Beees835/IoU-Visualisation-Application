@@ -140,7 +140,8 @@ public class InputController : MonoBehaviour
                 {
                     selectedShape.Prefabs[draggedPointIndex].transform.position = selectedShape.Points[draggedPointIndex];
                 }
-                
+
+                IoUManager.CalculateIoUForShapes();
                 ShapeRenderer.Instance.RedrawAllShapes();
             }
             else
