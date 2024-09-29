@@ -5,7 +5,6 @@ public class ShapeGenerator : MonoBehaviour
 {
     public GameObject PrefabShape1; // Assign via the Inspector
     public Material lineMaterial; // Assign a material for the line renderer in the Inspector
-    private List<GameObject> allShapes = new List<GameObject>(); // List to store all shapes created
 
     public void GenerateTriangle()
     {
@@ -68,16 +67,14 @@ public class ShapeGenerator : MonoBehaviour
         AddLineRenderer(shapeObject, vertices3D);
 
         // Add the new shape to ShapeManager
-        ShapeManager.Instance.AllShapes.Add(newShape);
 
         // Center the shape on the canvas
         CenterShapeOnCanvas(shapeObject);
 
         Debug.Log($"Created {shapeName} with {vertexCount} vertices");
-        CanvasState.Instance.shapeCount += 1;
 
         // Add the generated shape GameObject to the list of all shapes
-        allShapes.Add(shapeObject);
+        ShapeManager.Instance.AllShapes.Add(newShape);
         CanvasState.Instance.shapeCount++;
     }
 

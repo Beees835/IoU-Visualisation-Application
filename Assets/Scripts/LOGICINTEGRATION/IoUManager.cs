@@ -18,6 +18,7 @@ public class IoUManager : MonoBehaviour
         if (allShapes.Count < CanvasState.MAX_SHAPE_COUNT)
         {
             Debug.LogWarning("Not enough shapes to calculate IoU.");
+            return;
         }
 
         // Assuming we calculate IoU between the first two shapes
