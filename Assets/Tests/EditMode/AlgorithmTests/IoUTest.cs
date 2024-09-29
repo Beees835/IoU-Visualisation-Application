@@ -42,7 +42,7 @@ public class IoUTest
         Vector2[] polygon = new Vector2[3];
         polygon[0] = new Vector2(0, 0);
         polygon[1] = new Vector2(width, 0);
-        polygon[2] = new Vector2(0.5f*width, width);
+        polygon[2] = new Vector2(0.5f * width, width);
 
         float rectangleArea = width * width;
         float triangleArea = 0.5f * width * width;

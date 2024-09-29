@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class ZoomOutBtnScript : MonoBehaviour
@@ -19,7 +17,7 @@ public class ZoomOutBtnScript : MonoBehaviour
         _zoomOutBtn.onClick.AddListener(ZoomOut);
     }
 
-    void ZoomOut() 
+    void ZoomOut()
     {
         float val = Mathf.Clamp(Camera.main.orthographicSize + 1, minZoom, maxZoom);
         Camera.main.orthographicSize = val;

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -65,7 +64,7 @@ public class ShapeRenderer : MonoBehaviour
 
         lineRenderer.startWidth = LineWidth;
         lineRenderer.endWidth = LineWidth;
-        
+
         ShapeManager.Instance.CurrentLines.Add(line);
     }
 
