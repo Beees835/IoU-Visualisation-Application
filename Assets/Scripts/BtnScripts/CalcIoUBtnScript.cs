@@ -26,7 +26,7 @@ public class CalcIoUBtnScript : MonoBehaviour
     {
         if (_iouPanel != null)
         {
-            _iouText.text = CalculateIoUForShapes();
+            _iouText.text = IoUManager.IoUInfo;
             _iouPanel.SetActive(true);
         }
     }
