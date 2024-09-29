@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.EventSystems;
 
-public class CanvasState : MonoBehaviour
+public class CanvasState : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     // Enum for different states
     public enum DrawStates
@@ -14,6 +15,8 @@ public class CanvasState : MonoBehaviour
     };
 
     public const int MAX_SHAPE_COUNT = 2;
+
+    public bool hovering;
 
     // Singleton instance
     private static CanvasState _instance;
@@ -58,6 +61,18 @@ public class CanvasState : MonoBehaviour
         }
     }
 
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        Debug.Log("Enter Canvas");
+        hovering = true;
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        Debug.Log("Exit Canvas");
+        hovering = false;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -68,6 +83,13 @@ public class CanvasState : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!hovering)
+        {
+            drawState = DrawStates.LOCK_STATE;
+            return;
+        }
+
+
         // Allow for shape creation
         if (shapeCount < MAX_SHAPE_COUNT)
         {
