@@ -25,7 +25,7 @@ public class ClearCanvasScript : MonoBehaviour
         ShapeManager.Instance.CurrentShape.Points.Clear();
         ShapeRenderer.Instance.ClearAllLines();
         IoUManager.resetInfo();
-        CanvasState.Instance.shapeCount = 1;
+        CanvasState.Instance.shapeCount = 0;
         CanvasState.Instance.drawState = CanvasState.DrawStates.DRAW_STATE;
         Debug.Log("num shapes: " + ShapeManager.Instance.AllShapes.Count);
     }
