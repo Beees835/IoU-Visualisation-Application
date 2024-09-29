@@ -41,7 +41,6 @@ public class CanvasState : MonoBehaviour
     // Variables
     public int shapeCount;
     public DrawStates drawState;
-    public bool beginCalculatingIoUStatus = false;
     public string uiState = "";
     public TMP_Text textMeshPro;
 
@@ -63,7 +62,7 @@ public class CanvasState : MonoBehaviour
     void Start()
     {
         this.drawState = DrawStates.DRAW_STATE;
-        this.shapeCount = 1;
+        this.shapeCount = 0;
     }
 
     // Update is called once per frame
@@ -73,17 +72,11 @@ public class CanvasState : MonoBehaviour
         if (shapeCount < MAX_SHAPE_COUNT)
         {
             this.drawState = DrawStates.DRAW_STATE;
-        }
-
-        // Generate intersection
-        if (shapeCount > MAX_SHAPE_COUNT && !beginCalculatingIoUStatus)
+        } else if (shapeCount == MAX_SHAPE_COUNT)
         {
             this.drawState = DrawStates.LOCK_STATE;
-            beginCalculatingIoUStatus = true;
-        }
-
-        // Allow for shape modification
-        if (this.shapeCount > MAX_SHAPE_COUNT) {
+            IoUManager.CalculateIoUForShapes();
+        } else if (this.shapeCount > MAX_SHAPE_COUNT) {
             this.drawState = DrawStates.MODIFY_STATE;
         }
     }

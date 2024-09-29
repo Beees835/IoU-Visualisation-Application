@@ -25,12 +25,12 @@ public class InputController : MonoBehaviour
 
         
         // Logic to select the correct prefab
-        if (CanvasState.Instance.shapeCount == 1 )
+        if (CanvasState.Instance.shapeCount == 0 )
 
         {
             currentPrefab = PrefabShape1;
         }
-        else if (CanvasState.Instance.shapeCount >= 2)
+        else if (CanvasState.Instance.shapeCount == 1)
         {
             currentPrefab = PrefabShape2;
             //ShapeManager.Instance.StartNewShape();
@@ -67,7 +67,6 @@ public class InputController : MonoBehaviour
             Vector3.Distance(spawnPosition, ShapeManager.Instance.CurrentShape.Points[0]) <= CloseThreshold)
         {
             // Close the current shape
-            ShapeManager.Instance.CurrentShape.IsClosed = true;
             ShapeManager.Instance.StartNewShape();
             ShapeRenderer.Instance.RedrawAllShapes();
             CanvasState.Instance.shapeCount++;
@@ -141,7 +140,8 @@ public class InputController : MonoBehaviour
                 {
                     selectedShape.Prefabs[draggedPointIndex].transform.position = selectedShape.Points[draggedPointIndex];
                 }
-                
+
+                IoUManager.CalculateIoUForShapes();
                 ShapeRenderer.Instance.RedrawAllShapes();
             }
             else

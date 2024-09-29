@@ -52,7 +52,7 @@ public class ShapeRenderer : MonoBehaviour
 
     private void DrawLine(Vector3 start, Vector3 end)
     {
-        Debug.Log("IS DRAWING LINE");
+        //Debug.Log("IS DRAWING LINE");
         GameObject line = new GameObject("Line");
         line.tag = "Line";
 
