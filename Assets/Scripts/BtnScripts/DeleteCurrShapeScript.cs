@@ -16,6 +16,12 @@ public class DeleteCurrShapeScript : MonoBehaviour
 
     public void DeleteCurrShape()
     {
+        if (CanvasState.Instance.drawState == CanvasState.DrawStates.MODIFY_STATE)
+        {
+            Debug.Log("Can't delete shape after intersection");
+            return;
+        }
+
         if (ShapeManager.Instance.AllShapes.Count > -1)
         {
             ShapeManager.Instance.CurrentShape.Points.Clear();
