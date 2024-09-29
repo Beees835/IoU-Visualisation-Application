@@ -29,6 +29,8 @@ public class UndoScript : MonoBehaviour
             switch(lastAction)
             {
                 case ActionManager.UserAction.DRAW_POINT:
+                    Debug.Log("Undo Point Draw");
+
                     // A singular point (no line) has been drawn to start a new shape. now undo it
                     ShapeManager.Instance.CurrentShape.RemoveLastPoint();
                     if (CanvasState.Instance.shapeCount > 1) {
@@ -42,13 +44,16 @@ public class UndoScript : MonoBehaviour
                     break;
 
                 case ActionManager.UserAction.DRAW_LINE:
+                    Debug.Log("Undo Line Draw");
+
                     UndoDrawLine();
                     ShapeManager.Instance.CurrentShape.RemoveLastPoint();
                     break;
                 
                 case ActionManager.UserAction.CLOSE_SHAPE:
-                    // the shape was closed and locked. need to undo the locked shape and last line drawn
+                    Debug.Log("Undo Shape Close");
 
+                    // the shape was closed and locked. need to undo the locked shape and last line drawn
                     if (CanvasState.Instance.shapeCount > 0)
                     {
                         // We've closed the first shape and are now undoing it. 
@@ -65,6 +70,8 @@ public class UndoScript : MonoBehaviour
                     break;
 
                 case ActionManager.UserAction.GENERATE_SHAPE:
+                    Debug.Log("Undo Shape Gen");
+
                     // A shape has been rando generated. Undo the last shape generated
                     ShapeManager.Instance.DeleteLastShape();
                     break;
