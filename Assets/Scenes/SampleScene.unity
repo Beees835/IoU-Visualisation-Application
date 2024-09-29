@@ -401,8 +401,8 @@ MonoBehaviour:
   shapeCount: 0
   drawState: 0
   uiState: 
-  PrefabShape1: {fileID: 0}
-  PrefabShape2: {fileID: 0}
+  PrefabShape1: {fileID: 1473709619147884113, guid: b73f91f45f74a4579ae55b8b750d63b9, type: 3}
+  PrefabShape2: {fileID: 5077000918732251823, guid: 0b9fc175dc5b54517b3fba4543af1ec0, type: 3}
 --- !u!114 &104920593
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1450,7 +1450,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2060636204}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ShapeGenerator, Scripts
         m_MethodName: GeneratePentagon
         m_Mode: 1
@@ -2097,8 +2097,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Cam: {fileID: 519420031}
-  PrefabShape1: {fileID: 1473709619147884113, guid: b73f91f45f74a4579ae55b8b750d63b9, type: 3}
-  PrefabShape2: {fileID: 5077000918732251823, guid: 0b9fc175dc5b54517b3fba4543af1ec0, type: 3}
   CloseThreshold: 0.1
 --- !u!1 &606981754
 GameObject:
@@ -5133,7 +5131,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2060636204}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ShapeGenerator, Scripts
         m_MethodName: GenerateSquare
         m_Mode: 1
@@ -5592,7 +5590,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2060636204}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ShapeGenerator, Scripts
         m_MethodName: GenerateTriangle
         m_Mode: 1
@@ -5858,7 +5856,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2060636204}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ShapeGenerator, Scripts
         m_MethodName: GenerateHexagon
         m_Mode: 1
@@ -6434,8 +6432,6 @@ GameObject:
   - component: {fileID: 2060636201}
   - component: {fileID: 2060636200}
   - component: {fileID: 2060636199}
-  - component: {fileID: 2060636205}
-  - component: {fileID: 2060636204}
   m_Layer: 5
   m_Name: OverlayCanvas
   m_TagString: Untagged
@@ -6531,32 +6527,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &2060636204
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2060636198}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad7dfa2db63b7ee47b6cc1867486a273, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2060636205
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2060636198}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 761ce814467bdd94b83bba129d960e9e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _verticesInput: {fileID: 0}
-  _generateButton: {fileID: 0}
 --- !u!1 &2103462211
 GameObject:
   m_ObjectHideFlags: 0
