@@ -14,6 +14,7 @@ public class ActionManager : MonoBehaviour
     }
     public static ActionManager Instance { get; private set; }
     public Stack<UserAction> ActionStack { get; set; } = new Stack<UserAction>();
+    public Stack<UserAction> RedoStack { get; set; } = new Stack<UserAction>();
 
     private void Awake()
     {
