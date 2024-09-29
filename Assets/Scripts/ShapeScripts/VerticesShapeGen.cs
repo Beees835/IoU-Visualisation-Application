@@ -47,7 +47,7 @@ public class VerticesShapeGen : MonoBehaviour
     private void GenerateShape(int vertexCount, string shapeName)
     {
         // Generate convex polygon vertices using the ConvexHullManager
-        List<Vector2> vertices2D = GenerateConvexPolygon(vertexCount);
+        List<Vector3> vertices2D = GenerateConvexPolygon(vertexCount);
 
         // Convert to Vector3 for shape instantiation
         List<Vector3> vertices3D = new List<Vector3>();
@@ -90,9 +90,9 @@ public class VerticesShapeGen : MonoBehaviour
         allShapes.Add(shapeObject);
     }
 
-    private List<Vector2> GenerateConvexPolygon(int vertexCount)
+    private List<Vector3> GenerateConvexPolygon(int vertexCount)
     {
-        List<Vector2> points = new List<Vector2>();
+        List<Vector3> points = new List<Vector3>();
         int extraPoints = 5; // Adding extra points to ensure sufficient points for a good hull
 
         // Define the canvas size 
@@ -116,7 +116,7 @@ public class VerticesShapeGen : MonoBehaviour
         }
 
         // Use ConvexHullManager to generate the convex hull
-        List<Vector2> convexHull = ConvexHullManager.ConvexHull(points);
+        List<Vector3> convexHull = ConvexHullManager.ConvexHull(points);
 
         // If the convex hull has fewer points than desired, regenerate
         if (convexHull.Count < vertexCount)
