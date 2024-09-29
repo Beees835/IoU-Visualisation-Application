@@ -7,7 +7,7 @@ public class InputController : MonoBehaviour
 {
     public Camera Cam;
     public float CloseThreshold = 0.1f;
-
+    public GameObject invalidMarkPrefab;
     private GameObject currentPrefab;
     private int draggedPointIndex = -1;
     private bool isDragging = false;
@@ -89,7 +89,10 @@ public class InputController : MonoBehaviour
         }
         else
         {
-            Debug.Log("Point not placed: shape would not be convex.");
+            // new point results in an invalid shape
+            GameObject invalidClickMark = Instantiate(invalidMarkPrefab, spawnPosition, Quaternion.identity);
+            PointAnimation pointAnimation = invalidClickMark.GetComponent<PointAnimation>();
+            pointAnimation.quickLife();
         }
     }
 

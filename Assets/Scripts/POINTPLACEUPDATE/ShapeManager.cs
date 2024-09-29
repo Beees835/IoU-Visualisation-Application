@@ -35,7 +35,7 @@ public class ShapeManager : MonoBehaviour
         foreach (var prefab in CurrentShape.Prefabs)
         {
             // remove points from screen
-            Destroy(prefab);
+            prefab.GetComponent<PointAnimation>().Close();
         }
 
         foreach (var line in CurrentLines)
