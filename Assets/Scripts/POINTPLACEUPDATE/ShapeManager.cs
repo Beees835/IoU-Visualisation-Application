@@ -5,7 +5,6 @@ using UnityEngine;
 public class ShapeManager : MonoBehaviour
 {
     public static ShapeManager Instance { get; private set; }
-
     public List<Shape> AllShapes { get; private set; } = new List<Shape>();
     public Shape CurrentShape { get; set; } = new Shape();
     public List <GameObject> CurrentLines { get; set; } = new List<GameObject>();
