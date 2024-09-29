@@ -70,7 +70,7 @@ public class ShapeGenerator : MonoBehaviour
         }
 
         // Add the LineRenderer to the shape object to draw the edges
-        AddLineRenderer(shapeObject, vertices3D);
+        AddLines(vertices3D);
 
         // Center the shape on the canvas
         CenterShapeOnCanvas(shapeObject);
@@ -130,34 +130,14 @@ public class ShapeGenerator : MonoBehaviour
             shapeObject.transform.position = canvasRect.transform.position;
         }
     }
-
-    private void AddLineRenderer(GameObject shapeObject, List<Vector3> vertices)
+    private void AddLines(List<Vector3> vertices)
     {
-
         for (int i = 1; i < vertices.Count; i++)
         {
-            GameObject line = new GameObject("Line");
-            line.tag = "Line";
-            LineRenderer lineRenderer2 = line.AddComponent<LineRenderer>();
-            lineRenderer2.material = lineMaterial;
-            lineRenderer2.positionCount = 2;
-            lineRenderer2.SetPosition(0, vertices[i - 1]);
-            lineRenderer2.SetPosition(1, vertices[i]);
-            lineRenderer2.startWidth = 0.05f;
-            lineRenderer2.endWidth = 0.05f;
-            ShapeManager.Instance.CurrentLines.Add(line);
+            ShapeRenderer.DrawLine(vertices[i - 1], vertices[i]);
         }
 
         // add the last line to close the shape
-        GameObject lastLine = new GameObject("Line");
-        lastLine.tag = "Line";
-        LineRenderer lastLineRenderer = lastLine.AddComponent<LineRenderer>();
-        lastLineRenderer.material = lineMaterial;
-        lastLineRenderer.positionCount = 2;
-        lastLineRenderer.SetPosition(0, vertices[vertices.Count - 1]);
-        lastLineRenderer.SetPosition(1, vertices[0]);
-        lastLineRenderer.startWidth = 0.05f;
-        lastLineRenderer.endWidth = 0.05f;
-        ShapeManager.Instance.CurrentLines.Add(lastLine);
+        ShapeRenderer.DrawLine(vertices[vertices.Count - 1], vertices[0]);
     }
 }
