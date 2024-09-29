@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class ClearCanvasScript : MonoBehaviour
 {
@@ -14,10 +11,10 @@ public class ClearCanvasScript : MonoBehaviour
     void Start()
     {
         _clearCanvasBtn.onClick.AddListener(ClearCanvas);
-        
+
     }
 
-    void ClearCanvas() 
+    void ClearCanvas()
     {
         string currentSceneName = SceneManager.GetActiveScene().name;
         SceneManager.LoadScene(currentSceneName);
@@ -29,5 +26,5 @@ public class ClearCanvasScript : MonoBehaviour
         CanvasState.Instance.drawState = CanvasState.DrawStates.DRAW_STATE;
         Debug.Log("num shapes: " + ShapeManager.Instance.AllShapes.Count);
     }
-        
+
 }
