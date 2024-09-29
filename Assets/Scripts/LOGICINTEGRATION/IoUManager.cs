@@ -134,7 +134,7 @@ public class IoUManager : MonoBehaviour
     }
 
     // Method to highlight the intersection area
-    public static void HighlightIntersection(Vector2[] intersectionPoints)
+    private static void HighlightIntersection(Vector2[] intersectionPoints)
     {
         if (intersectionPoints.Length < 3)
             return;
