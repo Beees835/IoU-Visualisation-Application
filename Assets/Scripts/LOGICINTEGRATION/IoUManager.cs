@@ -10,7 +10,7 @@ public class IoUManager : MonoBehaviour
     // Method to calculate and display IoU between two shapes from ShapeManager
     public static void CalculateIoUForShapes()
     {
-        List<Shape> allShapes = ShapeManager.Instance.AllShapes;
+        List<Shape> allShapes = ShapeManager.AllShapes;
 
         if (allShapes.Count < CanvasState.MAX_SHAPE_COUNT)
         {

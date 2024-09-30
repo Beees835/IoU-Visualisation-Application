@@ -3,17 +3,9 @@ using UnityEngine;
 
 public class ShapeRenderer : MonoBehaviour
 {
-    public static ShapeRenderer Instance { get; private set; }
-
-    public static Material LineMaterial;
     public static float LineWidth = 0.05f;
 
-    private void Awake()
-    {
-        Instance = this;
-    }
-
-    public void DrawShape(Shape shape)
+    public static void DrawShape(Shape shape)
     {
         int pointCount = shape.Points.Count;
 
@@ -33,20 +25,20 @@ public class ShapeRenderer : MonoBehaviour
             Vector3 start = shape.Points[pointCount - 1];
             Vector3 end = shape.Points[0];
             DrawLine(start, end);
-            ShapeManager.Instance.PrevLines = ShapeManager.Instance.CurrentLines;
-            ShapeManager.Instance.CurrentLines = new List<GameObject>();
+            ShapeManager.PrevLines = ShapeManager.CurrentLines;
+            ShapeManager.CurrentLines = new List<GameObject>();
         }
     }
 
 
-    public void RedrawAllShapes()
+    public static void RedrawAllShapes()
     {
         ClearAllLines();
-        foreach (var shape in ShapeManager.Instance.AllShapes)
+        foreach (var shape in ShapeManager.AllShapes)
         {
             DrawShape(shape);
         }
-        DrawShape(ShapeManager.Instance.CurrentShape);
+        DrawShape(ShapeManager.CurrentShape);
     }
 
     public static void DrawLine(Vector3 start, Vector3 end)
@@ -57,7 +49,7 @@ public class ShapeRenderer : MonoBehaviour
 
         LineRenderer lineRenderer = line.AddComponent<LineRenderer>();
 
-        lineRenderer.material = LineMaterial;
+        lineRenderer.material = Materials.Instance.LineMaterial;
         lineRenderer.positionCount = 2;
         lineRenderer.SetPosition(0, start);
         lineRenderer.SetPosition(1, end);
@@ -65,10 +57,10 @@ public class ShapeRenderer : MonoBehaviour
         lineRenderer.startWidth = LineWidth;
         lineRenderer.endWidth = LineWidth;
 
-        ShapeManager.Instance.CurrentLines.Add(line);
+        ShapeManager.CurrentLines.Add(line);
     }
 
-    public void ClearAllLines()
+    public static void ClearAllLines()
     {
         foreach (var line in GameObject.FindGameObjectsWithTag("Line"))
         {
@@ -76,13 +68,13 @@ public class ShapeRenderer : MonoBehaviour
         }
     }
 
-    public void ClearCurrentLines()
+    public static void ClearCurrentLines()
     {
-        foreach (var line in ShapeManager.Instance.CurrentLines)
+        foreach (var line in ShapeManager.CurrentLines)
         {
             // delete the line off the screen
             Destroy(line);
         }
-        ShapeManager.Instance.CurrentLines.Clear();
+        ShapeManager.CurrentLines.Clear();
     }
 }
