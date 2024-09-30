@@ -20,6 +20,8 @@ public class RedoScript : MonoBehaviour
         if (ActionManager.Instance.RedoStack.Count > 0)
         {
             ActionManager.UserAction Action = ActionManager.Instance.RedoStack.Peek();
+            GameObject pfType;
+            pfType = CanvasState.Instance.shapeCount == 0 ? PrefabShape1 : PrefabShape2;
 
             switch(Action) {
                 case ActionManager.UserAction.DRAW_POINT:
@@ -30,8 +32,6 @@ public class RedoScript : MonoBehaviour
                     Vector3 point = newCurrShape.PrevPoints.Pop();
                     newCurrShape.Points.Add(point);
 
-                    GameObject pfType;
-                    pfType = CanvasState.Instance.shapeCount == 0 ? PrefabShape1 : PrefabShape2;
 
                     GameObject newPrefab = Instantiate(pfType, point, Quaternion.identity);
                     ShapeManager.Instance.CurrentShape.Prefabs.Add(newPrefab);
@@ -41,6 +41,17 @@ public class RedoScript : MonoBehaviour
 
                 case ActionManager.UserAction.DRAW_LINE:
                     Debug.Log("Redo Line Draw");
+                    // A line was just drawn and then removed. Redraw this line.
+                    GameObject line = ActionManager.Instance.UndoneLines.Pop();
+                    line.SetActive(true);
+                    ShapeManager.Instance.CurrentLines.Add(line);
+
+                    // add the point back
+                    Vector3 point1 = ShapeManager.Instance.CurrentShape.PrevPoints.Pop();
+                    ShapeManager.Instance.CurrentShape.Points.Add(point1);
+                    GameObject newPf = Instantiate(pfType, point1, Quaternion.identity);
+                    ShapeManager.Instance.CurrentShape.Prefabs.Add(newPf);
+
                     break;
 
                 case ActionManager.UserAction.CLOSE_SHAPE:
