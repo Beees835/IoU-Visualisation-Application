@@ -18,13 +18,13 @@ public class ClearCanvasScript : MonoBehaviour
     {
         string currentSceneName = SceneManager.GetActiveScene().name;
         SceneManager.LoadScene(currentSceneName);
-        ShapeManager.Instance.AllShapes.Clear();
-        ShapeManager.Instance.CurrentShape.Points.Clear();
-        ShapeRenderer.Instance.ClearAllLines();
+        ShapeManager.AllShapes.Clear();
+        ShapeManager.CurrentShape.Points.Clear();
+        ShapeRenderer.ClearAllLines();
         IoUManager.resetInfo();
         CanvasState.Instance.shapeCount = 0;
         CanvasState.Instance.drawState = CanvasState.DrawStates.DRAW_STATE;
-        Debug.Log("num shapes: " + ShapeManager.Instance.AllShapes.Count);
+        Debug.Log("num shapes: " + ShapeManager.AllShapes.Count);
     }
 
 }
