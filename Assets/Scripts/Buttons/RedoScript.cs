@@ -15,7 +15,7 @@ public class RedoScript : MonoBehaviour
 
     public void Redo()
     {
-        if (ActionManager.Instance.RedoStack.Count > 0)
+        if (ActionManager.Instance.RedoStack.Count > 0 && ActionManager.Instance.canRedo)
         {
             ActionManager.UserAction Action = ActionManager.Instance.RedoStack.Peek();
             GameObject pfType;

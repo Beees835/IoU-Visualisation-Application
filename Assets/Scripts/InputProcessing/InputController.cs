@@ -67,6 +67,7 @@ public class InputController : MonoBehaviour
             ShapeRenderer.RedrawAllShapes();
             CanvasState.Instance.shapeCount++;
             ActionManager.Instance.ActionStack.Push(ActionManager.UserAction.CLOSE_SHAPE);
+            ActionManager.Instance.canRedo = false;
             return;
         }
 
@@ -77,10 +78,12 @@ public class InputController : MonoBehaviour
             if (ShapeManager.CurrentShape.Prefabs.Count == 0)
             {
                 ActionManager.Instance.ActionStack.Push(ActionManager.UserAction.DRAW_POINT);
+                ActionManager.Instance.canRedo = false;
             }
             else
             {
                 ActionManager.Instance.ActionStack.Push(ActionManager.UserAction.DRAW_LINE);
+                ActionManager.Instance.canRedo = false;
             }
             GameObject newPrefab = Instantiate(currentPrefab, spawnPosition, Quaternion.identity);
             ShapeManager.AddPointToCurrentShape(spawnPosition, newPrefab);
