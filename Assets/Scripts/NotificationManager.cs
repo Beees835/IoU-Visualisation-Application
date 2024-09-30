@@ -35,8 +35,8 @@ public class NotificationManager : MonoBehaviour
             StopCoroutine(currentCoroutine);
         }
 
-        // Start the coroutine to show the message after a slight delay and then clear it after 3 seconds
-        currentCoroutine = StartCoroutine(ShowMessageWithDelay(message, 0.1f, 3f));
+        // Start the coroutine to show the message after a slight delay and then clear it after 2 seconds
+        currentCoroutine = StartCoroutine(ShowMessageWithDelay(message, 0.1f, 2f));
     }
 
     private IEnumerator ShowMessageWithDelay(string message, float initialDelay, float displayDuration)
