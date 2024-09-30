@@ -84,6 +84,7 @@ public class UndoScript : MonoBehaviour
 
             ActionManager.Instance.ActionStack.Pop();
             ActionManager.Instance.RedoStack.Push(lastAction);
+            ActionManager.Instance.canRedo = true;
         }
     }
 
