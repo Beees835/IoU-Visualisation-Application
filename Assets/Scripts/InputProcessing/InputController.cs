@@ -163,7 +163,7 @@ public class InputController : MonoBehaviour
         Vector3 mouseWorldPosition = Cam.ScreenToWorldPoint(new Vector3(mouseScreenPosition.x, mouseScreenPosition.y, -Cam.transform.position.z));
         mouseWorldPosition.z = 0f;
 
-        bool dragPointFalg = false;
+        bool dragPointFlag = false;
         // Iterate through all shapes
         foreach (Shape shape in ShapeManager.AllShapes)
         {
@@ -171,8 +171,9 @@ public class InputController : MonoBehaviour
             {
                 if (Vector3.Distance(mouseWorldPosition, shape.Points[pointIndex]) <= CloseThreshold + 1.0f)
                 {
-                    dragPointFalg = true;
+                    dragPointFlag = true;
                     Debug.Log("Point found for dragging");
+                    NotificationManager.Instance.ClearMessage();
 
                     draggedPointIndex = pointIndex;
                     isDragging = true;
@@ -185,7 +186,7 @@ public class InputController : MonoBehaviour
                 }
             }
         }
-        if (dragPointFalg)
+        if (!dragPointFlag)
         {
             NotificationManager.Instance.ShowMessage("Cannot add new points when the two shapes are defined");
         }
