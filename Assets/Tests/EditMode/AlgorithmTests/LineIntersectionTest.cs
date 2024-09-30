@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using UnityEngine;
-using static IoUManager;
+using static IoUCalculator;
 using static TestingFunctions;
 
 public class LineIntersectionTest

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IoUManager : MonoBehaviour
+public class IoUCalculator : MonoBehaviour
 {
     private static GameObject intersectionObject;
     private static string defaultInfo = "Not enough shapes to calculate Intersection over Union";
