@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class InputController : MonoBehaviour
@@ -15,12 +14,6 @@ public class InputController : MonoBehaviour
 
     public void PlacePrefabAtMousePosition()
     {
-        if (IsPointerOverUIButton())
-        {
-            return;
-        }
-
-
         // Logic to select the correct prefab
         if (CanvasState.Instance.shapeCount == 0)
 
@@ -189,26 +182,5 @@ public class InputController : MonoBehaviour
                 }
             }
         }
-    }
-
-    private bool IsPointerOverUIButton()
-    {
-        PointerEventData eventData = new PointerEventData(EventSystem.current)
-        {
-            position = Mouse.current.position.ReadValue()
-        };
-
-        List<RaycastResult> results = new List<RaycastResult>();
-        EventSystem.current.RaycastAll(eventData, results);
-
-        foreach (RaycastResult result in results)
-        {
-            if (result.gameObject.GetComponent<UnityEngine.UI.Button>() != null)
-            {
-                return true;
-            }
-        }
-
-        return false;
     }
 }
