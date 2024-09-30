@@ -28,12 +28,14 @@ public class ShapeGenerator : MonoBehaviour
         if (CanvasState.Instance.shapeCount > CanvasState.MAX_SHAPE_COUNT)
         {
             Debug.Log("Too many shapes already");
+            NotificationManager.Instance.ShowMessage("Too many shapes already");
             return;
         }
 
         if (ShapeManager.CurrentShape.Points.Count > 0)
         {
             Debug.Log("Can't generate a shape until the current one is finished");
+            NotificationManager.Instance.ShowMessage("Can't generate a shape until the current one is finished");
             return;
         }
 

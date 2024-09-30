@@ -21,19 +21,18 @@ public class CalcIoUBtnScript : MonoBehaviour
 
     public void OpenPanel()
     {
-        if (_iouPanel != null)
-        {
-            _iouText.text = IoUCalculator.IoUInfo;
-            _iouPanel.SetActive(true);
-        }
+        // if (_iouPanel != null)
+        // {
+        //     _iouText.text = IoUCalculator.IoUInfo;
+        //     _iouPanel.SetActive(true);
+        // }
     }
 
     public void ClosePanel()
     {
-        if (_iouPanel != null)
-        {
-            _iouPanel.SetActive(false);
-        }
+        // if (_iouPanel != null)
+        // {
+        //     _iouPanel.SetActive(false);
+        // }
     }
-
 }
