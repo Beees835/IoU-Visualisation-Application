@@ -46,6 +46,22 @@ public class RedoScript : MonoBehaviour
 
                 case ActionManager.UserAction.CLOSE_SHAPE:
                     Debug.Log("Redo Shape Close");
+                    // Shape 1 was just closed. Its final line was removed. Redraw this line.
+                    if (CanvasState.Instance.shapeCount <= 1)
+                    {
+                        // shape 1 is the current shape
+                        // ShapeManager.Instance.CurrentShape = ShapeManager.Instance.PrevShapes.Peek();
+                        // GameObject lastLine = ShapeManager.Instance.PrevLines[ShapeManager.Instance.PrevLines.Count - 1];
+                        GameObject lastLine = ActionManager.Instance.UndoneLines.Pop();
+                        lastLine.SetActive(true);
+                        ShapeManager.Instance.CurrentLines.Add(lastLine);
+                        ShapeManager.Instance.CurrentShape.IsClosed = true;
+                        CanvasState.Instance.shapeCount++;
+                        ShapeManager.Instance.PrevLines = ShapeManager.Instance.CurrentLines;
+                        ShapeManager.Instance.CurrentLines = new List<GameObject>();
+                        ShapeManager.Instance.AllShapes.Add(ShapeManager.Instance.CurrentShape);
+                        ShapeManager.Instance.CurrentShape = new Shape();
+                    }
                     break;
 
                 case ActionManager.UserAction.GENERATE_SHAPE:
