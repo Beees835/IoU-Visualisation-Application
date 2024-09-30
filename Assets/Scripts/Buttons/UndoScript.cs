@@ -15,8 +15,7 @@ public class UndoScript : MonoBehaviour
     {
         if (CanvasState.Instance.drawState == CanvasState.DrawStates.MODIFY_STATE)
         {
-            Debug.Log("Can't undo Canvas has been locked");
-            return;
+            IoUCalculator.Reset();
         }
 
 
@@ -67,7 +66,7 @@ public class UndoScript : MonoBehaviour
                     {
                         // We've closed the first shape and are now undoing it. 
                         // Need to reassign the current shape to the first shape
-                        ShapeManager.CurrentShape = ShapeManager.AllShapes[0];
+                        ShapeManager.CurrentShape = ShapeManager.AllShapes[ShapeManager.AllShapes.Count - 1];
                         ShapeManager.AllShapes.RemoveAt(ShapeManager.AllShapes.Count - 1);
                         CanvasState.Instance.shapeCount--;
                     }
