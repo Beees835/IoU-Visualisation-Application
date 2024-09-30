@@ -1395,7 +1395,6 @@ GameObject:
   - component: {fileID: 476111636}
   - component: {fileID: 476111635}
   - component: {fileID: 476111634}
-  - component: {fileID: 476111637}
   m_Layer: 5
   m_Name: pentagonSelect
   m_TagString: Untagged
@@ -1467,7 +1466,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 476111637}
+      - m_Target: {fileID: 2060636204}
         m_TargetAssemblyTypeName: ShapeGenerator, Scripts
         m_MethodName: GeneratePentagon
         m_Mode: 1
@@ -1517,18 +1516,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 476111632}
   m_CullTransparentMesh: 1
---- !u!114 &476111637
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 476111632}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad7dfa2db63b7ee47b6cc1867486a273, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &478026036
 GameObject:
   m_ObjectHideFlags: 0
@@ -1813,6 +1800,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14f9281a1a93e4b7990fdf932ee97bec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  zoomSpeed: 1
+  panSpeed: 0.3
+  minZoom: 5
+  maxZoom: 15
+  zoomSlider: {fileID: 1135354966}
+  zoomPercentageText: {fileID: 789793699}
+  cam: {fileID: 0}
+  isUpdating: 0
 --- !u!1 &543288432
 GameObject:
   m_ObjectHideFlags: 0
@@ -2127,6 +2122,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Cam: {fileID: 519420031}
   CloseThreshold: 0.1
+  invalidMarkPrefab: {fileID: 3186114411118968715, guid: 362c8f1c2f3f24ff381aee8979a535cb, type: 3}
 --- !u!1 &606981754
 GameObject:
   m_ObjectHideFlags: 0
@@ -3854,19 +3850,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1128811848}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2060636203}
-        m_TargetAssemblyTypeName: BtnFunctions, Assembly-CSharp
-        m_MethodName: ZoomIn
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1128811848
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3917,11 +3901,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ea43734344c9d74abadd0db65415ea2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _zoomInBtn: {fileID: 1128811847}
-  _slider: {fileID: 1135354966}
-  _sliderText: {fileID: 789793699}
-  minZoom: 5
-  maxZoom: 15
+  zoomInBtn: {fileID: 1128811847}
+  cameraController: {fileID: 519420033}
 --- !u!1 &1135354964
 GameObject:
   m_ObjectHideFlags: 0
@@ -4025,10 +4006,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ec0abfbcfac02d4791c33faa1a07f29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _slider: {fileID: 1135354966}
-  _sliderText: {fileID: 789793699}
-  minZoom: 5
-  maxZoom: 15
+  zoomSlider: {fileID: 1135354966}
+  cameraController: {fileID: 519420033}
 --- !u!1 &1190309094
 GameObject:
   m_ObjectHideFlags: 0
@@ -4077,7 +4056,6 @@ GameObject:
   - component: {fileID: 1215937572}
   - component: {fileID: 1215937571}
   - component: {fileID: 1215937570}
-  - component: {fileID: 1215937573}
   m_Layer: 5
   m_Name: genShapeBtn
   m_TagString: Untagged
@@ -4161,6 +4139,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      m_Calls:
+      - m_Target: {fileID: 2060636204}
+        m_TargetAssemblyTypeName: ShapeGenerator, Scripts
+        m_MethodName: GenerateShapeFromInput
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1215937571
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4199,20 +4190,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1215937568}
   m_CullTransparentMesh: 1
---- !u!114 &1215937573
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1215937568}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 761ce814467bdd94b83bba129d960e9e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _verticesInput: {fileID: 1779759155}
-  _generateButton: {fileID: 1215937570}
 --- !u!1 &1282835048
 GameObject:
   m_ObjectHideFlags: 0
@@ -4296,19 +4273,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1282835051}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2060636203}
-        m_TargetAssemblyTypeName: BtnFunctions, Assembly-CSharp
-        m_MethodName: ZoomOut
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1282835051
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4359,11 +4324,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b09362871dfa3343a3b4bbf26e69c8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _zoomOutBtn: {fileID: 1282835050}
-  _slider: {fileID: 1135354966}
-  _sliderText: {fileID: 789793699}
-  minZoom: 5
-  maxZoom: 15
+  zoomOutBtn: {fileID: 1282835050}
+  cameraController: {fileID: 519420033}
 --- !u!1 &1291998376
 GameObject:
   m_ObjectHideFlags: 0
@@ -5050,6 +5012,8 @@ RectTransform:
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 1.0807, y: 0.1381}
   m_SizeDelta: {x: 50.6707, y: 28.3754}
+  m_AnchoredPosition: {x: 1.0807, y: 0.1381}
+  m_SizeDelta: {x: 50.6707, y: 28.3754}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1615800050
 MonoBehaviour:
@@ -5101,7 +5065,6 @@ GameObject:
   - component: {fileID: 1684382207}
   - component: {fileID: 1684382206}
   - component: {fileID: 1684382205}
-  - component: {fileID: 1684382208}
   m_Layer: 5
   m_Name: quadSelect
   m_TagString: Untagged
@@ -5173,7 +5136,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1684382208}
+      - m_Target: {fileID: 2060636204}
         m_TargetAssemblyTypeName: ShapeGenerator, Scripts
         m_MethodName: GenerateSquare
         m_Mode: 1
@@ -5223,18 +5186,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1684382203}
   m_CullTransparentMesh: 1
---- !u!114 &1684382208
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1684382203}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad7dfa2db63b7ee47b6cc1867486a273, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1720927328
 GameObject:
   m_ObjectHideFlags: 0
@@ -5573,7 +5524,6 @@ GameObject:
   - component: {fileID: 1812860863}
   - component: {fileID: 1812860862}
   - component: {fileID: 1812860861}
-  - component: {fileID: 1812860864}
   m_Layer: 5
   m_Name: triangleSelect
   m_TagString: Untagged
@@ -5645,7 +5595,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1812860864}
+      - m_Target: {fileID: 2060636204}
         m_TargetAssemblyTypeName: ShapeGenerator, Scripts
         m_MethodName: GenerateTriangle
         m_Mode: 1
@@ -5695,18 +5645,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1812860859}
   m_CullTransparentMesh: 1
---- !u!114 &1812860864
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1812860859}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad7dfa2db63b7ee47b6cc1867486a273, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1838075977
 GameObject:
   m_ObjectHideFlags: 0
@@ -5852,7 +5790,6 @@ GameObject:
   - component: {fileID: 1893396492}
   - component: {fileID: 1893396491}
   - component: {fileID: 1893396490}
-  - component: {fileID: 1893396493}
   m_Layer: 5
   m_Name: hexagonSelect
   m_TagString: Untagged
@@ -5924,7 +5861,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1893396493}
+      - m_Target: {fileID: 2060636204}
         m_TargetAssemblyTypeName: ShapeGenerator, Scripts
         m_MethodName: GenerateHexagon
         m_Mode: 1
@@ -5974,18 +5911,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1893396488}
   m_CullTransparentMesh: 1
---- !u!114 &1893396493
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1893396488}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad7dfa2db63b7ee47b6cc1867486a273, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1909817000
 GameObject:
   m_ObjectHideFlags: 0
@@ -6515,6 +6440,9 @@ GameObject:
   - component: {fileID: 2060636203}
   - component: {fileID: 2060636205}
   - component: {fileID: 2060636204}
+  - component: {fileID: 2060636203}
+  - component: {fileID: 2060636205}
+  - component: {fileID: 2060636204}
   m_Layer: 5
   m_Name: OverlayCanvas
   m_TagString: Untagged
@@ -6580,6 +6508,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
@@ -6622,8 +6551,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a4175876560543b18977791ec18f87d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minZoom: 5
-  maxZoom: 15
 --- !u!114 &2060636204
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6636,8 +6563,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad7dfa2db63b7ee47b6cc1867486a273, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PrefabShape1: {fileID: 1473709619147884113, guid: b73f91f45f74a4579ae55b8b750d63b9, type: 3}
-  lineMaterial: {fileID: 0}
 --- !u!114 &2060636205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6650,10 +6575,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 761ce814467bdd94b83bba129d960e9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PrefabShape1: {fileID: 1473709619147884113, guid: b73f91f45f74a4579ae55b8b750d63b9, type: 3}
-  lineMaterial: {fileID: 0}
-  verticesInput: {fileID: 1779759155}
-  generateButton: {fileID: 1215937570}
+  _verticesInput: {fileID: 0}
+  _generateButton: {fileID: 0}
 --- !u!1 &2103462211
 GameObject:
   m_ObjectHideFlags: 0
