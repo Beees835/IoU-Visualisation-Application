@@ -37,7 +37,6 @@ public class RedoScript : MonoBehaviour
                     ShapeManager.Instance.CurrentShape.Prefabs.Add(newPrefab);
 
                     ShapeManager.Instance.CurrentShape = newCurrShape;
-                    CanvasState.Instance.shapeCount++;
                     break;
 
                 case ActionManager.UserAction.DRAW_LINE:
@@ -50,8 +49,6 @@ public class RedoScript : MonoBehaviour
                     if (CanvasState.Instance.shapeCount <= 1)
                     {
                         // shape 1 is the current shape
-                        // ShapeManager.Instance.CurrentShape = ShapeManager.Instance.PrevShapes.Peek();
-                        // GameObject lastLine = ShapeManager.Instance.PrevLines[ShapeManager.Instance.PrevLines.Count - 1];
                         GameObject lastLine = ActionManager.Instance.UndoneLines.Pop();
                         lastLine.SetActive(true);
                         ShapeManager.Instance.CurrentLines.Add(lastLine);
