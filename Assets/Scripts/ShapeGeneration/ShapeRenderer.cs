@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ShapeRenderer : MonoBehaviour
@@ -16,7 +15,7 @@ public class ShapeRenderer : MonoBehaviour
         {
             Vector3 start = shape.Points[i];
             Vector3 end = shape.Points[i + 1];
-            DrawLine(start, end);
+            DrawLine(shape, start, end);
         }
 
         if (shape.IsClosed)
@@ -24,16 +23,14 @@ public class ShapeRenderer : MonoBehaviour
             // Draw closing line from last point to first point
             Vector3 start = shape.Points[pointCount - 1];
             Vector3 end = shape.Points[0];
-            DrawLine(start, end);
-            ShapeManager.PrevLines = ShapeManager.CurrentLines;
-            ShapeManager.CurrentLines = new List<GameObject>();
+            DrawLine(shape, start, end);
         }
     }
 
 
     public static void RedrawAllShapes()
     {
-        ClearAllLines();
+        ShapeManager.ClearLines();
         foreach (var shape in ShapeManager.AllShapes)
         {
             DrawShape(shape);
@@ -41,7 +38,7 @@ public class ShapeRenderer : MonoBehaviour
         DrawShape(ShapeManager.CurrentShape);
     }
 
-    public static void DrawLine(Vector3 start, Vector3 end)
+    public static void DrawLine(Shape shape, Vector3 start, Vector3 end)
     {
         //Debug.Log("IS DRAWING LINE");
         GameObject line = new GameObject("Line");
@@ -58,23 +55,8 @@ public class ShapeRenderer : MonoBehaviour
         lineRenderer.endWidth = LineWidth;
 
         ShapeManager.CurrentLines.Add(line);
+        shape.Lines.Add(line);
     }
 
-    public static void ClearAllLines()
-    {
-        foreach (var line in GameObject.FindGameObjectsWithTag("Line"))
-        {
-            Destroy(line);
-        }
-    }
 
-    public static void ClearCurrentLines()
-    {
-        foreach (var line in ShapeManager.CurrentLines)
-        {
-            // delete the line off the screen
-            Destroy(line);
-        }
-        ShapeManager.CurrentLines.Clear();
-    }
 }

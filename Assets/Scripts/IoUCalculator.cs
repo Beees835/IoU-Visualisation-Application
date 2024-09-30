@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class IoUCalculator : MonoBehaviour
 {
-    private static GameObject intersectionObject;
+    public static GameObject intersectionObject;
     private static string defaultInfo = "Not enough shapes to calculate Intersection over Union";
     public static string IoUInfo = defaultInfo;
 
@@ -42,7 +42,7 @@ public class IoUCalculator : MonoBehaviour
         IoUInfo = string.Format(msg, area1, area2, iouValues[0], iouValues[1], iouValues[2]);
     }
 
-    public static void resetInfo()
+    public static void ResetInfo()
     {
         IoUInfo = defaultInfo;
     }
@@ -249,5 +249,12 @@ public class IoUCalculator : MonoBehaviour
         }
 
         return null;
+    }
+
+    public static void Reset()
+    {
+        Destroy(intersectionObject);
+        intersectionObject = null;
+        ResetInfo();
     }
 }

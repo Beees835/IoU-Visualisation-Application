@@ -41,25 +41,25 @@ public class ShapeGenerator : MonoBehaviour
         // Generate convex polygon vertices using ConvexHullManager
         List<Vector3> vertices3D = GenerateConvexPolygon(vertexCount);
 
-        Shape newShape = new Shape(true);
+        Shape shape = new Shape(true);
 
         // Add points and instantiate prefabs
         foreach (var point in vertices3D)
         {
             GameObject newPrefab = Instantiate(Materials.Instance.PrefabShape1, point, Quaternion.identity);
-            newShape.AddPoint(point, newPrefab); // Add point and associated prefab to shape
+            shape.AddPoint(point, newPrefab); // Add point and associated prefab to shape
         }
 
-        AddLines(vertices3D);
+        AddLines(shape, vertices3D);
 
         Debug.Log($"Created shape with {vertexCount} vertices");
 
         // Add the generated shape GameObject to the list of all shapes
-        ShapeManager.AllShapes.Add(newShape);
+        ShapeManager.AllShapes.Add(shape);
         CanvasState.Instance.shapeCount++;
 
-        ActionManager.Instance.ActionStack.Push(ActionManager.UserAction.GENERATE_SHAPE);
-        ActionManager.Instance.canRedo = false;
+        ActionManager.ActionStack.Push(ActionManager.UserAction.GENERATE_SHAPE);
+        ActionManager.canRedo = false;
     }
 
     private static List<Vector3> GenerateConvexPolygon(int vertexCount)
@@ -102,14 +102,14 @@ public class ShapeGenerator : MonoBehaviour
     }
 
     // Add the LineRenderer to the shape object to draw the edges
-    private static void AddLines(List<Vector3> vertices)
+    private static void AddLines(Shape shape, List<Vector3> vertices)
     {
         for (int i = 1; i < vertices.Count; i++)
         {
-            ShapeRenderer.DrawLine(vertices[i - 1], vertices[i]);
+            ShapeRenderer.DrawLine(shape, vertices[i - 1], vertices[i]);
         }
 
         // add the last line to close the shape
-        ShapeRenderer.DrawLine(vertices[vertices.Count - 1], vertices[0]);
+        ShapeRenderer.DrawLine(shape, vertices[vertices.Count - 1], vertices[0]);
     }
 }
