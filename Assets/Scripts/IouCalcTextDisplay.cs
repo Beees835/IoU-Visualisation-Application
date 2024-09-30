@@ -1,5 +1,5 @@
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 
 public class IouCalcTextDisplay : MonoBehaviour
 {
@@ -15,6 +15,7 @@ public class IouCalcTextDisplay : MonoBehaviour
             Instance = this;
 
             displayText = GetComponent<TextMeshProUGUI>();
+            displayText.color = Color.black;
             if (displayText == null)
             {
                 Debug.LogError("IouCalcTextDisplay requires a TextMeshProUGUI component on the same GameObject.");
