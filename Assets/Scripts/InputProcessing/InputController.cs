@@ -95,6 +95,7 @@ public class InputController : MonoBehaviour
             GameObject invalidClickMark = Instantiate(Materials.Instance.invalidMarkPrefab, spawnPosition, Quaternion.identity);
             PointAnimation pointAnimation = invalidClickMark.GetComponent<PointAnimation>();
             pointAnimation.quickLife();
+            NotificationManager.Instance.ShowMessage("Invalid Point, Cannot Place Here.");
         }
     }
 
