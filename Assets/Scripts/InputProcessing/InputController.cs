@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class InputController : MonoBehaviour
 {
@@ -32,8 +33,10 @@ public class InputController : MonoBehaviour
                 break;
             case CanvasState.DrawStates.MODIFY_STATE:
                 HandleModifyState();
+                
                 break;
             case CanvasState.DrawStates.LOCK_STATE:
+                NotificationManager.Instance.ShowMessage("Cannot add new points when the two shapes are defined");
                 break;
         }
     }
@@ -87,6 +90,7 @@ public class InputController : MonoBehaviour
             GameObject invalidClickMark = Instantiate(Materials.Instance.invalidMarkPrefab, spawnPosition, Quaternion.identity);
             PointAnimation pointAnimation = invalidClickMark.GetComponent<PointAnimation>();
             pointAnimation.quickLife();
+            NotificationManager.Instance.ShowMessage("Invalid Point, Cannot Place Here.");
         }
     }
 
@@ -161,6 +165,7 @@ public class InputController : MonoBehaviour
         Vector3 mouseWorldPosition = Cam.ScreenToWorldPoint(new Vector3(mouseScreenPosition.x, mouseScreenPosition.y, -Cam.transform.position.z));
         mouseWorldPosition.z = 0f;
 
+        bool dragPointFalg = false;
         // Iterate through all shapes
         foreach (Shape shape in ShapeManager.AllShapes)
         {
@@ -168,6 +173,7 @@ public class InputController : MonoBehaviour
             {
                 if (Vector3.Distance(mouseWorldPosition, shape.Points[pointIndex]) <= CloseThreshold + 1.0f)
                 {
+                    dragPointFalg = true;
                     Debug.Log("Point found for dragging");
 
                     draggedPointIndex = pointIndex;
@@ -180,6 +186,10 @@ public class InputController : MonoBehaviour
                     return;
                 }
             }
+        }
+        if (dragPointFalg)
+        {
+            NotificationManager.Instance.ShowMessage("Cannot add new points when the two shapes are defined");
         }
     }
 }
