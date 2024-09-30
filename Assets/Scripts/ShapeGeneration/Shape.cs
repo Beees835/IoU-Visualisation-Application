@@ -5,6 +5,7 @@ public class Shape
 {
     public List<Vector3> Points { get; set; } = new List<Vector3>();
     public List<GameObject> Prefabs { get; set; } = new List<GameObject>();
+    public List<GameObject> Lines { get; set; } = new List<GameObject>();
     public Stack<Vector3> PrevPoints { get; set; } = new Stack<Vector3>();
     public bool IsClosed { get; set; } = false;
 
@@ -19,20 +20,26 @@ public class Shape
         Prefabs.Add(prefab);
     }
 
-    public void RemoveLastPoint()
+    public Vector3 RemoveLastPoint()
     {
-        if (Points.Count > 0)
-        {
-            // store last point in case of redo
-            Vector3 lastPoint = Points[Points.Count - 1];
-            PrevPoints.Push(lastPoint);
+        Vector3 point = Points[Points.Count - 1];
+        GameObject prefab = Prefabs[Prefabs.Count - 1];
 
-            // actually remove last point 
-            Points.RemoveAt(Points.Count - 1);
-            GameObject lastPrefab = Prefabs[Prefabs.Count - 1];
-            Prefabs.RemoveAt(Prefabs.Count - 1);
-            lastPrefab.GetComponent<PointAnimation>().Close();
-        }
+        Prefabs.RemoveAt(Prefabs.Count - 1);
+        Points.RemoveAt(Points.Count - 1);
+
+        prefab.GetComponent<PointAnimation>().Close();
+        Object.Destroy(prefab);
+        return point;
+    }
+
+    public Vector3 RemoveLastLine()
+    {
+        Vector3 point = Points[Points.Count - 1];
+        GameObject line = Lines[Lines.Count - 1];
+        Lines.RemoveAt(Lines.Count - 1);
+        Object.Destroy(line);
+        return point;
     }
 
     // General convexity check with custom points

@@ -12,7 +12,7 @@ public class DeleteCurrShapeScript : MonoBehaviour
         _deleteCurrShapeBtn.onClick.AddListener(DeleteCurrShape);
     }
 
-    public void DeleteCurrShape()
+    public static void DeleteCurrShape()
     {
         if (CanvasState.Instance.drawState == CanvasState.DrawStates.MODIFY_STATE)
         {
@@ -21,16 +21,30 @@ public class DeleteCurrShapeScript : MonoBehaviour
             return;
         }
 
+        if (ShapeManager.CurrentShape.Points.Count == 0)
+        {
+            ShapeManager.CurrentShape = ShapeManager.AllShapes[ShapeManager.AllShapes.Count - 1];
+            ShapeManager.AllShapes.RemoveAt(ShapeManager.AllShapes.Count - 1);
+            CanvasState.Instance.shapeCount--;
+        }
+
+        // Data for Undo/Redo
+        ActionManager.DeleteCompletion.Push(ShapeManager.CurrentShape.IsClosed);
+        ActionManager.ShapeSizeStack.Push(ShapeManager.CurrentShape.Points.Count);
+
+        // Reverse list to ensure points come out in right order when popped
+        ShapeManager.CurrentShape.Points.Reverse();
+        foreach (var point in ShapeManager.CurrentShape.Points)
+        {
+            ActionManager.PointStack.Push(point);
+        }
+
         if (ShapeManager.AllShapes.Count > -1)
         {
-            ShapeManager.CurrentShape.Points.Clear();
-            foreach (GameObject pf in ShapeManager.CurrentShape.Prefabs)
-            {
-                pf.GetComponent<PointAnimation>().Close();
-            }
-            ShapeManager.CurrentShape.Prefabs.Clear();
-            ShapeRenderer.ClearCurrentLines();
-            CanvasState.Instance.drawState = CanvasState.DrawStates.DRAW_STATE;
+            ShapeManager.DestroyShape(ShapeManager.CurrentShape);
         }
+
+        ActionManager.ActionStack.Push(ActionManager.UserAction.DELETE_SHAPE);
+        ActionManager.canRedo = false;
     }
 }
