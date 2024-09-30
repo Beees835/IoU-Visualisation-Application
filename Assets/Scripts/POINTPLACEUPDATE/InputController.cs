@@ -7,11 +7,10 @@ public class InputController : MonoBehaviour
 {
     public Camera Cam;
     public float CloseThreshold = 0.1f;
-    public GameObject invalidMarkPrefab;
-    private GameObject currentPrefab;
     private int draggedPointIndex = -1;
     private bool isDragging = false;
 
+    private GameObject currentPrefab;
     private Shape selectedShape; // Keeps track of the shape being modified
 
     public void PlacePrefabAtMousePosition()
@@ -26,11 +25,11 @@ public class InputController : MonoBehaviour
         if (CanvasState.Instance.shapeCount == 0)
 
         {
-            currentPrefab = CanvasState.Instance.PrefabShape1;
+            currentPrefab = Materials.Instance.PrefabShape1;
         }
         else if (CanvasState.Instance.shapeCount == 1)
         {
-            currentPrefab = CanvasState.Instance.PrefabShape2;
+            currentPrefab = Materials.Instance.PrefabShape2;
         }
 
         switch (CanvasState.Instance.drawState)
@@ -60,22 +59,22 @@ public class InputController : MonoBehaviour
         Vector3 spawnPosition = GetWorldPosition(mouseScreenPosition);
 
         // Check if the point is near the first point to close the shape
-        if (ShapeManager.Instance.CurrentShape.Points.Count > 2 &&
-            Vector3.Distance(spawnPosition, ShapeManager.Instance.CurrentShape.Points[0]) <= CloseThreshold)
+        if (ShapeManager.CurrentShape.Points.Count > 2 &&
+            Vector3.Distance(spawnPosition, ShapeManager.CurrentShape.Points[0]) <= CloseThreshold)
         {
             // Close the current shape
-            ShapeManager.Instance.StartNewShape();
-            ShapeRenderer.Instance.RedrawAllShapes();
+            ShapeManager.StartNewShape();
+            ShapeRenderer.RedrawAllShapes();
             CanvasState.Instance.shapeCount++;
             ActionManager.Instance.ActionStack.Push(ActionManager.UserAction.CLOSE_SHAPE);
             return;
         }
 
         // Add the new point to the current shape
-        if (ShapeManager.Instance.CurrentShape.IsConvexWithNewPoint(spawnPosition))
+        if (ShapeManager.CurrentShape.IsConvexWithNewPoint(spawnPosition))
         {
             // current shape hasn't been set yet, this point will be the first point
-            if (ShapeManager.Instance.CurrentShape.Prefabs.Count == 0)
+            if (ShapeManager.CurrentShape.Prefabs.Count == 0)
             {
                 ActionManager.Instance.ActionStack.Push(ActionManager.UserAction.DRAW_POINT);
             }
@@ -84,13 +83,13 @@ public class InputController : MonoBehaviour
                 ActionManager.Instance.ActionStack.Push(ActionManager.UserAction.DRAW_LINE);
             }
             GameObject newPrefab = Instantiate(currentPrefab, spawnPosition, Quaternion.identity);
-            ShapeManager.Instance.AddPointToCurrentShape(spawnPosition, newPrefab);
-            ShapeRenderer.Instance.RedrawAllShapes();
+            ShapeManager.AddPointToCurrentShape(spawnPosition, newPrefab);
+            ShapeRenderer.RedrawAllShapes();
         }
         else
         {
             // new point results in an invalid shape
-            GameObject invalidClickMark = Instantiate(invalidMarkPrefab, spawnPosition, Quaternion.identity);
+            GameObject invalidClickMark = Instantiate(Materials.Instance.invalidMarkPrefab, spawnPosition, Quaternion.identity);
             PointAnimation pointAnimation = invalidClickMark.GetComponent<PointAnimation>();
             pointAnimation.quickLife();
         }
@@ -142,7 +141,7 @@ public class InputController : MonoBehaviour
                 }
 
                 IoUManager.CalculateIoUForShapes();
-                ShapeRenderer.Instance.RedrawAllShapes();
+                ShapeRenderer.RedrawAllShapes();
             }
             else
             {
@@ -168,7 +167,7 @@ public class InputController : MonoBehaviour
         mouseWorldPosition.z = 0f;
 
         // Iterate through all shapes
-        foreach (Shape shape in ShapeManager.Instance.AllShapes)
+        foreach (Shape shape in ShapeManager.AllShapes)
         {
             for (int pointIndex = 0; pointIndex < shape.Points.Count; pointIndex++)
             {
