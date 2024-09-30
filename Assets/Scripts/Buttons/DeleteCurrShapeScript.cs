@@ -24,7 +24,6 @@ public class DeleteCurrShapeScript : MonoBehaviour
         {
             // set lines as inactive
             ShapeRenderer.ClearCurrentLines();
-            
             foreach (GameObject pf in ShapeManager.CurrentShape.Prefabs)
             {
                 // remove points from screen
@@ -37,8 +36,8 @@ public class DeleteCurrShapeScript : MonoBehaviour
             ShapeManager.PrevShapes.Push(ShapeManager.CurrentShape);
 
             // reconfigure state
-            // ShapeManager.CurrentShape = new Shape();
             CanvasState.Instance.shapeCount--;
+            ShapeManager.AllShapes.Remove(ShapeManager.CurrentShape);
             CanvasState.Instance.drawState = CanvasState.DrawStates.DRAW_STATE;
             ActionManager.Instance.ActionStack.Push(ActionManager.UserAction.DELETE_SHAPE);
         }
