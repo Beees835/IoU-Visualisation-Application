@@ -39,8 +39,8 @@ public class CanvasState : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     }
 
     // Variables
-    public int shapeCount;
-    public DrawStates drawState;
+    public int shapeCount = 0;
+    public DrawStates drawState = DrawStates.DRAW_STATE;
     public string uiState = "";
 
     // Awake is called when the script instance is being loaded
@@ -48,12 +48,12 @@ public class CanvasState : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         if (_instance != null && _instance != this)
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
         else
         {
             _instance = this;
-            DontDestroyOnLoad(this.gameObject);
+            DontDestroyOnLoad(gameObject);
         }
     }
 
@@ -69,13 +69,6 @@ public class CanvasState : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         hovering = false;
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        this.drawState = DrawStates.DRAW_STATE;
-        this.shapeCount = 0;
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -86,12 +79,18 @@ public class CanvasState : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         }
         else if (shapeCount == MAX_SHAPE_COUNT)
         {
-            this.drawState = DrawStates.LOCK_STATE;
+            drawState = DrawStates.LOCK_STATE;
             IoUCalculator.CalculateIoUForShapes();
         }
-        else if (this.shapeCount > MAX_SHAPE_COUNT)
+        else if (shapeCount > MAX_SHAPE_COUNT)
         {
-            this.drawState = DrawStates.MODIFY_STATE;
+            drawState = DrawStates.MODIFY_STATE;
         }
+    }
+
+    public void Reset()
+    {
+        shapeCount = 0;
+        drawState = CanvasState.DrawStates.DRAW_STATE;
     }
 }

@@ -292,8 +292,8 @@ GameObject:
   - component: {fileID: 104920592}
   - component: {fileID: 104920593}
   - component: {fileID: 104920594}
-  - component: {fileID: 104920595}
   - component: {fileID: 104920596}
+  - component: {fileID: 104920597}
   m_Layer: 5
   m_Name: WorkingCanvas
   m_TagString: Untagged
@@ -426,18 +426,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2216c0eeb14bb4e828332844244771b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &104920595
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 104920587}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6081933e244ac6b48b448eebcc289d73, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &104920596
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -454,6 +442,18 @@ MonoBehaviour:
   PrefabShape2: {fileID: 5077000918732251823, guid: 0b9fc175dc5b54517b3fba4543af1ec0, type: 3}
   invalidMarkPrefab: {fileID: 3186114411118968715, guid: 362c8f1c2f3f24ff381aee8979a535cb, type: 3}
   LineMaterial: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+--- !u!114 &104920597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 104920587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6081933e244ac6b48b448eebcc289d73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &134288624
 GameObject:
   m_ObjectHideFlags: 0
