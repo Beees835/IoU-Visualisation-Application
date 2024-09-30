@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
-using static IoUManager;
 
 public class CalcIoUBtnScript : MonoBehaviour
 {
@@ -13,7 +10,7 @@ public class CalcIoUBtnScript : MonoBehaviour
     [SerializeField] private Button _closeBtn;
     [SerializeField] private TextMeshProUGUI _iouText;
 
-    
+
     // Start is called before the first frame update
     void Start()
     {

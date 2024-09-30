@@ -1,7 +1,6 @@
 using NUnit.Framework;
 using UnityEngine;
 using static IoUManager;
-using static TestingFunctions;
 
 public class PointInPolygonTest
 {

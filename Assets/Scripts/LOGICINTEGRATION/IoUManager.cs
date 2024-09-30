@@ -1,8 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
-using UnityEngine.UI;
 
 public class IoUManager : MonoBehaviour
 {
@@ -59,10 +56,10 @@ public class IoUManager : MonoBehaviour
         }
         return result;
     }
-    
+
     // Method to calculate and display IoU between two polygons
-    public static float[] CalculateIoU(float area1, float area2, Vector2[]  intersectionPoints)
-    { 
+    public static float[] CalculateIoU(float area1, float area2, Vector2[] intersectionPoints)
+    {
         float[] iouValues = new float[3];
         if (intersectionPoints.Length < 3)
         {
@@ -137,7 +134,7 @@ public class IoUManager : MonoBehaviour
         if (intersectionPoints.Length < 3)
             return;
 
-        List<Vector3> vertices = new List<Vector3> ();
+        List<Vector3> vertices = new List<Vector3>();
         for (int i = 0; i < intersectionPoints.Length; i++)
         {
             // Use a slight negative z-value to ensure visibility
