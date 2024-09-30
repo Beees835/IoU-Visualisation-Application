@@ -15,6 +15,7 @@ public class UndoScript : MonoBehaviour
     {
         if (CanvasState.Instance.drawState == CanvasState.DrawStates.MODIFY_STATE)
         {
+            // Remove Intersection Shape
             IoUCalculator.Reset();
         }
 
