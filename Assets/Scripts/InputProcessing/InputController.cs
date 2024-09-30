@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class InputController : MonoBehaviour
 {
@@ -15,7 +16,7 @@ public class InputController : MonoBehaviour
 
     public void PlacePrefabAtMousePosition()
     {
-        if (IsPointerOverUIButton())
+        if (IsPointerOverUIElement())
         {
             return;
         }
@@ -39,8 +40,10 @@ public class InputController : MonoBehaviour
                 break;
             case CanvasState.DrawStates.MODIFY_STATE:
                 HandleModifyState();
+                
                 break;
             case CanvasState.DrawStates.LOCK_STATE:
+                NotificationManager.Instance.ShowMessage("Cannot add new points when the two shapes are defined");
                 break;
         }
     }
@@ -170,6 +173,7 @@ public class InputController : MonoBehaviour
         Vector3 mouseWorldPosition = Cam.ScreenToWorldPoint(new Vector3(mouseScreenPosition.x, mouseScreenPosition.y, -Cam.transform.position.z));
         mouseWorldPosition.z = 0f;
 
+        bool dragPointFalg = false;
         // Iterate through all shapes
         foreach (Shape shape in ShapeManager.AllShapes)
         {
@@ -177,6 +181,7 @@ public class InputController : MonoBehaviour
             {
                 if (Vector3.Distance(mouseWorldPosition, shape.Points[pointIndex]) <= CloseThreshold + 1.0f)
                 {
+                    dragPointFalg = true;
                     Debug.Log("Point found for dragging");
 
                     draggedPointIndex = pointIndex;
@@ -190,10 +195,16 @@ public class InputController : MonoBehaviour
                 }
             }
         }
+        if (dragPointFalg)
+        {
+            NotificationManager.Instance.ShowMessage("Cannot add new points when the two shapes are defined");
+        }
     }
 
-    private bool IsPointerOverUIButton()
+    //had to change this function to account for error messages
+    private bool IsPointerOverUIElement()
     {
+        // Create a new PointerEventData object based on the current mouse position
         PointerEventData eventData = new PointerEventData(EventSystem.current)
         {
             position = Mouse.current.position.ReadValue()
@@ -204,12 +215,13 @@ public class InputController : MonoBehaviour
 
         foreach (RaycastResult result in results)
         {
-            if (result.gameObject.GetComponent<UnityEngine.UI.Button>() != null)
+            // Check if object is in OverlayUI layer
+            if (result.gameObject.layer == LayerMask.NameToLayer("OverlayUI"))
             {
                 return true;
             }
         }
-
         return false;
     }
+
 }
