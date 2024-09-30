@@ -33,6 +33,10 @@ public class UndoScript : MonoBehaviour
 
                     // A singular point (no line) has been drawn to start a new shape. now undo it
                     ShapeManager.Instance.CurrentShape.RemoveLastPoint();
+                    
+                    // store shape in case of redo
+                    ShapeManager.Instance.PrevShapes.Push(ShapeManager.Instance.CurrentShape);
+                    
                     if (CanvasState.Instance.shapeCount > 1) {
                         // if destroying the first point of shape 2, reassign the current shape to shape 1
                         ShapeManager.Instance.CurrentShape = ShapeManager.Instance.AllShapes[0];
@@ -57,7 +61,7 @@ public class UndoScript : MonoBehaviour
                     if (CanvasState.Instance.shapeCount > 0)
                     {
                         // We've closed the first shape and are now undoing it. 
-                        // Need to reassign the current shape to the second shape
+                        // Need to reassign the current shape to the first shape
                         ShapeManager.Instance.CurrentShape = ShapeManager.Instance.AllShapes[0];
                         ShapeManager.Instance.AllShapes.RemoveAt(ShapeManager.Instance.AllShapes.Count - 1);
                         CanvasState.Instance.shapeCount--;
@@ -79,6 +83,7 @@ public class UndoScript : MonoBehaviour
             }
 
             ActionManager.Instance.ActionStack.Pop();
+            ActionManager.Instance.RedoStack.Push(lastAction);
         }
     }
 
@@ -87,6 +92,7 @@ public class UndoScript : MonoBehaviour
         // undo the last line drawn
         GameObject lastLine = ShapeManager.Instance.CurrentLines[ShapeManager.Instance.CurrentLines.Count - 1];
         ShapeManager.Instance.CurrentLines.RemoveAt(ShapeManager.Instance.CurrentLines.Count - 1);
-        Destroy(lastLine);
+        lastLine.SetActive(false);
+        ActionManager.Instance.UndoneLines.Push(lastLine);
     }
 }

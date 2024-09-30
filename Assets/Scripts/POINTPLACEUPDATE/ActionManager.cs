@@ -13,6 +13,10 @@ public class ActionManager : MonoBehaviour
     }
     public static ActionManager Instance { get; private set; }
     public Stack<UserAction> ActionStack { get; set; } = new Stack<UserAction>();
+    public Stack<UserAction> RedoStack { get; set; } = new Stack<UserAction>();
+
+    // deleted lines get stored here in case of redo
+    public Stack<GameObject> UndoneLines { get; set; } = new Stack<GameObject>();
 
     private void Awake()
     {

@@ -5,6 +5,7 @@ public class Shape
 {
     public List<Vector3> Points { get; set; } = new List<Vector3>();
     public List<GameObject> Prefabs { get; set; } = new List<GameObject>();
+    public Stack<Vector3> PrevPoints { get; set; } = new Stack<Vector3>();
     public bool IsClosed { get; set; } = false;
 
     public Shape(bool isClosed = false)
@@ -22,6 +23,11 @@ public class Shape
     {
         if (Points.Count > 0)
         {
+            // store last point in case of redo
+            Vector3 lastPoint = Points[Points.Count - 1];
+            PrevPoints.Push(lastPoint);
+
+            // actually remove last point 
             Points.RemoveAt(Points.Count - 1);
             GameObject lastPrefab = Prefabs[Prefabs.Count - 1];
             Prefabs.RemoveAt(Prefabs.Count - 1);
