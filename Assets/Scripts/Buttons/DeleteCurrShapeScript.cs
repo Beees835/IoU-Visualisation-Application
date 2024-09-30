@@ -20,16 +20,16 @@ public class DeleteCurrShapeScript : MonoBehaviour
             return;
         }
 
+        if (ShapeManager.CurrentShape.Points.Count == 0)
+        {
+            ShapeManager.CurrentShape = ShapeManager.AllShapes[ShapeManager.AllShapes.Count - 1];
+            ShapeManager.AllShapes.RemoveAt(ShapeManager.AllShapes.Count - 1);
+            CanvasState.Instance.shapeCount--;
+        }
+
         if (ShapeManager.AllShapes.Count > -1)
         {
-            ShapeManager.CurrentShape.Points.Clear();
-            foreach (GameObject pf in ShapeManager.CurrentShape.Prefabs)
-            {
-                pf.GetComponent<PointAnimation>().Close();
-            }
-            ShapeManager.CurrentShape.Prefabs.Clear();
-            ShapeRenderer.ClearCurrentLines();
-            CanvasState.Instance.drawState = CanvasState.DrawStates.DRAW_STATE;
+            ShapeManager.DestroyShape(ShapeManager.CurrentShape);
         }
     }
 }

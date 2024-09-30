@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ActionManager : MonoBehaviour
+public class ActionManager
 {
     public enum UserAction
     {
@@ -10,18 +10,13 @@ public class ActionManager : MonoBehaviour
         CLOSE_SHAPE,
         GENERATE_SHAPE
     }
-    public static ActionManager Instance { get; private set; }
-    public Stack<UserAction> ActionStack { get; set; } = new Stack<UserAction>();
-    public Stack<UserAction> RedoStack { get; set; } = new Stack<UserAction>();
-    public bool canRedo { get; set; } = false;
+    public static Stack<UserAction> ActionStack = new Stack<UserAction>();
+    public static Stack<UserAction> RedoStack = new Stack<UserAction>();
+    public static bool canRedo = false;
 
-    // deleted lines get stored here in case of redo
-    public Stack<GameObject> UndoneLines { get; set; } = new Stack<GameObject>();
-
-    private void Awake()
-    {
-        Instance = this;
-    }
+    // Points and Shape Sizes that have been undone
+    public static Stack<Vector3> PointStack = new Stack<Vector3>();
+    public static Stack<int> ShapeSizeStack = new Stack<int>();
 
 
     public int GetNumberOfActions()
@@ -29,4 +24,9 @@ public class ActionManager : MonoBehaviour
         return ActionStack.Count;
     }
 
+    public static void Reset()
+    {
+        ActionStack.Clear();
+        RedoStack.Clear();
+    }
 }

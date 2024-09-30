@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,9 +20,12 @@ public class UndoScript : MonoBehaviour
         }
 
 
-        if (ActionManager.Instance.ActionStack.Count > 0)
+        if (ActionManager.ActionStack.Count > 0)
         {
-            ActionManager.UserAction lastAction = ActionManager.Instance.ActionStack.Peek();
+            ActionManager.UserAction lastAction = ActionManager.ActionStack.Peek();
+
+            Vector3 startPoint;
+            Vector3 endPoint;
 
             switch (lastAction)
             {
@@ -31,27 +33,27 @@ public class UndoScript : MonoBehaviour
                     Debug.Log("Undo Point Draw");
 
                     // A singular point (no line) has been drawn to start a new shape. now undo it
-                    ShapeManager.CurrentShape.RemoveLastPoint();
+                    startPoint = ShapeManager.CurrentShape.RemoveLastPoint();
 
-                    // store shape in case of redo
-                    ShapeManager.PrevShapes.Push(ShapeManager.CurrentShape);
+                    ActionManager.PointStack.Push(startPoint);
 
                     if (CanvasState.Instance.shapeCount > 1)
                     {
                         // if destroying the first point of shape 2, reassign the current shape to shape 1
-                        ShapeManager.CurrentShape = ShapeManager.AllShapes[0];
+                        ShapeManager.CurrentShape = ShapeManager.AllShapes[ShapeManager.AllShapes.Count - 2];
                         ShapeManager.AllShapes.RemoveAt(ShapeManager.AllShapes.Count - 1);
                         CanvasState.Instance.shapeCount--;
-                        ShapeManager.CurrentLines = ShapeManager.PrevLines;
-                        ShapeManager.PrevLines = new List<GameObject>();
                     }
                     break;
 
                 case ActionManager.UserAction.DRAW_LINE:
                     Debug.Log("Undo Line Draw");
 
-                    UndoDrawLine();
-                    ShapeManager.CurrentShape.RemoveLastPoint();
+                    endPoint = ShapeManager.CurrentShape.RemoveLastPoint();
+                    startPoint = ShapeManager.CurrentShape.RemoveLastLine();
+
+                    ActionManager.PointStack.Push(endPoint);
+                    ActionManager.PointStack.Push(startPoint);
                     break;
 
                 case ActionManager.UserAction.CLOSE_SHAPE:
@@ -68,32 +70,34 @@ public class UndoScript : MonoBehaviour
                     }
 
                     ShapeManager.CurrentShape.IsClosed = false;
-                    ShapeManager.CurrentLines = ShapeManager.PrevLines;
 
-                    UndoDrawLine();
+                    startPoint = ShapeManager.CurrentShape.RemoveLastLine();
+
+                    ActionManager.PointStack.Push(startPoint);
                     break;
-
                 case ActionManager.UserAction.GENERATE_SHAPE:
                     Debug.Log("Undo Shape Gen");
 
                     // A shape has been rando generated. Undo the last shape generated
-                    ShapeManager.DeleteLastShape();
-                    ShapeRenderer.RedrawAllShapes();
+                    Shape shape = ShapeManager.AllShapes[ShapeManager.AllShapes.Count - 1];
+                    ShapeManager.AllShapes.RemoveAt(ShapeManager.AllShapes.Count - 1);
+
+                    ActionManager.ShapeSizeStack.Push(shape.Points.Count);
+                    foreach (var point in shape.Points)
+                    {
+                        ActionManager.PointStack.Push(point);
+                    }
+
+                    ShapeManager.DestroyShape(shape);
+                    CanvasState.Instance.shapeCount--;
+
+                    ShapeManager.CurrentShape = new Shape();
                     break;
             }
 
-            ActionManager.Instance.ActionStack.Pop();
-            ActionManager.Instance.RedoStack.Push(lastAction);
-            ActionManager.Instance.canRedo = true;
+            ActionManager.ActionStack.Pop();
+            ActionManager.RedoStack.Push(lastAction);
+            ActionManager.canRedo = true;
         }
-    }
-
-    public void UndoDrawLine()
-    {
-        // undo the last line drawn
-        GameObject lastLine = ShapeManager.CurrentLines[ShapeManager.CurrentLines.Count - 1];
-        ShapeManager.CurrentLines.RemoveAt(ShapeManager.CurrentLines.Count - 1);
-        lastLine.SetActive(false);
-        ActionManager.Instance.UndoneLines.Push(lastLine);
     }
 }

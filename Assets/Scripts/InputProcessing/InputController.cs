@@ -58,9 +58,8 @@ public class InputController : MonoBehaviour
             // Close the current shape
             ShapeManager.StartNewShape();
             ShapeRenderer.RedrawAllShapes();
-            CanvasState.Instance.shapeCount++;
-            ActionManager.Instance.ActionStack.Push(ActionManager.UserAction.CLOSE_SHAPE);
-            ActionManager.Instance.canRedo = false;
+            ActionManager.ActionStack.Push(ActionManager.UserAction.CLOSE_SHAPE);
+            ActionManager.canRedo = false;
             return;
         }
 
@@ -70,13 +69,13 @@ public class InputController : MonoBehaviour
             // current shape hasn't been set yet, this point will be the first point
             if (ShapeManager.CurrentShape.Prefabs.Count == 0)
             {
-                ActionManager.Instance.ActionStack.Push(ActionManager.UserAction.DRAW_POINT);
-                ActionManager.Instance.canRedo = false;
+                ActionManager.ActionStack.Push(ActionManager.UserAction.DRAW_POINT);
+                ActionManager.canRedo = false;
             }
             else
             {
-                ActionManager.Instance.ActionStack.Push(ActionManager.UserAction.DRAW_LINE);
-                ActionManager.Instance.canRedo = false;
+                ActionManager.ActionStack.Push(ActionManager.UserAction.DRAW_LINE);
+                ActionManager.canRedo = false;
             }
             GameObject newPrefab = Instantiate(currentPrefab, spawnPosition, Quaternion.identity);
             ShapeManager.AddPointToCurrentShape(spawnPosition, newPrefab);
