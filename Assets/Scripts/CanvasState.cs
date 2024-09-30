@@ -87,7 +87,7 @@ public class CanvasState : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         else if (shapeCount == MAX_SHAPE_COUNT)
         {
             this.drawState = DrawStates.LOCK_STATE;
-            IoUManager.CalculateIoUForShapes();
+            IoUCalculator.CalculateIoUForShapes();
         }
         else if (this.shapeCount > MAX_SHAPE_COUNT)
         {

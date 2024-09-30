@@ -23,7 +23,7 @@ public class CalcIoUBtnScript : MonoBehaviour
     {
         if (_iouPanel != null)
         {
-            _iouText.text = IoUManager.IoUInfo;
+            _iouText.text = IoUCalculator.IoUInfo;
             _iouPanel.SetActive(true);
         }
     }
