@@ -92,7 +92,6 @@ public class UndoScript : MonoBehaviour
         // undo the last line drawn
         GameObject lastLine = ShapeManager.Instance.CurrentLines[ShapeManager.Instance.CurrentLines.Count - 1];
         ShapeManager.Instance.CurrentLines.RemoveAt(ShapeManager.Instance.CurrentLines.Count - 1);
-        // Destroy(lastLine);
         lastLine.SetActive(false);
         ActionManager.Instance.UndoneLines.Push(lastLine);
     }
