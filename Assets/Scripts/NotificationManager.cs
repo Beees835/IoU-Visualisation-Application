@@ -1,6 +1,6 @@
-using UnityEngine;
-using TMPro;
 using System.Collections;
+using TMPro;
+using UnityEngine;
 
 public class NotificationManager : MonoBehaviour
 {
@@ -42,9 +42,9 @@ public class NotificationManager : MonoBehaviour
     private IEnumerator ShowMessageWithDelay(string message, float initialDelay, float displayDuration)
     {
         // Initial invisibility for 0.1 seconds
-        notificationText.text = ""; 
+        notificationText.text = "";
         yield return new WaitForSeconds(initialDelay);
-        
+
         // Display the message
         notificationText.text = message;
 
@@ -52,5 +52,15 @@ public class NotificationManager : MonoBehaviour
         yield return new WaitForSeconds(displayDuration);
         notificationText.text = "";
         currentCoroutine = null;
+    }
+
+    public void ClearMessage()
+    {
+        if (currentCoroutine != null)
+        {
+            StopCoroutine(currentCoroutine);
+        }
+
+        notificationText.text = "";
     }
 }
