@@ -25,6 +25,7 @@ public class VerticesShapeGen : MonoBehaviour
 
         if (!isValid || vertexCount < MIN_VERTICES || vertexCount > MAX_VERTICES)
         {
+            NotificationManager.Instance.ShowMessage("Invalid input: Please enter a number between " + MIN_VERTICES + " and " + MAX_VERTICES);
             Debug.LogWarning("Invalid input: Please enter a number between " + MIN_VERTICES + " and " + MAX_VERTICES);
             return;
         }
