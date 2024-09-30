@@ -74,6 +74,18 @@ public class RedoScript : MonoBehaviour
 
                 case ActionManager.UserAction.GENERATE_SHAPE:
                     Debug.Log("Redo Shape Generate");
+                    // put the randomly generated shape back on the screen
+                    Shape deletedShape = ShapeManager.Instance.PrevShapes.Pop();
+                    ShapeManager.Instance.AllShapes.Add(deletedShape);
+                    CanvasState.Instance.shapeCount++;
+
+                    // redraw the points 
+                    foreach (var prefab in deletedShape.Prefabs)
+                    {
+                        prefab.SetActive(true);
+                    }
+                    // redraw lines
+                    ShapeRenderer.Instance.RedrawAllShapes();
                     break;
             }
         }
