@@ -31,10 +31,8 @@ public class InputController : MonoBehaviour
                 break;
             case CanvasState.DrawStates.MODIFY_STATE:
                 HandleModifyState();
-
                 break;
             case CanvasState.DrawStates.LOCK_STATE:
-                NotificationManager.Instance.ShowMessage("Cannot add new points when the two shapes are defined");
                 break;
         }
     }
@@ -67,6 +65,7 @@ public class InputController : MonoBehaviour
         // Add the new point to the current shape
         if (ShapeManager.CurrentShape.IsConvexWithNewPoint(spawnPosition))
         {
+            NotificationManager.Instance.ClearMessage();
             // current shape hasn't been set yet, this point will be the first point
             if (ShapeManager.CurrentShape.Prefabs.Count == 0)
             {
@@ -88,7 +87,7 @@ public class InputController : MonoBehaviour
             GameObject invalidClickMark = Instantiate(Materials.Instance.invalidMarkPrefab, spawnPosition, Quaternion.identity);
             PointAnimation pointAnimation = invalidClickMark.GetComponent<PointAnimation>();
             pointAnimation.quickLife();
-            NotificationManager.Instance.ShowMessage("Invalid Point, Cannot Place Here.");
+            NotificationManager.Instance.ShowMessage("Cannot place point here. Shape would not be Convex");
         }
     }
 
@@ -186,7 +185,7 @@ public class InputController : MonoBehaviour
                 }
             }
         }
-        if (!dragPointFlag)
+        if (!dragPointFlag && CanvasState.Instance.hovering)
         {
             NotificationManager.Instance.ShowMessage("Cannot add new points when the two shapes are defined");
         }

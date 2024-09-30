@@ -4386,7 +4386,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.9575, y: 0.9575, z: 0.9575}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 2060636202}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4478,7 +4478,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -188.02722, y: 0, z: -48.581627, w: 0}
+  m_margin: {x: -188.02722, y: 0, z: -243.39291, w: -226.77255}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
