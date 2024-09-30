@@ -88,6 +88,8 @@ public class RedoScript : MonoBehaviour
                     ShapeRenderer.Instance.RedrawAllShapes();
                     break;
             }
+            ActionManager.Instance.RedoStack.Pop();
+            ActionManager.Instance.ActionStack.Push(Action);
         }
     }
 }
