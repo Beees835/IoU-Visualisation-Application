@@ -59,6 +59,7 @@ public class ShapeGenerator : MonoBehaviour
         CanvasState.Instance.shapeCount++;
 
         ActionManager.Instance.ActionStack.Push(ActionManager.UserAction.GENERATE_SHAPE);
+        ActionManager.Instance.canRedo = false;
     }
 
     private static List<Vector3> GenerateConvexPolygon(int vertexCount)
