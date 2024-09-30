@@ -47,7 +47,7 @@ public class ShapeManager : MonoBehaviour
         shape.Prefabs.Clear();
     }
 
-    public static void DestroyShapes()
+    public static void DestroyAllShapes()
     {
         foreach (var shape in AllShapes)
         {
@@ -55,6 +55,7 @@ public class ShapeManager : MonoBehaviour
 
         }
         AllShapes.Clear();
+        DestroyShape(CurrentShape);
         CurrentShape = new Shape();
     }
 

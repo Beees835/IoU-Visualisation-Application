@@ -34,7 +34,7 @@ public class IoUCalculator : MonoBehaviour
 
         // Highlight the intersection after the calculation
         HighlightIntersection(intersectionPoints);
-        CanvasState.Instance.shapeCount += 1; // Add a shape for the intersection
+        CanvasState.Instance.shapeCount++; // Add a shape for the intersection
         Debug.Log("IoU between shape 1 and shape 2: " + iouValues[2]);
 
         Debug.Log("IoU between shape 1 and shape 2: " + iouValues[2]);
@@ -173,6 +173,7 @@ public class IoUCalculator : MonoBehaviour
         if (intersectionObject != null)
         {
             Destroy(intersectionObject);
+            CanvasState.Instance.shapeCount--;
         }
         // Track this intersection object for future removal if needed
         intersectionObject = newIntersectionObject;
@@ -257,6 +258,7 @@ public class IoUCalculator : MonoBehaviour
     {
         Destroy(intersectionObject);
         intersectionObject = null;
+        CanvasState.Instance.shapeCount--;
         ResetInfo();
     }
 }
