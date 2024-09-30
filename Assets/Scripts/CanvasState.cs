@@ -42,8 +42,6 @@ public class CanvasState : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public int shapeCount;
     public DrawStates drawState;
     public string uiState = "";
-    public GameObject PrefabShape1;
-    public GameObject PrefabShape2;
 
     // Awake is called when the script instance is being loaded
     private void Awake()

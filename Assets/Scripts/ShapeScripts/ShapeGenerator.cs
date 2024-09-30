@@ -31,7 +31,7 @@ public class ShapeGenerator : MonoBehaviour
             return;
         }
 
-        if (ShapeManager.Instance.CurrentShape.Points.Count > 0)
+        if (ShapeManager.CurrentShape.Points.Count > 0)
         {
             Debug.Log("Can't generate a shape until the current one is finished");
             return;
@@ -46,7 +46,7 @@ public class ShapeGenerator : MonoBehaviour
         // Add points and instantiate prefabs
         foreach (var point in vertices3D)
         {
-            GameObject newPrefab = Instantiate(CanvasState.Instance.PrefabShape1, point, Quaternion.identity);
+            GameObject newPrefab = Instantiate(Materials.Instance.PrefabShape1, point, Quaternion.identity);
             newShape.AddPoint(point, newPrefab); // Add point and associated prefab to shape
         }
 
@@ -55,7 +55,7 @@ public class ShapeGenerator : MonoBehaviour
         Debug.Log($"Created shape with {vertexCount} vertices");
 
         // Add the generated shape GameObject to the list of all shapes
-        ShapeManager.Instance.AllShapes.Add(newShape);
+        ShapeManager.AllShapes.Add(newShape);
         CanvasState.Instance.shapeCount++;
 
         ActionManager.Instance.ActionStack.Push(ActionManager.UserAction.GENERATE_SHAPE);
