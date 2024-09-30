@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -27,8 +25,9 @@ public class DeleteCurrShapeScript : MonoBehaviour
             ShapeManager.Instance.CurrentShape.Points.Clear();
             foreach (GameObject pf in ShapeManager.Instance.CurrentShape.Prefabs)
             {
-                Destroy(pf);
+                pf.GetComponent<PointAnimation>().Close();
             }
+            ShapeManager.Instance.CurrentShape.Prefabs.Clear();
             ShapeRenderer.Instance.ClearCurrentLines();
             CanvasState.Instance.drawState = CanvasState.DrawStates.DRAW_STATE;
         }

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,7 +8,10 @@ public class Shape
     public Stack<Vector3> PrevPoints { get; set; } = new Stack<Vector3>();
     public bool IsClosed { get; set; } = false;
 
-    public Shape() { }
+    public Shape(bool isClosed = false)
+    {
+        IsClosed = isClosed;
+    }
 
     public void AddPoint(Vector3 point, GameObject prefab)
     {
@@ -29,7 +31,7 @@ public class Shape
             Points.RemoveAt(Points.Count - 1);
             GameObject lastPrefab = Prefabs[Prefabs.Count - 1];
             Prefabs.RemoveAt(Prefabs.Count - 1);
-            GameObject.Destroy(lastPrefab);
+            lastPrefab.GetComponent<PointAnimation>().Close();
         }
     }
 

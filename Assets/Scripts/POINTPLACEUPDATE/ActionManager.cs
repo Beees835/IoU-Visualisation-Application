@@ -1,11 +1,10 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ActionManager : MonoBehaviour
 {
 
-    public enum UserAction 
+    public enum UserAction
     {
         DRAW_POINT,
         DRAW_LINE,
@@ -21,7 +20,7 @@ public class ActionManager : MonoBehaviour
 
     private void Awake()
     {
-    Instance = this;
+        Instance = this;
     }
 
 

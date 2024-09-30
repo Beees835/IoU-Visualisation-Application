@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,6 +12,7 @@ public class ShapeManager : MonoBehaviour
     public List <GameObject> PrevLines { get; set; } = new List<GameObject>();
     public Stack<Shape> PrevShapes { get; set; } = new Stack<Shape>();
 
+
     private void Awake()
     {
         Instance = this;
@@ -22,7 +22,7 @@ public class ShapeManager : MonoBehaviour
     {
         if (CurrentShape.Points.Count > 0)
         {
-            CurrentShape.IsClosed = true; 
+            CurrentShape.IsClosed = true;
             AllShapes.Add(CurrentShape);
             CurrentShape = new Shape();
         }
@@ -33,14 +33,16 @@ public class ShapeManager : MonoBehaviour
         CurrentShape.AddPoint(point, prefab);
     }
 
-    public void DeleteLastShape() {
+    public void DeleteLastShape()
+    {
         CurrentShape = AllShapes[AllShapes.Count - 1];
         foreach (var prefab in CurrentShape.Prefabs)
         {
             // remove points from screen
             prefab.SetActive(false);
+
         }
-    
+
         foreach (var line in CurrentLines)
         {
             // remove lines from screen 
@@ -51,6 +53,7 @@ public class ShapeManager : MonoBehaviour
         PrevShapes.Push(CurrentShape);
 
         // actually remove shape
+
         AllShapes.Remove(CurrentShape);
         CurrentShape = new Shape();
         CanvasState.Instance.shapeCount--;

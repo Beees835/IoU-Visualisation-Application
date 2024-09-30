@@ -401,7 +401,8 @@ MonoBehaviour:
   shapeCount: 0
   drawState: 0
   uiState: 
-  textMeshPro: {fileID: 1909817002}
+  PrefabShape1: {fileID: 1473709619147884113, guid: b73f91f45f74a4579ae55b8b750d63b9, type: 3}
+  PrefabShape2: {fileID: 5077000918732251823, guid: 0b9fc175dc5b54517b3fba4543af1ec0, type: 3}
 --- !u!114 &104920593
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1394,6 +1395,7 @@ GameObject:
   - component: {fileID: 476111636}
   - component: {fileID: 476111635}
   - component: {fileID: 476111634}
+  - component: {fileID: 476111637}
   m_Layer: 5
   m_Name: pentagonSelect
   m_TagString: Untagged
@@ -1465,7 +1467,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2060636204}
+      - m_Target: {fileID: 476111637}
         m_TargetAssemblyTypeName: ShapeGenerator, Scripts
         m_MethodName: GeneratePentagon
         m_Mode: 1
@@ -1515,6 +1517,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 476111632}
   m_CullTransparentMesh: 1
+--- !u!114 &476111637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 476111632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad7dfa2db63b7ee47b6cc1867486a273, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &478026036
 GameObject:
   m_ObjectHideFlags: 0
@@ -2112,8 +2126,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Cam: {fileID: 519420031}
-  PrefabShape1: {fileID: 1473709619147884113, guid: b73f91f45f74a4579ae55b8b750d63b9, type: 3}
-  PrefabShape2: {fileID: 5077000918732251823, guid: 0b9fc175dc5b54517b3fba4543af1ec0, type: 3}
   CloseThreshold: 0.1
 --- !u!1 &606981754
 GameObject:
@@ -2615,8 +2627,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf7fd85b94b0248c38be32b02cbdbcb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LineMaterial: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
-  LineWidth: 0.05
 --- !u!1 &774138552
 GameObject:
   m_ObjectHideFlags: 0
@@ -4067,6 +4077,7 @@ GameObject:
   - component: {fileID: 1215937572}
   - component: {fileID: 1215937571}
   - component: {fileID: 1215937570}
+  - component: {fileID: 1215937573}
   m_Layer: 5
   m_Name: genShapeBtn
   m_TagString: Untagged
@@ -4188,6 +4199,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1215937568}
   m_CullTransparentMesh: 1
+--- !u!114 &1215937573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1215937568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 761ce814467bdd94b83bba129d960e9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _verticesInput: {fileID: 1779759155}
+  _generateButton: {fileID: 1215937570}
 --- !u!1 &1282835048
 GameObject:
   m_ObjectHideFlags: 0
@@ -5076,6 +5101,7 @@ GameObject:
   - component: {fileID: 1684382207}
   - component: {fileID: 1684382206}
   - component: {fileID: 1684382205}
+  - component: {fileID: 1684382208}
   m_Layer: 5
   m_Name: quadSelect
   m_TagString: Untagged
@@ -5147,7 +5173,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2060636204}
+      - m_Target: {fileID: 1684382208}
         m_TargetAssemblyTypeName: ShapeGenerator, Scripts
         m_MethodName: GenerateSquare
         m_Mode: 1
@@ -5197,6 +5223,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1684382203}
   m_CullTransparentMesh: 1
+--- !u!114 &1684382208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1684382203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad7dfa2db63b7ee47b6cc1867486a273, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1720927328
 GameObject:
   m_ObjectHideFlags: 0
@@ -5535,6 +5573,7 @@ GameObject:
   - component: {fileID: 1812860863}
   - component: {fileID: 1812860862}
   - component: {fileID: 1812860861}
+  - component: {fileID: 1812860864}
   m_Layer: 5
   m_Name: triangleSelect
   m_TagString: Untagged
@@ -5606,7 +5645,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2060636204}
+      - m_Target: {fileID: 1812860864}
         m_TargetAssemblyTypeName: ShapeGenerator, Scripts
         m_MethodName: GenerateTriangle
         m_Mode: 1
@@ -5656,6 +5695,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1812860859}
   m_CullTransparentMesh: 1
+--- !u!114 &1812860864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1812860859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad7dfa2db63b7ee47b6cc1867486a273, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1838075977
 GameObject:
   m_ObjectHideFlags: 0
@@ -5801,6 +5852,7 @@ GameObject:
   - component: {fileID: 1893396492}
   - component: {fileID: 1893396491}
   - component: {fileID: 1893396490}
+  - component: {fileID: 1893396493}
   m_Layer: 5
   m_Name: hexagonSelect
   m_TagString: Untagged
@@ -5872,7 +5924,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2060636204}
+      - m_Target: {fileID: 1893396493}
         m_TargetAssemblyTypeName: ShapeGenerator, Scripts
         m_MethodName: GenerateHexagon
         m_Mode: 1
@@ -5922,6 +5974,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1893396488}
   m_CullTransparentMesh: 1
+--- !u!114 &1893396493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1893396488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad7dfa2db63b7ee47b6cc1867486a273, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1909817000
 GameObject:
   m_ObjectHideFlags: 0
