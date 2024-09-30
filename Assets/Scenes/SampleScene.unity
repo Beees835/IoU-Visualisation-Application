@@ -1124,6 +1124,7 @@ GameObject:
   - component: {fileID: 401900892}
   - component: {fileID: 401900891}
   - component: {fileID: 401900890}
+  - component: {fileID: 401900893}
   m_Layer: 5
   m_Name: redoBtn
   m_TagString: Untagged
@@ -1233,6 +1234,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 401900888}
   m_CullTransparentMesh: 1
+--- !u!114 &401900893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 401900888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9192e6057c0fc449a0e9d4b326c16cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _redoBtn: {fileID: 401900890}
+  PrefabShape1: {fileID: 1473709619147884113, guid: b73f91f45f74a4579ae55b8b750d63b9, type: 3}
+  PrefabShape2: {fileID: 5077000918732251823, guid: 0b9fc175dc5b54517b3fba4543af1ec0, type: 3}
 --- !u!1 &406055129
 GameObject:
   m_ObjectHideFlags: 0
@@ -4123,6 +4139,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      m_Calls:
+      - m_Target: {fileID: 2060636204}
+        m_TargetAssemblyTypeName: ShapeGenerator, Scripts
+        m_MethodName: GenerateShapeFromInput
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1215937571
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4981,6 +5010,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 1.0807, y: 0.1381}
+  m_SizeDelta: {x: 50.6707, y: 28.3754}
   m_AnchoredPosition: {x: 1.0807, y: 0.1381}
   m_SizeDelta: {x: 50.6707, y: 28.3754}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -6409,6 +6440,9 @@ GameObject:
   - component: {fileID: 2060636203}
   - component: {fileID: 2060636205}
   - component: {fileID: 2060636204}
+  - component: {fileID: 2060636203}
+  - component: {fileID: 2060636205}
+  - component: {fileID: 2060636204}
   m_Layer: 5
   m_Name: OverlayCanvas
   m_TagString: Untagged
@@ -6473,6 +6507,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
