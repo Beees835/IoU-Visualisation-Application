@@ -453,7 +453,7 @@ MonoBehaviour:
   PrefabShape1: {fileID: 1473709619147884113, guid: b73f91f45f74a4579ae55b8b750d63b9, type: 3}
   PrefabShape2: {fileID: 5077000918732251823, guid: 0b9fc175dc5b54517b3fba4543af1ec0, type: 3}
   invalidMarkPrefab: {fileID: 3186114411118968715, guid: 362c8f1c2f3f24ff381aee8979a535cb, type: 3}
-  LineMaterial: {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  LineMaterial: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
 --- !u!1 &134288624
 GameObject:
   m_ObjectHideFlags: 0
