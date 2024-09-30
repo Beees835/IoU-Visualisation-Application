@@ -23,9 +23,12 @@ public class UndoScript : MonoBehaviour
         if (ActionManager.ActionStack.Count > 0)
         {
             ActionManager.UserAction lastAction = ActionManager.ActionStack.Peek();
+            GameObject prefabType = CanvasState.Instance.shapeCount == 0 ? Materials.Instance.PrefabShape1 : Materials.Instance.PrefabShape2;
 
             Vector3 startPoint;
             Vector3 endPoint;
+            Shape shape;
+
 
             switch (lastAction)
             {
@@ -79,7 +82,7 @@ public class UndoScript : MonoBehaviour
                     Debug.Log("Undo Shape Gen");
 
                     // A shape has been rando generated. Undo the last shape generated
-                    Shape shape = ShapeManager.AllShapes[ShapeManager.AllShapes.Count - 1];
+                    shape = ShapeManager.AllShapes[ShapeManager.AllShapes.Count - 1];
                     ShapeManager.AllShapes.RemoveAt(ShapeManager.AllShapes.Count - 1);
 
                     ActionManager.ShapeSizeStack.Push(shape.Points.Count);
@@ -92,6 +95,20 @@ public class UndoScript : MonoBehaviour
                     CanvasState.Instance.shapeCount--;
 
                     ShapeManager.CurrentShape = new Shape();
+                    break;
+                case ActionManager.UserAction.DELETE_SHAPE:
+                    Debug.Log("Undo Delete Partial Shape");
+
+                    bool shapeCompleted = ActionManager.DeleteCompletion.Pop();
+
+                    shape = ActionManager.BuildShapeFromStack(prefabType);
+                    ShapeManager.CurrentShape = shape;
+
+                    if (shapeCompleted)
+                    {
+                        ShapeManager.StartNewShape();
+                    }
+                    ShapeRenderer.DrawShape(shape);
                     break;
             }
 

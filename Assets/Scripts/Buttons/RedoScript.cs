@@ -64,18 +64,12 @@ public class RedoScript : MonoBehaviour
 
                 case ActionManager.UserAction.GENERATE_SHAPE:
                     Debug.Log("Redo Shape Generate");
-
-                    int shapeSize = ActionManager.ShapeSizeStack.Pop();
-
-                    ShapeManager.CurrentShape = new Shape();
-                    for (int i = 0; i < shapeSize; i++)
-                    {
-                        startPoint = ActionManager.PointStack.Pop();
-                        prefab = Instantiate(prefabType, startPoint, Quaternion.identity);
-                        ShapeManager.AddPointToCurrentShape(startPoint, prefab);
-                    }
+                    ShapeManager.CurrentShape = ActionManager.BuildShapeFromStack(prefabType);
                     ShapeManager.StartNewShape();
                     ShapeRenderer.RedrawAllShapes();
+                    break;
+                case ActionManager.UserAction.DELETE_SHAPE:
+                    DeleteCurrShapeScript.DeleteCurrShape();
                     break;
             }
 
