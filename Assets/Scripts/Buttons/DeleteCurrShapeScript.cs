@@ -16,9 +16,6 @@ public class DeleteCurrShapeScript : MonoBehaviour
     {
         if (CanvasState.Instance.drawState == CanvasState.DrawStates.MODIFY_STATE)
         {
-            //NotificationManager.Instance.ShowMessage("Can't delete shape after intersection has been calculated.");
-            //Debug.Log("Can't delete shape after intersection");
-
             // Remove Intersection Shape
             IoUCalculator.Reset();
         }
