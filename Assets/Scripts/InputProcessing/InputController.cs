@@ -14,9 +14,12 @@ public class InputController : MonoBehaviour
 
     public void PlacePrefabAtMousePosition()
     {
+        if (IsPointerOverUIElement()) {
+            return;
+        }
+
         // Logic to select the correct prefab
         if (CanvasState.Instance.shapeCount == 0)
-
         {
             currentPrefab = Materials.Instance.PrefabShape1;
         }
@@ -191,4 +194,24 @@ public class InputController : MonoBehaviour
             NotificationManager.Instance.ShowMessage("Cannot add new points when the two shapes are defined");
         }
     }
+
+    private bool IsPointerOverUIElement()
+    {
+        PointerEventData eventData = new PointerEventData(EventSystem.current)
+        {
+            position = Mouse.current.position.ReadValue()
+        };
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventData, results);
+        foreach (RaycastResult result in results)
+        {
+            if (result.gameObject.layer == LayerMask.NameToLayer("OverlayUI"))
+            {
+                return true; 
+            }
+        }
+
+        return false;
+    }
+
 }
