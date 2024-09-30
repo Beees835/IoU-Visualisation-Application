@@ -80,6 +80,21 @@ public class UndoScript : MonoBehaviour
                     ShapeManager.DeleteLastShape();
                     ShapeRenderer.RedrawAllShapes();
                     break;
+
+                case ActionManager.UserAction.DELETE_SHAPE:
+                    Debug.Log("Undo Shape Delete");
+
+                    // A shape has been deleted. Bring the shape back.
+                    ShapeManager.CurrentShape = ShapeManager.PrevShapes.Pop();
+                    // redraw the shape
+                    foreach (var prefab in ShapeManager.CurrentShape.Prefabs)
+                    {
+                        prefab.SetActive(true);
+                    }
+                    ShapeRenderer.RedrawAllShapes();
+                    ShapeManager.AllShapes.Add(ShapeManager.CurrentShape);
+                    CanvasState.Instance.shapeCount++;
+                    break;
             }
 
             ActionManager.Instance.ActionStack.Pop();

@@ -73,7 +73,9 @@ public class ShapeRenderer : MonoBehaviour
         foreach (var line in ShapeManager.CurrentLines)
         {
             // delete the line off the screen
-            Destroy(line);
+            if (line != null) {
+                line.SetActive(false);
+            }
         }
         ShapeManager.CurrentLines.Clear();
     }

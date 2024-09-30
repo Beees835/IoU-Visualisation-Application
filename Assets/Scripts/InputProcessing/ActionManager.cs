@@ -8,7 +8,8 @@ public class ActionManager : MonoBehaviour
         DRAW_POINT,
         DRAW_LINE,
         CLOSE_SHAPE,
-        GENERATE_SHAPE
+        GENERATE_SHAPE,
+        DELETE_SHAPE
     }
     public static ActionManager Instance { get; private set; }
     public Stack<UserAction> ActionStack { get; set; } = new Stack<UserAction>();

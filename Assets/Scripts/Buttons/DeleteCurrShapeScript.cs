@@ -22,14 +22,25 @@ public class DeleteCurrShapeScript : MonoBehaviour
 
         if (ShapeManager.AllShapes.Count > -1)
         {
-            ShapeManager.CurrentShape.Points.Clear();
+            // set lines as inactive
+            ShapeRenderer.ClearCurrentLines();
+            
             foreach (GameObject pf in ShapeManager.CurrentShape.Prefabs)
             {
+                // remove points from screen
+                if (pf == null) continue;
                 pf.GetComponent<PointAnimation>().Close();
+                pf.SetActive(false);
             }
-            ShapeManager.CurrentShape.Prefabs.Clear();
-            ShapeRenderer.ClearCurrentLines();
+            
+            // store deleted shape in case of redo
+            ShapeManager.PrevShapes.Push(ShapeManager.CurrentShape);
+
+            // reconfigure state
+            // ShapeManager.CurrentShape = new Shape();
+            CanvasState.Instance.shapeCount--;
             CanvasState.Instance.drawState = CanvasState.DrawStates.DRAW_STATE;
+            ActionManager.Instance.ActionStack.Push(ActionManager.UserAction.DELETE_SHAPE);
         }
     }
 }
