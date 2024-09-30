@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ClearCanvasScript : MonoBehaviour
@@ -16,15 +15,9 @@ public class ClearCanvasScript : MonoBehaviour
 
     void ClearCanvas()
     {
-        string currentSceneName = SceneManager.GetActiveScene().name;
-        SceneManager.LoadScene(currentSceneName);
-        ShapeManager.AllShapes.Clear();
-        ShapeManager.CurrentShape.Points.Clear();
-        ShapeRenderer.ClearAllLines();
-        IoUCalculator.resetInfo();
-        CanvasState.Instance.shapeCount = 0;
-        CanvasState.Instance.drawState = CanvasState.DrawStates.DRAW_STATE;
-        Debug.Log("num shapes: " + ShapeManager.AllShapes.Count);
+        ShapeManager.DestroyShapes();
+        IoUCalculator.Reset();
+        ActionManager.Reset();
+        CanvasState.Instance.Reset();
     }
-
 }

@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
@@ -16,12 +15,6 @@ public class InputController : MonoBehaviour
 
     public void PlacePrefabAtMousePosition()
     {
-        if (IsPointerOverUIElement())
-        {
-            return;
-        }
-
-
         // Logic to select the correct prefab
         if (CanvasState.Instance.shapeCount == 0)
 
@@ -68,9 +61,8 @@ public class InputController : MonoBehaviour
             // Close the current shape
             ShapeManager.StartNewShape();
             ShapeRenderer.RedrawAllShapes();
-            CanvasState.Instance.shapeCount++;
-            ActionManager.Instance.ActionStack.Push(ActionManager.UserAction.CLOSE_SHAPE);
-            ActionManager.Instance.canRedo = false;
+            ActionManager.ActionStack.Push(ActionManager.UserAction.CLOSE_SHAPE);
+            ActionManager.canRedo = false;
             return;
         }
 
@@ -80,13 +72,13 @@ public class InputController : MonoBehaviour
             // current shape hasn't been set yet, this point will be the first point
             if (ShapeManager.CurrentShape.Prefabs.Count == 0)
             {
-                ActionManager.Instance.ActionStack.Push(ActionManager.UserAction.DRAW_POINT);
-                ActionManager.Instance.canRedo = false;
+                ActionManager.ActionStack.Push(ActionManager.UserAction.DRAW_POINT);
+                ActionManager.canRedo = false;
             }
             else
             {
-                ActionManager.Instance.ActionStack.Push(ActionManager.UserAction.DRAW_LINE);
-                ActionManager.Instance.canRedo = false;
+                ActionManager.ActionStack.Push(ActionManager.UserAction.DRAW_LINE);
+                ActionManager.canRedo = false;
             }
             GameObject newPrefab = Instantiate(currentPrefab, spawnPosition, Quaternion.identity);
             ShapeManager.AddPointToCurrentShape(spawnPosition, newPrefab);
@@ -200,28 +192,4 @@ public class InputController : MonoBehaviour
             NotificationManager.Instance.ShowMessage("Cannot add new points when the two shapes are defined");
         }
     }
-
-    //had to change this function to account for error messages
-    private bool IsPointerOverUIElement()
-    {
-        // Create a new PointerEventData object based on the current mouse position
-        PointerEventData eventData = new PointerEventData(EventSystem.current)
-        {
-            position = Mouse.current.position.ReadValue()
-        };
-
-        List<RaycastResult> results = new List<RaycastResult>();
-        EventSystem.current.RaycastAll(eventData, results);
-
-        foreach (RaycastResult result in results)
-        {
-            // Check if object is in OverlayUI layer
-            if (result.gameObject.layer == LayerMask.NameToLayer("OverlayUI"))
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
 }

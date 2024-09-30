@@ -18,6 +18,7 @@ public class ShapeManager : MonoBehaviour
         {
             CurrentShape.IsClosed = true;
             AllShapes.Add(CurrentShape);
+            CanvasState.Instance.shapeCount++;
             CurrentShape = new Shape();
         }
     }
@@ -27,32 +28,50 @@ public class ShapeManager : MonoBehaviour
         CurrentShape.AddPoint(point, prefab);
     }
 
-    public static void DeleteLastShape()
+    public static void DestroyShape(Shape shape)
     {
-        CurrentShape = AllShapes[AllShapes.Count - 1];
-        foreach (var prefab in CurrentShape.Prefabs)
-        {
-            // remove points from screen
-            prefab.SetActive(false);
 
+        foreach (var prefab in shape.Prefabs)
+        {
+            prefab.GetComponent<PointAnimation>().Close();
+            Destroy(prefab);
         }
 
-        foreach (var line in CurrentLines)
+        foreach (var line in shape.Lines)
         {
-            // remove lines from screen 
             Destroy(line);
         }
 
-        // store deleted shape in case of redo
-        PrevShapes.Push(CurrentShape);
+        shape.Points.Clear();
+        shape.Lines.Clear();
+        shape.Prefabs.Clear();
+    }
 
-        // actually remove shape
+    public static void DestroyShapes()
+    {
+        foreach (var shape in AllShapes)
+        {
+            DestroyShape(shape);
 
-        AllShapes.Remove(CurrentShape);
+        }
+        AllShapes.Clear();
         CurrentShape = new Shape();
-        CanvasState.Instance.shapeCount--;
+    }
 
-        // reassign current lines
-        CurrentLines = PrevLines;
+    public static void ClearLines()
+    {
+        foreach (var line in CurrentLines)
+        {
+            // delete the line off the screen
+            Destroy(line);
+        }
+        foreach (var line in PrevLines)
+        {
+            // delete the line off the screen
+            Destroy(line);
+        }
+
+        CurrentLines.Clear();
+        PrevLines.Clear();
     }
 }
