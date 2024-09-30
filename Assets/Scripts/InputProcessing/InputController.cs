@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
-using UnityEngine.EventSystems;
 
 public class InputController : MonoBehaviour
 {
@@ -37,7 +35,7 @@ public class InputController : MonoBehaviour
                 break;
             case CanvasState.DrawStates.MODIFY_STATE:
                 HandleModifyState();
-                
+
                 break;
             case CanvasState.DrawStates.LOCK_STATE:
                 NotificationManager.Instance.ShowMessage("Cannot add new points when the two shapes are defined");

@@ -16,9 +16,8 @@ public class DeleteCurrShapeScript : MonoBehaviour
     {
         if (CanvasState.Instance.drawState == CanvasState.DrawStates.MODIFY_STATE)
         {
-            NotificationManager.Instance.ShowMessage("Can't delete shape after intersection has been calculated.");
-            Debug.Log("Can't delete shape after intersection");
-            return;
+            // Remove Intersection Shape
+            IoUCalculator.Reset();
         }
 
         if (ShapeManager.CurrentShape.Points.Count == 0)
@@ -43,6 +42,8 @@ public class DeleteCurrShapeScript : MonoBehaviour
         {
             ShapeManager.DestroyShape(ShapeManager.CurrentShape);
         }
+
+        ShapeManager.CurrentShape.IsClosed = false;
 
         ActionManager.ActionStack.Push(ActionManager.UserAction.DELETE_SHAPE);
         ActionManager.canRedo = false;
