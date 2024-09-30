@@ -38,7 +38,7 @@ public class IoUCalculator : MonoBehaviour
         Debug.Log("IoU between shape 1 and shape 2: " + iouValues[2]);
 
         Debug.Log("IoU between shape 1 and shape 2: " + iouValues[2]);
-        string msg = "Shape 1 Area:  {0} \nShape 2 Area: {1} \n Area of Union: {2} \n Area of Intersection: {3} \n IoU: {4}";
+        string msg = "Shape 1 Area:  {0} \nShape 2 Area: {1} \nArea of Union: {2} \nArea of Intersection: {3} \nIoU: {4}";
         IoUInfo = string.Format(msg, area1, area2, iouValues[0], iouValues[1], iouValues[2]);
         IouCalcTextDisplay.Instance.ShowMessage(IoUInfo);
     }
