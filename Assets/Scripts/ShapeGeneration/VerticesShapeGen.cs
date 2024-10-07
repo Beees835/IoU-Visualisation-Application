@@ -27,11 +27,16 @@ public class VerticesShapeGen : MonoBehaviour
         {
             NotificationManager.Instance.ShowMessage("Invalid input: Please enter a number between " + MIN_VERTICES + " and " + MAX_VERTICES);
             Debug.LogWarning("Invalid input: Please enter a number between " + MIN_VERTICES + " and " + MAX_VERTICES);
+            // Clear input field
+            _verticesInput.text = "";
             return;
         }
 
         // Generate shape based on user input
         ShapeGenerator.GenerateShape(vertexCount);
+
+        // Clear input field
+        _verticesInput.text = "";
 
         // Allows the colour tint to show on the btn when you hover over it, even after clicking 
         _generateButton.interactable = true;
