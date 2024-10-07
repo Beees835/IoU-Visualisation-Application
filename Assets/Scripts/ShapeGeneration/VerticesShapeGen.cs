@@ -8,7 +8,7 @@ public class VerticesShapeGen : MonoBehaviour
     [SerializeField] private Button _generateButton;
 
 
-    private const int MIN_VERTICES = 3; // Maximum vertices allowed
+    private const int MIN_VERTICES = 3; // Minimum vertices allowed
     private const int MAX_VERTICES = 10; // Maximum vertices allowed
 
     private void Start()
@@ -32,5 +32,8 @@ public class VerticesShapeGen : MonoBehaviour
 
         // Generate shape based on user input
         ShapeGenerator.GenerateShape(vertexCount);
+
+        // Allows the colour tint to show on the btn when you hover over it, even after clicking 
+        _generateButton.interactable = true;
     }
 }
