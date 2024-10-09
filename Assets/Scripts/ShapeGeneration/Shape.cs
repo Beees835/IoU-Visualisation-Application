@@ -16,10 +16,18 @@ public class Shape
         IsClosed = isClosed;
     }
 
-    public void AddPoint(Vector3 point)
+    public void AddPoint(Vector3 point, bool animated = false)
     {
         Points.Add(point);
-        ShapeRenderer.RenderPoint(this, point);
+
+        if (animated)
+        {
+            ShapeRenderer.RenderNewPoint(this, point);
+        }
+        else
+        {
+            ShapeRenderer.RenderPoint(this, point);
+        }
     }
 
     public Vector3 RemoveLastPoint()
@@ -94,5 +102,24 @@ public class Shape
     {
         List<Vector3> testPoints = new List<Vector3>(Points) { newPoint };
         return IsConvex(testPoints);
+    }
+
+    public void ClearLines()
+    {
+        foreach (var line in Lines)
+        {
+            // delete the line off the screen
+            GameObject.Destroy(line);
+        }
+        Lines.Clear();
+    }
+
+    public void ClearVertices()
+    {
+        foreach (GameObject point in RenderedPoints)
+        {
+            GameObject.Destroy(point);
+        }
+        RenderedPoints.Clear();
     }
 }

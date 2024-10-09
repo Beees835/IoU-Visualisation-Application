@@ -3,13 +3,14 @@ using UnityEngine;
 
 public class PointAnimation : MonoBehaviour
 {
-    public float duration = 0.5f; 
+    public float duration = 0.5f;
     private Vector3 targetScale;
     private Vector3 initialScale = Vector3.zero;
     private Vector3 originalScale;
 
     private Coroutine scaleCoroutine;
     private bool shouldScaleDownAfterScaleUp = false;
+    private bool noWait = false;
 
     void Awake()
     {
@@ -17,8 +18,9 @@ public class PointAnimation : MonoBehaviour
         targetScale = originalScale;
     }
 
-    void OnEnable()
+    public void Scale()
     {
+        noWait = false;
         transform.localScale = initialScale;
         scaleCoroutine = StartCoroutine(ScaleUp());
     }
@@ -34,7 +36,17 @@ public class PointAnimation : MonoBehaviour
         scaleCoroutine = StartCoroutine(ScaleDown());
     }
 
-    public void quickLife()
+    public void Instant()
+    {
+        noWait = true;
+
+        if (scaleCoroutine == null)
+        {
+            scaleCoroutine = StartCoroutine(ScaleUp());
+        }
+    }
+
+    public void QuickLife()
     {
         shouldScaleDownAfterScaleUp = true;
 
@@ -46,13 +58,16 @@ public class PointAnimation : MonoBehaviour
 
     IEnumerator ScaleUp()
     {
-        float time = 0f;
-        while (time < duration)
+        if (!noWait)
         {
-            // Smoothly interpolate the scale from zero to the original scale
-            transform.localScale = Vector3.Lerp(initialScale, targetScale, time / duration);
-            time += Time.deltaTime;
-            yield return null;
+            float time = 0f;
+            while (time < duration)
+            {
+                // Smoothly interpolate the scale from zero to the original scale
+                transform.localScale = Vector3.Lerp(initialScale, targetScale, time / duration);
+                time += Time.deltaTime;
+                yield return null;
+            }
         }
         transform.localScale = targetScale;
 

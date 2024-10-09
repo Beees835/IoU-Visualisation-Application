@@ -77,14 +77,14 @@ public class InputController : MonoBehaviour
                 ActionManager.canRedo = false;
             }
             ShapeManager.AddPointToCurrentShape(spawnPosition);
-            ShapeRenderer.RedrawAllShapes();
+            ShapeRenderer.DrawLines(ShapeManager.CurrentShape);
         }
         else
         {
             // new point results in an invalid shape
             GameObject invalidClickMark = Instantiate(Materials.Instance.invalidMarkPrefab, spawnPosition, Quaternion.identity);
             PointAnimation pointAnimation = invalidClickMark.GetComponent<PointAnimation>();
-            pointAnimation.quickLife();
+            pointAnimation.QuickLife();
             NotificationManager.Instance.ShowMessage("Cannot place point here. Shape would not be Convex");
         }
     }

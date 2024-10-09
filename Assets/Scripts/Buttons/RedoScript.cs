@@ -59,6 +59,12 @@ public class RedoScript : MonoBehaviour
                 endPoint = ShapeManager.CurrentShape.Points[0];
                 ShapeRenderer.DrawLine(ShapeManager.CurrentShape, startPoint, endPoint);
 
+                if (CanvasState.Instance.shapeCount >= CanvasState.MAX_SHAPE_COUNT)
+                {
+                    IoUCalculator.CalculateIoUForShapes();
+                    break;
+                }
+
                 ShapeManager.StartNewShape();
                 break;
 

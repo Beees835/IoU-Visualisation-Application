@@ -9,7 +9,6 @@ public class ShapeManager : MonoBehaviour
 
     // storing deleted/undone things in case of redo
     public static List<GameObject> PrevLines { get; set; } = new List<GameObject>();
-    public static Stack<Shape> PrevShapes { get; set; } = new Stack<Shape>();
 
 
     public static void StartNewShape()
@@ -25,7 +24,7 @@ public class ShapeManager : MonoBehaviour
 
     public static void AddPointToCurrentShape(Vector3 point)
     {
-        CurrentShape.AddPoint(point);
+        CurrentShape.AddPoint(point, true);
     }
 
     public static void DestroyShape(Shape shape)
@@ -36,15 +35,10 @@ public class ShapeManager : MonoBehaviour
             prefab.GetComponent<PointAnimation>().Close();
             Destroy(prefab);
         }
-
-        foreach (var line in shape.Lines)
-        {
-            Destroy(line);
-        }
-
         shape.Points.Clear();
-        shape.Lines.Clear();
         shape.RenderedPoints.Clear();
+
+        shape.ClearLines();
     }
 
     public static void DestroyAllShapes()
@@ -52,7 +46,6 @@ public class ShapeManager : MonoBehaviour
         foreach (var shape in AllShapes)
         {
             DestroyShape(shape);
-
         }
         AllShapes.Clear();
         DestroyShape(CurrentShape);
@@ -61,18 +54,19 @@ public class ShapeManager : MonoBehaviour
 
     public static void ClearLines()
     {
-        foreach (var line in CurrentLines)
+        foreach (Shape shape in AllShapes)
         {
-            // delete the line off the screen
-            Destroy(line);
+            shape.ClearLines();
         }
-        foreach (var line in PrevLines)
-        {
-            // delete the line off the screen
-            Destroy(line);
-        }
+        CurrentShape.ClearLines();
+    }
 
-        CurrentLines.Clear();
-        PrevLines.Clear();
+    public static void ClearVertices()
+    {
+        foreach (Shape shape in AllShapes)
+        {
+            shape.ClearVertices();
+        }
+        CurrentShape.ClearVertices();
     }
 }
