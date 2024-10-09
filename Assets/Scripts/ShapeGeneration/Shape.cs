@@ -9,6 +9,7 @@ public class Shape
     public List<GameObject> Lines { get; set; } = new List<GameObject>();
     public Stack<Vector3> PrevPoints { get; set; } = new Stack<Vector3>();
     public bool IsClosed { get; set; } = false;
+    public bool Selected = false;
 
     public Shape(bool isClosed = false)
     {
@@ -104,6 +105,7 @@ public class Shape
         return IsConvex(testPoints);
     }
 
+
     public void ClearLines()
     {
         foreach (var line in Lines)
@@ -121,5 +123,11 @@ public class Shape
             GameObject.Destroy(point);
         }
         RenderedPoints.Clear();
+    }
+
+    public void ClearShape()
+    {
+        ClearLines();
+        ClearVertices();
     }
 }

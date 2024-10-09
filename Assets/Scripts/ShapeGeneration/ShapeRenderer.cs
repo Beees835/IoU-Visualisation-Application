@@ -34,6 +34,11 @@ public class ShapeRenderer : MonoBehaviour
         LineRenderer lineRenderer = line.AddComponent<LineRenderer>();
 
         lineRenderer.material = Materials.Instance.LineMaterial;
+
+        Color color = shape.Selected ? new Color(1.0f, 0.64f, 0.0f) : Color.white;
+
+        lineRenderer.startColor = color;
+        lineRenderer.endColor = color;
         lineRenderer.positionCount = 2;
         lineRenderer.SetPosition(0, start);
         lineRenderer.SetPosition(1, end);

@@ -112,16 +112,14 @@ public class InputController : MonoBehaviour
 
     public void Drag(Vector2 panDelta)
     {
-        if (!isDragging || draggedPointIndex == -1 || selectedShape == null)
+        if (!isDragging || draggedPointIndex == -1 || selectedShape == null || CanvasState.Instance.drawState == CanvasState.DrawStates.LOCK_STATE)
         {
             return;
         }
 
-        if (doubleClicked)
+        if (ShapeManager.SelectedShape != null)
         {
             Vector3 deltaWorld = Cam.ScreenToWorldPoint(new Vector3(panDelta.x, panDelta.y, 0)) - Cam.ScreenToWorldPoint(Vector3.zero);
-
-
             Vector3 movement = new Vector3(deltaWorld.x, deltaWorld.y, 0);
             for (int i = 0; i < selectedShape.Points.Count; i++)
             {
@@ -193,11 +191,30 @@ public class InputController : MonoBehaviour
                     // Set the selected shape
                     selectedShape = shape;
 
+                    if (doubleClicked)
+                    {
+                        Debug.Log("Selecting a Shape");
+                        if (ShapeManager.SelectedShape != null)
+                        {
+                            ShapeManager.SelectedShape.Selected = false;
+                        }
+                        ShapeManager.SelectedShape = shape;
+                        shape.Selected = true;
+                        ShapeRenderer.RedrawAllShapes();
+                    }
+
                     Debug.Log($"Point {draggedPointIndex} selected in shape.");
                     return;
                 }
             }
         }
+
+        Debug.Log("Deselecting Shape");
+        ShapeManager.SelectedShape.Selected = false;
+        ShapeManager.SelectedShape = null;
+        ShapeRenderer.RedrawAllShapes();
+
+
         if (!dragPointFlag && CanvasState.Instance.hovering)
         {
             NotificationManager.Instance.ShowMessage("Cannot add new points when the two shapes are defined");

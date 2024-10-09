@@ -78,7 +78,7 @@ public class CanvasState : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         }
         else if (shapeCount > MAX_SHAPE_COUNT)
         {
-            drawState = DrawStates.MODIFY_STATE;
+            drawState = hovering ? DrawStates.MODIFY_STATE : DrawStates.LOCK_STATE;
         }
     }
 

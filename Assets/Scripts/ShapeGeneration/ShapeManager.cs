@@ -5,6 +5,7 @@ public class ShapeManager : MonoBehaviour
 {
     public static List<Shape> AllShapes { get; private set; } = new List<Shape>();
     public static Shape CurrentShape;
+    public static Shape SelectedShape;
     public static List<GameObject> CurrentLines { get; set; } = new List<GameObject>();
 
     // storing deleted/undone things in case of redo
