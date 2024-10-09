@@ -4,12 +4,12 @@ using UnityEngine;
 public class ShapeManager : MonoBehaviour
 {
     public static List<Shape> AllShapes { get; private set; } = new List<Shape>();
-    public static Shape CurrentShape { get; set; } = new Shape();
+    public static Shape CurrentShape;
+    public static Shape SelectedShape;
     public static List<GameObject> CurrentLines { get; set; } = new List<GameObject>();
 
     // storing deleted/undone things in case of redo
     public static List<GameObject> PrevLines { get; set; } = new List<GameObject>();
-    public static Stack<Shape> PrevShapes { get; set; } = new Stack<Shape>();
 
 
     public static void StartNewShape()
@@ -23,28 +23,23 @@ public class ShapeManager : MonoBehaviour
         }
     }
 
-    public static void AddPointToCurrentShape(Vector3 point, GameObject prefab)
+    public static void AddPointToCurrentShape(Vector3 point)
     {
-        CurrentShape.AddPoint(point, prefab);
+        CurrentShape.AddPoint(point, true);
     }
 
     public static void DestroyShape(Shape shape)
     {
 
-        foreach (var prefab in shape.Prefabs)
+        foreach (var prefab in shape.RenderedPoints)
         {
             prefab.GetComponent<PointAnimation>().Close();
             Destroy(prefab);
         }
-
-        foreach (var line in shape.Lines)
-        {
-            Destroy(line);
-        }
-
         shape.Points.Clear();
-        shape.Lines.Clear();
-        shape.Prefabs.Clear();
+        shape.RenderedPoints.Clear();
+
+        shape.ClearLines();
     }
 
     public static void DestroyAllShapes()
@@ -52,7 +47,6 @@ public class ShapeManager : MonoBehaviour
         foreach (var shape in AllShapes)
         {
             DestroyShape(shape);
-
         }
         AllShapes.Clear();
         DestroyShape(CurrentShape);
@@ -61,18 +55,19 @@ public class ShapeManager : MonoBehaviour
 
     public static void ClearLines()
     {
-        foreach (var line in CurrentLines)
+        foreach (Shape shape in AllShapes)
         {
-            // delete the line off the screen
-            Destroy(line);
+            shape.ClearLines();
         }
-        foreach (var line in PrevLines)
-        {
-            // delete the line off the screen
-            Destroy(line);
-        }
+        CurrentShape.ClearLines();
+    }
 
-        CurrentLines.Clear();
-        PrevLines.Clear();
+    public static void ClearVertices()
+    {
+        foreach (Shape shape in AllShapes)
+        {
+            shape.ClearVertices();
+        }
+        CurrentShape.ClearVertices();
     }
 }

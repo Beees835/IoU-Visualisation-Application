@@ -3,29 +3,40 @@ using UnityEngine;
 
 public class Shape
 {
+    public GameObject prefabType;
     public List<Vector3> Points { get; set; } = new List<Vector3>();
-    public List<GameObject> Prefabs { get; set; } = new List<GameObject>();
+    public List<GameObject> RenderedPoints { get; set; } = new List<GameObject>();
     public List<GameObject> Lines { get; set; } = new List<GameObject>();
     public Stack<Vector3> PrevPoints { get; set; } = new Stack<Vector3>();
     public bool IsClosed { get; set; } = false;
+    public bool Selected = false;
 
     public Shape(bool isClosed = false)
     {
+        prefabType = Materials.GetPrefabType();
         IsClosed = isClosed;
     }
 
-    public void AddPoint(Vector3 point, GameObject prefab)
+    public void AddPoint(Vector3 point, bool animated = false)
     {
         Points.Add(point);
-        Prefabs.Add(prefab);
+
+        if (animated)
+        {
+            ShapeRenderer.RenderNewPoint(this, point);
+        }
+        else
+        {
+            ShapeRenderer.RenderPoint(this, point);
+        }
     }
 
     public Vector3 RemoveLastPoint()
     {
         Vector3 point = Points[Points.Count - 1];
-        GameObject prefab = Prefabs[Prefabs.Count - 1];
+        GameObject prefab = RenderedPoints[RenderedPoints.Count - 1];
 
-        Prefabs.RemoveAt(Prefabs.Count - 1);
+        RenderedPoints.RemoveAt(RenderedPoints.Count - 1);
         Points.RemoveAt(Points.Count - 1);
 
         prefab.GetComponent<PointAnimation>().Close();
@@ -92,5 +103,31 @@ public class Shape
     {
         List<Vector3> testPoints = new List<Vector3>(Points) { newPoint };
         return IsConvex(testPoints);
+    }
+
+
+    public void ClearLines()
+    {
+        foreach (var line in Lines)
+        {
+            // delete the line off the screen
+            GameObject.Destroy(line);
+        }
+        Lines.Clear();
+    }
+
+    public void ClearVertices()
+    {
+        foreach (GameObject point in RenderedPoints)
+        {
+            GameObject.Destroy(point);
+        }
+        RenderedPoints.Clear();
+    }
+
+    public void ClearShape()
+    {
+        ClearLines();
+        ClearVertices();
     }
 }

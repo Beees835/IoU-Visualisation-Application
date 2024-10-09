@@ -26,7 +26,7 @@ public class ActionManager : MonoBehaviour
         return ActionStack.Count;
     }
 
-    public static Shape BuildShapeFromStack(GameObject prefabType)
+    public static Shape BuildShapeFromStack()
     {
         Shape shape = new Shape();
         int shapeSize = ActionManager.ShapeSizeStack.Pop();
@@ -34,8 +34,7 @@ public class ActionManager : MonoBehaviour
         for (int i = 0; i < shapeSize; i++)
         {
             Vector3 startPoint = PointStack.Pop();
-            GameObject prefab = Instantiate(prefabType, startPoint, Quaternion.identity);
-            shape.AddPoint(startPoint, prefab);
+            shape.AddPoint(startPoint);
         }
 
         return shape;

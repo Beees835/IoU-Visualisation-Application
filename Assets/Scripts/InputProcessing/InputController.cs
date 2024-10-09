@@ -9,20 +9,19 @@ public class InputController : MonoBehaviour
     private int draggedPointIndex = -1;
     private bool isDragging = false;
 
-    private GameObject currentPrefab;
     private Shape selectedShape; // Keeps track of the shape being modified
 
-    public void PlacePrefabAtMousePosition()
+    private double prevClick = 0;
+
+    bool doubleClicked = false;
+
+    public void HandleClick(InputAction.CallbackContext context)
     {
-        // Logic to select the correct prefab
-        if (CanvasState.Instance.shapeCount == 0)
-        {
-            currentPrefab = Materials.Instance.PrefabShape1;
-        }
-        else if (CanvasState.Instance.shapeCount == 1)
-        {
-            currentPrefab = Materials.Instance.PrefabShape2;
-        }
+        double curClick = context.startTime;
+        doubleClicked = curClick - prevClick < 0.3;
+        prevClick = curClick;
+
+        Debug.Log("Double Clicked" + doubleClicked);
 
         switch (CanvasState.Instance.drawState)
         {
@@ -30,14 +29,14 @@ public class InputController : MonoBehaviour
                 AddNewPoint();
                 break;
             case CanvasState.DrawStates.MODIFY_STATE:
-                HandleModifyState();
+                HandlePointSelection();
                 break;
             case CanvasState.DrawStates.LOCK_STATE:
                 break;
         }
     }
 
-    private void HandleModifyState()
+    private void HandlePointSelection()
     {
         if (draggedPointIndex == -1)
         {
@@ -67,7 +66,7 @@ public class InputController : MonoBehaviour
         {
             NotificationManager.Instance.ClearMessage();
             // current shape hasn't been set yet, this point will be the first point
-            if (ShapeManager.CurrentShape.Prefabs.Count == 0)
+            if (ShapeManager.CurrentShape.RenderedPoints.Count == 0)
             {
                 ActionManager.ActionStack.Push(ActionManager.UserAction.DRAW_POINT);
                 ActionManager.canRedo = false;
@@ -77,16 +76,15 @@ public class InputController : MonoBehaviour
                 ActionManager.ActionStack.Push(ActionManager.UserAction.DRAW_LINE);
                 ActionManager.canRedo = false;
             }
-            GameObject newPrefab = Instantiate(currentPrefab, spawnPosition, Quaternion.identity);
-            ShapeManager.AddPointToCurrentShape(spawnPosition, newPrefab);
-            ShapeRenderer.RedrawAllShapes();
+            ShapeManager.AddPointToCurrentShape(spawnPosition);
+            ShapeRenderer.DrawLines(ShapeManager.CurrentShape);
         }
         else
         {
             // new point results in an invalid shape
             GameObject invalidClickMark = Instantiate(Materials.Instance.invalidMarkPrefab, spawnPosition, Quaternion.identity);
             PointAnimation pointAnimation = invalidClickMark.GetComponent<PointAnimation>();
-            pointAnimation.quickLife();
+            pointAnimation.QuickLife();
             NotificationManager.Instance.ShowMessage("Cannot place point here. Shape would not be Convex");
         }
     }
@@ -112,9 +110,23 @@ public class InputController : MonoBehaviour
         return worldPosition;
     }
 
-    public void DragPoint(Vector2 panDelta)
+    public void Drag(Vector2 panDelta)
     {
-        if (isDragging && draggedPointIndex != -1 && selectedShape != null)
+        if (!isDragging || draggedPointIndex == -1 || selectedShape == null || CanvasState.Instance.drawState == CanvasState.DrawStates.LOCK_STATE)
+        {
+            return;
+        }
+
+        if (ShapeManager.SelectedShape != null)
+        {
+            Vector3 deltaWorld = Cam.ScreenToWorldPoint(new Vector3(panDelta.x, panDelta.y, 0)) - Cam.ScreenToWorldPoint(Vector3.zero);
+            Vector3 movement = new Vector3(deltaWorld.x, deltaWorld.y, 0);
+            for (int i = 0; i < selectedShape.Points.Count; i++)
+            {
+                selectedShape.Points[i] += movement;
+            }
+        }
+        else
         {
             Vector3 deltaWorld = Cam.ScreenToWorldPoint(new Vector3(panDelta.x, panDelta.y, 0)) - Cam.ScreenToWorldPoint(Vector3.zero);
 
@@ -125,27 +137,26 @@ public class InputController : MonoBehaviour
             testPoints[draggedPointIndex] += new Vector3(deltaWorld.x, deltaWorld.y, 0);
 
             // Check if the shape remains convex after moving the point
-            if (Shape.IsConvex(testPoints))
-            {
-                // Move the dragged point
-                selectedShape.Points[draggedPointIndex] = testPoints[draggedPointIndex];
 
-                // Move the associated prefab
-                if (draggedPointIndex < selectedShape.Prefabs.Count)
-                {
-                    selectedShape.Prefabs[draggedPointIndex].transform.position = selectedShape.Points[draggedPointIndex];
-                }
-
-                IoUCalculator.CalculateIoUForShapes();
-                ShapeRenderer.RedrawAllShapes();
-            }
-            else
+            if (!Shape.IsConvex(testPoints))
             {
                 Debug.Log("Point movement rejected: shape would not be convex.");
+                return;
+            }
+
+            // Move the dragged point
+            selectedShape.Points[draggedPointIndex] = testPoints[draggedPointIndex];
+
+            // Move the associated prefab
+            if (draggedPointIndex < selectedShape.RenderedPoints.Count)
+            {
+                selectedShape.RenderedPoints[draggedPointIndex].transform.position = selectedShape.Points[draggedPointIndex];
             }
         }
-    }
 
+        IoUCalculator.CalculateIoUForShapes();
+        ShapeRenderer.RedrawAllShapes();
+    }
 
     public void StopDragging()
     {
@@ -180,11 +191,30 @@ public class InputController : MonoBehaviour
                     // Set the selected shape
                     selectedShape = shape;
 
+                    if (doubleClicked)
+                    {
+                        Debug.Log("Selecting a Shape");
+                        if (ShapeManager.SelectedShape != null)
+                        {
+                            ShapeManager.SelectedShape.Selected = false;
+                        }
+                        ShapeManager.SelectedShape = shape;
+                        shape.Selected = true;
+                        ShapeRenderer.RedrawAllShapes();
+                    }
+
                     Debug.Log($"Point {draggedPointIndex} selected in shape.");
                     return;
                 }
             }
         }
+
+        Debug.Log("Deselecting Shape");
+        ShapeManager.SelectedShape.Selected = false;
+        ShapeManager.SelectedShape = null;
+        ShapeRenderer.RedrawAllShapes();
+
+
         if (!dragPointFlag && CanvasState.Instance.hovering)
         {
             NotificationManager.Instance.ShowMessage("Cannot add new points when the two shapes are defined");

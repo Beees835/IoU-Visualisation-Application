@@ -10,6 +10,7 @@ public class IoUCalculator : MonoBehaviour
     // Method to calculate and display IoU between two shapes from ShapeManager
     public static void CalculateIoUForShapes()
     {
+
         List<Shape> allShapes = ShapeManager.AllShapes;
 
         if (allShapes.Count < CanvasState.MAX_SHAPE_COUNT)
@@ -133,8 +134,16 @@ public class IoUCalculator : MonoBehaviour
     // Method to highlight the intersection area
     private static void HighlightIntersection(Vector2[] intersectionPoints)
     {
+        if (intersectionObject != null)
+        {
+            Destroy(intersectionObject);
+            intersectionObject = null;
+        }
+
         if (intersectionPoints.Length < 3)
+        {
             return;
+        }
 
         List<Vector3> vertices = new List<Vector3>();
         for (int i = 0; i < intersectionPoints.Length; i++)
@@ -167,14 +176,8 @@ public class IoUCalculator : MonoBehaviour
         mesh.vertices = vertices.ToArray();
         mesh.triangles = triangles;
         mesh.RecalculateNormals();
-
         meshFilter.mesh = mesh;
 
-        if (intersectionObject != null)
-        {
-            Destroy(intersectionObject);
-            CanvasState.Instance.shapeCount--;
-        }
         // Track this intersection object for future removal if needed
         intersectionObject = newIntersectionObject;
     }

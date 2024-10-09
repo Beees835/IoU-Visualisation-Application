@@ -31,4 +31,8 @@ public class Materials : MonoBehaviour
         }
     }
 
+    public static GameObject GetPrefabType()
+    {
+        return CanvasState.Instance.shapeCount == 0 ? Materials.Instance.PrefabShape1 : Materials.Instance.PrefabShape2;
+    }
 }

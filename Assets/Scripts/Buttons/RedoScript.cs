@@ -22,9 +22,6 @@ public class RedoScript : MonoBehaviour
         }
 
         ActionManager.UserAction Action = ActionManager.RedoStack.Peek();
-        GameObject prefabType = CanvasState.Instance.shapeCount == 0 ? Materials.Instance.PrefabShape1 : Materials.Instance.PrefabShape2;
-
-        GameObject prefab;
 
         Vector3 startPoint;
         Vector3 endPoint;
@@ -41,8 +38,7 @@ public class RedoScript : MonoBehaviour
                 }
 
                 startPoint = ActionManager.PointStack.Pop();
-                prefab = Instantiate(prefabType, startPoint, Quaternion.identity);
-                ShapeManager.CurrentShape.AddPoint(startPoint, prefab);
+                ShapeManager.CurrentShape.AddPoint(startPoint);
                 break;
 
             case ActionManager.UserAction.DRAW_LINE:
@@ -51,8 +47,7 @@ public class RedoScript : MonoBehaviour
                 startPoint = ActionManager.PointStack.Pop();
                 endPoint = ActionManager.PointStack.Pop();
 
-                prefab = Instantiate(prefabType, endPoint, Quaternion.identity);
-                ShapeManager.AddPointToCurrentShape(endPoint, prefab);
+                ShapeManager.AddPointToCurrentShape(endPoint);
                 ShapeRenderer.DrawLine(ShapeManager.CurrentShape, startPoint, endPoint);
 
                 break;
@@ -64,12 +59,18 @@ public class RedoScript : MonoBehaviour
                 endPoint = ShapeManager.CurrentShape.Points[0];
                 ShapeRenderer.DrawLine(ShapeManager.CurrentShape, startPoint, endPoint);
 
+                if (CanvasState.Instance.shapeCount >= CanvasState.MAX_SHAPE_COUNT)
+                {
+                    IoUCalculator.CalculateIoUForShapes();
+                    break;
+                }
+
                 ShapeManager.StartNewShape();
                 break;
 
             case ActionManager.UserAction.GENERATE_SHAPE:
                 Debug.Log("Redo Shape Generate");
-                ShapeManager.CurrentShape = ActionManager.BuildShapeFromStack(prefabType);
+                ShapeManager.CurrentShape = ActionManager.BuildShapeFromStack();
                 ShapeManager.StartNewShape();
                 ShapeRenderer.RedrawAllShapes();
                 break;

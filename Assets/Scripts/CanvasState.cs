@@ -57,16 +57,10 @@ public class CanvasState : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         }
     }
 
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        Debug.Log("Enter Canvas");
-        hovering = true;
-    }
 
-    public void OnPointerExit(PointerEventData eventData)
+    private void Start()
     {
-        Debug.Log("Exit Canvas");
-        hovering = false;
+        ShapeManager.CurrentShape = new Shape();
     }
 
     // Update is called once per frame
@@ -84,9 +78,22 @@ public class CanvasState : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         }
         else if (shapeCount > MAX_SHAPE_COUNT)
         {
-            drawState = DrawStates.MODIFY_STATE;
+            drawState = hovering ? DrawStates.MODIFY_STATE : DrawStates.LOCK_STATE;
         }
     }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        Debug.Log("Enter Canvas");
+        hovering = true;
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        Debug.Log("Exit Canvas");
+        hovering = false;
+    }
+
 
     public void Reset()
     {
