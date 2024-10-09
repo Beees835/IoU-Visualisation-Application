@@ -26,7 +26,7 @@ public class ActionManager : MonoBehaviour
         return ActionStack.Count;
     }
 
-    public static Shape BuildShapeFromStack(GameObject prefabType)
+    public static Shape BuildShapeFromStack()
     {
         Shape shape = new Shape();
         int shapeSize = ActionManager.ShapeSizeStack.Pop();

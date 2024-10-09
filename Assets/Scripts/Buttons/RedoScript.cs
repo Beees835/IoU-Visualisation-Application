@@ -22,9 +22,6 @@ public class RedoScript : MonoBehaviour
         }
 
         ActionManager.UserAction Action = ActionManager.RedoStack.Peek();
-        GameObject prefabType = CanvasState.Instance.shapeCount == 0 ? Materials.Instance.PrefabShape1 : Materials.Instance.PrefabShape2;
-
-        GameObject prefab;
 
         Vector3 startPoint;
         Vector3 endPoint;
@@ -67,7 +64,7 @@ public class RedoScript : MonoBehaviour
 
             case ActionManager.UserAction.GENERATE_SHAPE:
                 Debug.Log("Redo Shape Generate");
-                ShapeManager.CurrentShape = ActionManager.BuildShapeFromStack(prefabType);
+                ShapeManager.CurrentShape = ActionManager.BuildShapeFromStack();
                 ShapeManager.StartNewShape();
                 ShapeRenderer.RedrawAllShapes();
                 break;

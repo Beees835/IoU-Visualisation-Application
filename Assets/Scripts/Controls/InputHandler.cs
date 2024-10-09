@@ -64,13 +64,13 @@ public class InputHandler : MonoBehaviour
         }
         else
         {
-            inputController?.DragPoint(panValue);
+            inputController?.Drag(panValue);
         }
     }
 
     private void OnPlacePoint(InputAction.CallbackContext context)
     {
-        inputController?.PlacePrefabAtMousePosition();
+        inputController?.HandleClick(context);
     }
 
     private void OnStopPlacePoint(InputAction.CallbackContext context)

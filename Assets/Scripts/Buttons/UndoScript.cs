@@ -26,7 +26,6 @@ public class UndoScript : MonoBehaviour
 
 
         ActionManager.UserAction lastAction = ActionManager.ActionStack.Peek();
-        GameObject prefabType = CanvasState.Instance.shapeCount == 0 ? Materials.Instance.PrefabShape1 : Materials.Instance.PrefabShape2;
 
         Vector3 startPoint;
         Vector3 endPoint;
@@ -104,7 +103,7 @@ public class UndoScript : MonoBehaviour
 
                 bool shapeCompleted = ActionManager.DeleteCompletion.Pop();
 
-                shape = ActionManager.BuildShapeFromStack(prefabType);
+                shape = ActionManager.BuildShapeFromStack();
                 ShapeManager.CurrentShape = shape;
 
                 if (shapeCompleted)
