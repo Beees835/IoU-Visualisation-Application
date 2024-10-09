@@ -4,7 +4,7 @@ using UnityEngine;
 public class ShapeManager : MonoBehaviour
 {
     public static List<Shape> AllShapes { get; private set; } = new List<Shape>();
-    public static Shape CurrentShape { get; set; } = new Shape();
+    public static Shape CurrentShape;
     public static List<GameObject> CurrentLines { get; set; } = new List<GameObject>();
 
     // storing deleted/undone things in case of redo
@@ -23,15 +23,15 @@ public class ShapeManager : MonoBehaviour
         }
     }
 
-    public static void AddPointToCurrentShape(Vector3 point, GameObject prefab)
+    public static void AddPointToCurrentShape(Vector3 point)
     {
-        CurrentShape.AddPoint(point, prefab);
+        CurrentShape.AddPoint(point);
     }
 
     public static void DestroyShape(Shape shape)
     {
 
-        foreach (var prefab in shape.Prefabs)
+        foreach (var prefab in shape.RenderedPoints)
         {
             prefab.GetComponent<PointAnimation>().Close();
             Destroy(prefab);
@@ -44,7 +44,7 @@ public class ShapeManager : MonoBehaviour
 
         shape.Points.Clear();
         shape.Lines.Clear();
-        shape.Prefabs.Clear();
+        shape.RenderedPoints.Clear();
     }
 
     public static void DestroyAllShapes()

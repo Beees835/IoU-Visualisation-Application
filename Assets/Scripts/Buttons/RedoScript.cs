@@ -41,8 +41,7 @@ public class RedoScript : MonoBehaviour
                 }
 
                 startPoint = ActionManager.PointStack.Pop();
-                prefab = Instantiate(prefabType, startPoint, Quaternion.identity);
-                ShapeManager.CurrentShape.AddPoint(startPoint, prefab);
+                ShapeManager.CurrentShape.AddPoint(startPoint);
                 break;
 
             case ActionManager.UserAction.DRAW_LINE:
@@ -51,8 +50,7 @@ public class RedoScript : MonoBehaviour
                 startPoint = ActionManager.PointStack.Pop();
                 endPoint = ActionManager.PointStack.Pop();
 
-                prefab = Instantiate(prefabType, endPoint, Quaternion.identity);
-                ShapeManager.AddPointToCurrentShape(endPoint, prefab);
+                ShapeManager.AddPointToCurrentShape(endPoint);
                 ShapeRenderer.DrawLine(ShapeManager.CurrentShape, startPoint, endPoint);
 
                 break;

@@ -34,8 +34,7 @@ public class ActionManager : MonoBehaviour
         for (int i = 0; i < shapeSize; i++)
         {
             Vector3 startPoint = PointStack.Pop();
-            GameObject prefab = Instantiate(prefabType, startPoint, Quaternion.identity);
-            shape.AddPoint(startPoint, prefab);
+            shape.AddPoint(startPoint);
         }
 
         return shape;

@@ -67,7 +67,7 @@ public class InputController : MonoBehaviour
         {
             NotificationManager.Instance.ClearMessage();
             // current shape hasn't been set yet, this point will be the first point
-            if (ShapeManager.CurrentShape.Prefabs.Count == 0)
+            if (ShapeManager.CurrentShape.RenderedPoints.Count == 0)
             {
                 ActionManager.ActionStack.Push(ActionManager.UserAction.DRAW_POINT);
                 ActionManager.canRedo = false;
@@ -77,8 +77,7 @@ public class InputController : MonoBehaviour
                 ActionManager.ActionStack.Push(ActionManager.UserAction.DRAW_LINE);
                 ActionManager.canRedo = false;
             }
-            GameObject newPrefab = Instantiate(currentPrefab, spawnPosition, Quaternion.identity);
-            ShapeManager.AddPointToCurrentShape(spawnPosition, newPrefab);
+            ShapeManager.AddPointToCurrentShape(spawnPosition);
             ShapeRenderer.RedrawAllShapes();
         }
         else
@@ -131,9 +130,9 @@ public class InputController : MonoBehaviour
                 selectedShape.Points[draggedPointIndex] = testPoints[draggedPointIndex];
 
                 // Move the associated prefab
-                if (draggedPointIndex < selectedShape.Prefabs.Count)
+                if (draggedPointIndex < selectedShape.RenderedPoints.Count)
                 {
-                    selectedShape.Prefabs[draggedPointIndex].transform.position = selectedShape.Points[draggedPointIndex];
+                    selectedShape.RenderedPoints[draggedPointIndex].transform.position = selectedShape.Points[draggedPointIndex];
                 }
 
                 IoUCalculator.CalculateIoUForShapes();

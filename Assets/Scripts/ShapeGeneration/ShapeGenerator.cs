@@ -45,11 +45,9 @@ public class ShapeGenerator : MonoBehaviour
 
         Shape shape = new Shape(true);
 
-        // Add points and instantiate prefabs
         foreach (var point in vertices3D)
         {
-            GameObject newPrefab = Instantiate(Materials.Instance.PrefabShape1, point, Quaternion.identity);
-            shape.AddPoint(point, newPrefab); // Add point and associated prefab to shape
+            shape.AddPoint(point);
         }
 
         AddLines(shape, vertices3D);

@@ -58,5 +58,8 @@ public class ShapeRenderer : MonoBehaviour
         shape.Lines.Add(line);
     }
 
-
+    public static void RenderPoint(Shape shape, Vector3 point)
+    {
+        shape.RenderedPoints.Add(Instantiate(shape.prefabType, point, Quaternion.identity));
+    }
 }
