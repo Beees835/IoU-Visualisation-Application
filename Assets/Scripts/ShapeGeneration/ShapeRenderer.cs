@@ -88,4 +88,9 @@ public class ShapeRenderer : MonoBehaviour
         vertex.GetComponent<PointAnimation>().Scale();
         shape.RenderedPoints.Add(vertex);
     }
+
+    public static void ToggleCoordinates() 
+    {
+        CoordinateDisplay.ToggleAllCoordinates();
+    }
 }
