@@ -1,14 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CartesianPlane : MonoBehaviour
 {
-    public int gridSize = 10; 
-    public float lineSpacing = 1f; 
+    public int gridSize = 10;
+    public float lineSpacing = 1f;
     public Material lineMaterial;
     public float numberZOffset = -0.1f;
-    public float lineThickness = 0.02f; 
+    public float lineThickness = 0.02f;
 
     void Start()
     {
@@ -33,7 +31,12 @@ public class CartesianPlane : MonoBehaviour
 
             // Vertical lines
             DrawLine(new Vector3(i * lineSpacing, -gridSize, 0), new Vector3(i * lineSpacing, gridSize, 0), Color.gray);
-            CreateNumber(new Vector3(i * lineSpacing, 0.1f, numberZOffset), i.ToString(), Color.gray); // X axis numbering
+
+            // We only want one zero
+            if (i != 0)
+            {
+                CreateNumber(new Vector3(i * lineSpacing, 0.1f, numberZOffset), i.ToString(), Color.gray); // X axis numbering
+            }
         }
     }
 
@@ -45,7 +48,7 @@ public class CartesianPlane : MonoBehaviour
         lineRenderer.positionCount = 2;
         lineRenderer.SetPosition(0, start);
         lineRenderer.SetPosition(1, end);
-        lineRenderer.startWidth = lineThickness; 
+        lineRenderer.startWidth = lineThickness;
         lineRenderer.endWidth = lineThickness;
         lineRenderer.material = lineMaterial;
         lineRenderer.startColor = color;
@@ -56,16 +59,16 @@ public class CartesianPlane : MonoBehaviour
     void CreateNumber(Vector3 position, string text, Color textColor)
     {
         GameObject textObj = new GameObject("Number");
-        textObj.transform.SetParent(transform); 
+        textObj.transform.SetParent(transform);
         textObj.transform.position = position;
 
         TextMesh textMesh = textObj.AddComponent<TextMesh>();
         textMesh.text = text;
         textMesh.fontSize = 24;
-        textMesh.color = textColor; 
+        textMesh.color = textColor;
         textMesh.anchor = TextAnchor.MiddleCenter;
         textMesh.alignment = TextAlignment.Center;
-        textMesh.characterSize = 0.1f; 
+        textMesh.characterSize = 0.1f;
 
         // Move the number in front of the grid lines
         textObj.transform.position = new Vector3(position.x, position.y, position.z + numberZOffset);
