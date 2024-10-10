@@ -39,16 +39,7 @@ public class UndoScript : MonoBehaviour
 
                 // A singular point (no line) has been drawn to start a new shape. now undo it
                 startPoint = ShapeManager.CurrentShape.RemoveLastPoint();
-
                 ActionManager.PointStack.Push(startPoint);
-
-                if (CanvasState.Instance.shapeCount > 1)
-                {
-                    // if destroying the first point of shape 2, reassign the current shape to shape 1
-                    ShapeManager.CurrentShape = ShapeManager.AllShapes[ShapeManager.AllShapes.Count - 2];
-                    ShapeManager.AllShapes.RemoveAt(ShapeManager.AllShapes.Count - 1);
-                    CanvasState.Instance.shapeCount--;
-                }
                 break;
 
             case ActionManager.UserAction.DRAW_LINE:
@@ -64,19 +55,18 @@ public class UndoScript : MonoBehaviour
             case ActionManager.UserAction.CLOSE_SHAPE:
                 Debug.Log("Undo Shape Close");
 
-                if (ShapeManager.AllShapes.Count >= CanvasState.MAX_SHAPE_COUNT)
+                if (ShapeManager.AllShapes.Count >= ShapeManager.MAX_SHAPE_COUNT)
                 {
                     IoUCalculator.Reset();
                 }
 
                 // the shape was closed and locked. need to undo the locked shape and last line drawn
-                if (CanvasState.Instance.shapeCount > 0)
+                if (ShapeManager.AllShapes.Count > 0)
                 {
                     // We've closed the first shape and are now undoing it. 
                     // Need to reassign the current shape to the first shape
                     ShapeManager.CurrentShape = ShapeManager.AllShapes[ShapeManager.AllShapes.Count - 1];
                     ShapeManager.AllShapes.RemoveAt(ShapeManager.AllShapes.Count - 1);
-                    CanvasState.Instance.shapeCount--;
                 }
 
                 ShapeManager.CurrentShape.IsClosed = false;
@@ -99,7 +89,6 @@ public class UndoScript : MonoBehaviour
                 }
 
                 ShapeManager.DestroyShape(shape);
-                CanvasState.Instance.shapeCount--;
 
                 ShapeManager.CurrentShape = new Shape();
                 break;

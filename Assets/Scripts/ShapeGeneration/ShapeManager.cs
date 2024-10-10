@@ -6,11 +6,8 @@ public class ShapeManager : MonoBehaviour
     public static List<Shape> AllShapes { get; private set; } = new List<Shape>();
     public static Shape CurrentShape;
     public static Shape SelectedShape;
-    public static List<GameObject> CurrentLines { get; set; } = new List<GameObject>();
 
-    // storing deleted/undone things in case of redo
-    public static List<GameObject> PrevLines { get; set; } = new List<GameObject>();
-
+    public const int MAX_SHAPE_COUNT = 2;
 
     public static void StartNewShape()
     {
@@ -18,7 +15,6 @@ public class ShapeManager : MonoBehaviour
         {
             CurrentShape.IsClosed = true;
             AllShapes.Add(CurrentShape);
-            CanvasState.Instance.shapeCount++;
             CurrentShape = new Shape();
         }
     }

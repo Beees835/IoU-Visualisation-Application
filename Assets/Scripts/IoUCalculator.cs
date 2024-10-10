@@ -17,7 +17,7 @@ public class IoUCalculator : MonoBehaviour
 
         List<Shape> allShapes = ShapeManager.AllShapes;
 
-        if (allShapes.Count < CanvasState.MAX_SHAPE_COUNT)
+        if (allShapes.Count < ShapeManager.MAX_SHAPE_COUNT)
         {
             Debug.LogWarning("Not enough shapes to calculate IoU.");
             return;
@@ -39,7 +39,6 @@ public class IoUCalculator : MonoBehaviour
 
         // Highlight the intersection after the calculation
         HighlightIntersection(intersectionPoints);
-        CanvasState.Instance.shapeCount++; // Add a shape for the intersection
         Debug.Log("IoU between shape 1 and shape 2: " + iouValues[2]);
 
         Debug.Log("IoU between shape 1 and shape 2: " + iouValues[2]);
@@ -265,7 +264,6 @@ public class IoUCalculator : MonoBehaviour
     {
         Destroy(intersectionObject);
         intersectionObject = null;
-        CanvasState.Instance.shapeCount--;
         ResetInfo();
     }
 }

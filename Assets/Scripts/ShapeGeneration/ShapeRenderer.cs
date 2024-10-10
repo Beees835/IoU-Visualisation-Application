@@ -46,7 +46,6 @@ public class ShapeRenderer : MonoBehaviour
         lineRenderer.startWidth = LineWidth;
         lineRenderer.endWidth = LineWidth;
 
-        ShapeManager.CurrentLines.Add(line);
         shape.Lines.Add(line);
     }
 

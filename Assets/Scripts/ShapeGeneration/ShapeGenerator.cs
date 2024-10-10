@@ -25,7 +25,7 @@ public class ShapeGenerator : MonoBehaviour
 
     public static void GenerateShape(int vertexCount)
     {
-        if (CanvasState.Instance.shapeCount > CanvasState.MAX_SHAPE_COUNT)
+        if (ShapeManager.AllShapes.Count >= ShapeManager.MAX_SHAPE_COUNT)
         {
             Debug.Log("Too many shapes already");
             NotificationManager.Instance.ShowMessage("Too many shapes already");
@@ -56,7 +56,6 @@ public class ShapeGenerator : MonoBehaviour
 
         // Add the generated shape GameObject to the list of all shapes
         ShapeManager.AllShapes.Add(shape);
-        CanvasState.Instance.shapeCount++;
 
         ActionManager.ActionStack.Push(ActionManager.UserAction.GENERATE_SHAPE);
         ActionManager.canRedo = false;
