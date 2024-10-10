@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -59,7 +60,7 @@ public class RedoScript : MonoBehaviour
                 endPoint = ShapeManager.CurrentShape.Points[0];
 
                 // Another point has since been placed
-                if (startPoint != ShapeManager.CurrentShape.Points[ShapeManager.CurrentShape.Points.Count - 1])
+                if (startPoint != ShapeManager.CurrentShape.Points.Last())
                 {
                     ActionManager.RedoStack.Clear();
                     ActionManager.PointStack.Clear();
@@ -68,7 +69,7 @@ public class RedoScript : MonoBehaviour
 
                 ShapeRenderer.DrawLine(ShapeManager.CurrentShape, startPoint, endPoint);
 
-                if (CanvasState.Instance.shapeCount >= CanvasState.MAX_SHAPE_COUNT)
+                if (!ShapeManager.CanAddMoreShapes())
                 {
                     IoUCalculator.CalculateIoUForShapes();
                     break;

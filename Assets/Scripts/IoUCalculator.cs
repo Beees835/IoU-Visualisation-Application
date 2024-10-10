@@ -3,21 +3,21 @@ using UnityEngine;
 
 public class IoUCalculator : MonoBehaviour
 {
-    public static GameObject intersectionObject;
-    private static string defaultInfo = "Not enough shapes to calculate Intersection over Union";
-    public static string IoUInfo = defaultInfo;
+    public static GameObject IntersectionObject;
+    private const string DefaultInfo = "Not enough shapes to calculate Intersection over Union";
+    public static string IoUInfo = DefaultInfo;
 
     // Method to calculate and display IoU between two shapes from ShapeManager
     public static void CalculateIoUForShapes()
     {
-        if (intersectionObject != null)
+        if (IntersectionObject != null)
         {
             Reset();
         }
 
         List<Shape> allShapes = ShapeManager.AllShapes;
 
-        if (allShapes.Count < CanvasState.MAX_SHAPE_COUNT)
+        if (ShapeManager.CanAddMoreShapes())
         {
             Debug.LogWarning("Not enough shapes to calculate IoU.");
             return;
@@ -39,7 +39,6 @@ public class IoUCalculator : MonoBehaviour
 
         // Highlight the intersection after the calculation
         HighlightIntersection(intersectionPoints);
-        CanvasState.Instance.shapeCount++; // Add a shape for the intersection
         Debug.Log("IoU between shape 1 and shape 2: " + iouValues[2]);
 
         Debug.Log("IoU between shape 1 and shape 2: " + iouValues[2]);
@@ -50,7 +49,7 @@ public class IoUCalculator : MonoBehaviour
 
     public static void ResetInfo()
     {
-        IoUInfo = defaultInfo;
+        IoUInfo = DefaultInfo;
         IouCalcTextDisplay.Instance.ResetText();
     }
 
@@ -138,10 +137,10 @@ public class IoUCalculator : MonoBehaviour
     // Method to highlight the intersection area
     private static void HighlightIntersection(Vector2[] intersectionPoints)
     {
-        if (intersectionObject != null)
+        if (IntersectionObject != null)
         {
-            Destroy(intersectionObject);
-            intersectionObject = null;
+            Destroy(IntersectionObject);
+            IntersectionObject = null;
         }
 
         if (intersectionPoints.Length < 3)
@@ -183,7 +182,7 @@ public class IoUCalculator : MonoBehaviour
         meshFilter.mesh = mesh;
 
         // Track this intersection object for future removal if needed
-        intersectionObject = newIntersectionObject;
+        IntersectionObject = newIntersectionObject;
     }
 
 
@@ -263,9 +262,8 @@ public class IoUCalculator : MonoBehaviour
 
     public static void Reset()
     {
-        Destroy(intersectionObject);
-        intersectionObject = null;
-        CanvasState.Instance.shapeCount--;
+        Destroy(IntersectionObject);
+        IntersectionObject = null;
         ResetInfo();
     }
 }

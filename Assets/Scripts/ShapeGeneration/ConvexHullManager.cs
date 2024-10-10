@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ConvexHullManager : MonoBehaviour
@@ -22,7 +23,7 @@ public class ConvexHullManager : MonoBehaviour
         foreach (var p in points)
         {
             // Remove last point while it creates a non-left turn
-            while (lower.Count >= 2 && Cross(lower[lower.Count - 2], lower[lower.Count - 1], p) <= 0)
+            while (lower.Count >= 2 && CrossProduct(lower[lower.Count - 2], lower.Last(), p) <= 0)
                 lower.RemoveAt(lower.Count - 1);
             lower.Add(p);
         }
@@ -32,7 +33,7 @@ public class ConvexHullManager : MonoBehaviour
         for (int i = points.Count - 1; i >= 0; i--)
         {
             var p = points[i];
-            while (upper.Count >= 2 && Cross(upper[upper.Count - 2], upper[upper.Count - 1], p) <= 0)
+            while (upper.Count >= 2 && CrossProduct(upper[upper.Count - 2], upper.Last(), p) <= 0)
                 upper.RemoveAt(upper.Count - 1);
             upper.Add(p);
         }
@@ -55,7 +56,7 @@ public class ConvexHullManager : MonoBehaviour
 
     // Calculate the cross product of OA and OB vectors
     // Positive result means counter-clockwise turn
-    private static float Cross(Vector2 O, Vector2 A, Vector2 B)
+    private static float CrossProduct(Vector2 O, Vector2 A, Vector2 B)
     {
         return (A.x - O.x) * (B.y - O.y) - (A.y - O.y) * (B.x - O.x);
     }

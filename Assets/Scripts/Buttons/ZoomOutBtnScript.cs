@@ -3,16 +3,16 @@ using UnityEngine.UI;
 
 public class ZoomOutBtnScript : MonoBehaviour
 {
-    [SerializeField] private Button zoomOutBtn;
-    [SerializeField] private CameraController cameraController;
+    [SerializeField] private Button _zoomOutBtn;
+    [SerializeField] private CameraController _cameraController;
 
     void Start()
     {
-        zoomOutBtn.onClick.AddListener(ZoomOut);
+        _zoomOutBtn.onClick.AddListener(ZoomOut);
     }
 
     void ZoomOut()
     {
-        cameraController.HandleZoom(-1f); // Zoom out by a fixed amount
+        _cameraController.HandleZoom(-1f); // Zoom out by a fixed amount
     }
 }

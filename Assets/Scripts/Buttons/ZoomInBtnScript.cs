@@ -3,16 +3,16 @@ using UnityEngine.UI;
 
 public class ZoomInBtnScript : MonoBehaviour
 {
-    [SerializeField] private Button zoomInBtn;
-    [SerializeField] private CameraController cameraController;
+    [SerializeField] private Button _zoomInBtn;
+    [SerializeField] private CameraController _cameraController;
 
     void Start()
     {
-        zoomInBtn.onClick.AddListener(ZoomIn);
+        _zoomInBtn.onClick.AddListener(ZoomIn);
     }
 
     void ZoomIn()
     {
-        cameraController.HandleZoom(1f); // Zoom in by a fixed amount
+        _cameraController.HandleZoom(1f); // Zoom in by a fixed amount
     }
 }

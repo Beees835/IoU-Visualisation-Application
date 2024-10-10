@@ -6,7 +6,7 @@ public class IouCalcTextDisplay : MonoBehaviour
     // Singleton instance
     public static IouCalcTextDisplay Instance { get; private set; }
 
-    private TextMeshProUGUI displayText;
+    private TextMeshProUGUI _displayText;
 
     void Awake()
     {
@@ -14,9 +14,9 @@ public class IouCalcTextDisplay : MonoBehaviour
         {
             Instance = this;
 
-            displayText = GetComponent<TextMeshProUGUI>();
-            displayText.color = Color.black;
-            if (displayText == null)
+            _displayText = GetComponent<TextMeshProUGUI>();
+            _displayText.color = Color.black;
+            if (_displayText == null)
             {
                 Debug.LogError("IouCalcTextDisplay requires a TextMeshProUGUI component on the same GameObject.");
             }
@@ -30,12 +30,12 @@ public class IouCalcTextDisplay : MonoBehaviour
     // Function to display a message immediately
     public void ShowMessage(string message)
     {
-        displayText.text = message;
+        _displayText.text = message;
     }
 
     // Function to reset the text to an empty string
     public void ResetText()
     {
-        displayText.text = "";
+        _displayText.text = "";
     }
 }

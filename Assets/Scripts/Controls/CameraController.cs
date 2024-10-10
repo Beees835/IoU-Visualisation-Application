@@ -1,5 +1,5 @@
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class CameraController : MonoBehaviour
@@ -11,20 +11,20 @@ public class CameraController : MonoBehaviour
     [SerializeField] public float maxZoom = 15f;
 
     [Header("UI Elements")]
-    [SerializeField] private Slider zoomSlider;
-    [SerializeField] private TextMeshProUGUI zoomPercentageText;
+    [SerializeField] private Slider _zoomSlider;
+    [SerializeField] private TextMeshProUGUI _zoomPercentageText;
 
-    [HideInInspector] public Camera cam;
+    [HideInInspector] public Camera _cam;
 
     [HideInInspector] public bool isUpdating = false;
 
     private void Awake()
     {
-        cam = GetComponent<Camera>();
+        _cam = GetComponent<Camera>();
 
         // Initialize slider values
-        zoomSlider.minValue = 0f;
-        zoomSlider.maxValue = 1f;
+        _zoomSlider.minValue = 0f;
+        _zoomSlider.maxValue = 1f;
 
         // Set initial slider value and zoom percentage text
         UpdateZoomUI();
@@ -42,8 +42,8 @@ public class CameraController : MonoBehaviour
 
     public void HandleZoom(float zoomAmount)
     {
-        float newZoom = Mathf.Clamp(cam.orthographicSize - zoomAmount, minZoom, maxZoom);
-        cam.orthographicSize = newZoom;
+        float newZoom = Mathf.Clamp(_cam.orthographicSize - zoomAmount, minZoom, maxZoom);
+        _cam.orthographicSize = newZoom;
 
         // Update the Zoom UI
         UpdateZoomUI();
@@ -58,14 +58,14 @@ public class CameraController : MonoBehaviour
     {
         isUpdating = true;
 
-        float val = cam.orthographicSize;
+        float val = _cam.orthographicSize;
 
         // Calculate the zoom percentage
         float zoomPercentage = (maxZoom - val) / (maxZoom - minZoom) * 100f;
-        zoomPercentageText.text = Mathf.RoundToInt(zoomPercentage).ToString() + "%";
+        _zoomPercentageText.text = Mathf.RoundToInt(zoomPercentage).ToString() + "%";
 
         // Invert the slider value calculation
-        zoomSlider.value = (maxZoom - val) / (maxZoom - minZoom);
+        _zoomSlider.value = (maxZoom - val) / (maxZoom - minZoom);
 
         isUpdating = false;
     }

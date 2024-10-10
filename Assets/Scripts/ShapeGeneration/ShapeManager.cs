@@ -6,11 +6,18 @@ public class ShapeManager : MonoBehaviour
     public static List<Shape> AllShapes { get; private set; } = new List<Shape>();
     public static Shape CurrentShape;
     public static Shape SelectedShape;
-    public static List<GameObject> CurrentLines { get; set; } = new List<GameObject>();
 
-    // storing deleted/undone things in case of redo
-    public static List<GameObject> PrevLines { get; set; } = new List<GameObject>();
+    public const int MAX_SHAPE_COUNT = 2;
 
+    public static int GetShapeCount()
+    {
+        return AllShapes.Count;
+    }
+
+    public static bool CanAddMoreShapes()
+    {
+        return AllShapes.Count < MAX_SHAPE_COUNT;
+    }
 
     public static void StartNewShape()
     {
@@ -18,7 +25,6 @@ public class ShapeManager : MonoBehaviour
         {
             CurrentShape.IsClosed = true;
             AllShapes.Add(CurrentShape);
-            CanvasState.Instance.shapeCount++;
             CurrentShape = new Shape();
         }
     }
@@ -42,7 +48,7 @@ public class ShapeManager : MonoBehaviour
         shape.ClearLines();
     }
 
-    public static void DestroyAllShapes()
+    private static void DestroyAllShapes()
     {
         foreach (var shape in AllShapes)
         {
@@ -50,7 +56,6 @@ public class ShapeManager : MonoBehaviour
         }
         AllShapes.Clear();
         DestroyShape(CurrentShape);
-        CurrentShape = new Shape();
     }
 
     public static void ClearLines()
@@ -69,5 +74,13 @@ public class ShapeManager : MonoBehaviour
             shape.ClearVertices();
         }
         CurrentShape.ClearVertices();
+    }
+
+
+    public static void Reset()
+    {
+        DestroyAllShapes();
+        CurrentShape = new Shape();
+        SelectedShape = null;
     }
 }

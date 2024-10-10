@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -39,16 +40,7 @@ public class UndoScript : MonoBehaviour
 
                 // A singular point (no line) has been drawn to start a new shape. now undo it
                 startPoint = ShapeManager.CurrentShape.RemoveLastPoint();
-
                 ActionManager.PointStack.Push(startPoint);
-
-                if (CanvasState.Instance.shapeCount > 1)
-                {
-                    // if destroying the first point of shape 2, reassign the current shape to shape 1
-                    ShapeManager.CurrentShape = ShapeManager.AllShapes[ShapeManager.AllShapes.Count - 2];
-                    ShapeManager.AllShapes.RemoveAt(ShapeManager.AllShapes.Count - 1);
-                    CanvasState.Instance.shapeCount--;
-                }
                 break;
 
             case ActionManager.UserAction.DRAW_LINE:
@@ -64,19 +56,18 @@ public class UndoScript : MonoBehaviour
             case ActionManager.UserAction.CLOSE_SHAPE:
                 Debug.Log("Undo Shape Close");
 
-                if (ShapeManager.AllShapes.Count >= CanvasState.MAX_SHAPE_COUNT)
+                if (!ShapeManager.CanAddMoreShapes())
                 {
                     IoUCalculator.Reset();
                 }
 
                 // the shape was closed and locked. need to undo the locked shape and last line drawn
-                if (CanvasState.Instance.shapeCount > 0)
+                if (ShapeManager.GetShapeCount() > 0)
                 {
                     // We've closed the first shape and are now undoing it. 
                     // Need to reassign the current shape to the first shape
-                    ShapeManager.CurrentShape = ShapeManager.AllShapes[ShapeManager.AllShapes.Count - 1];
-                    ShapeManager.AllShapes.RemoveAt(ShapeManager.AllShapes.Count - 1);
-                    CanvasState.Instance.shapeCount--;
+                    ShapeManager.CurrentShape = ShapeManager.AllShapes.Last();
+                    ShapeManager.AllShapes.RemoveAt(ShapeManager.GetShapeCount() - 1);
                 }
 
                 ShapeManager.CurrentShape.IsClosed = false;
@@ -89,8 +80,8 @@ public class UndoScript : MonoBehaviour
                 Debug.Log("Undo Shape Gen");
 
                 // A shape has been rando generated. Undo the last shape generated
-                shape = ShapeManager.AllShapes[ShapeManager.AllShapes.Count - 1];
-                ShapeManager.AllShapes.RemoveAt(ShapeManager.AllShapes.Count - 1);
+                shape = ShapeManager.AllShapes.Last();
+                ShapeManager.AllShapes.RemoveAt(ShapeManager.GetShapeCount() - 1);
 
                 ActionManager.ShapeSizeStack.Push(shape.Points.Count);
                 foreach (var point in shape.Points)
@@ -99,7 +90,6 @@ public class UndoScript : MonoBehaviour
                 }
 
                 ShapeManager.DestroyShape(shape);
-                CanvasState.Instance.shapeCount--;
 
                 ShapeManager.CurrentShape = new Shape();
                 break;

@@ -1,9 +1,10 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Shape
 {
-    public GameObject prefabType;
+    public GameObject PrefabType;
     public List<Vector3> Points { get; set; } = new List<Vector3>();
     public List<GameObject> RenderedPoints { get; set; } = new List<GameObject>();
     public List<GameObject> Lines { get; set; } = new List<GameObject>();
@@ -13,7 +14,7 @@ public class Shape
 
     public Shape(bool isClosed = false)
     {
-        prefabType = Materials.GetPrefabType();
+        PrefabType = Materials.GetPrefabType();
         IsClosed = isClosed;
     }
 
@@ -33,8 +34,8 @@ public class Shape
 
     public Vector3 RemoveLastPoint()
     {
-        Vector3 point = Points[Points.Count - 1];
-        GameObject prefab = RenderedPoints[RenderedPoints.Count - 1];
+        Vector3 point = Points.Last();
+        GameObject prefab = RenderedPoints.Last();
 
         RenderedPoints.RemoveAt(RenderedPoints.Count - 1);
         Points.RemoveAt(Points.Count - 1);
@@ -46,8 +47,8 @@ public class Shape
 
     public Vector3 RemoveLastLine()
     {
-        Vector3 point = Points[Points.Count - 1];
-        GameObject line = Lines[Lines.Count - 1];
+        Vector3 point = Points.Last();
+        GameObject line = Lines.Last();
         Lines.RemoveAt(Lines.Count - 1);
         Object.Destroy(line);
         return point;
