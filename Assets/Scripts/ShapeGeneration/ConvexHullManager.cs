@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ConvexHullManager : MonoBehaviour
@@ -22,7 +23,7 @@ public class ConvexHullManager : MonoBehaviour
         foreach (var p in points)
         {
             // Remove last point while it creates a non-left turn
-            while (lower.Count >= 2 && CrossProduct(lower[lower.Count - 2], lower[lower.Count - 1], p) <= 0)
+            while (lower.Count >= 2 && CrossProduct(lower[lower.Count - 2], lower.Last(), p) <= 0)
                 lower.RemoveAt(lower.Count - 1);
             lower.Add(p);
         }
@@ -32,7 +33,7 @@ public class ConvexHullManager : MonoBehaviour
         for (int i = points.Count - 1; i >= 0; i--)
         {
             var p = points[i];
-            while (upper.Count >= 2 && CrossProduct(upper[upper.Count - 2], upper[upper.Count - 1], p) <= 0)
+            while (upper.Count >= 2 && CrossProduct(upper[upper.Count - 2], upper.Last(), p) <= 0)
                 upper.RemoveAt(upper.Count - 1);
             upper.Add(p);
         }

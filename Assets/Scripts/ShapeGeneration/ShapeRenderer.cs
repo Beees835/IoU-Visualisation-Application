@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ShapeRenderer : MonoBehaviour
@@ -33,7 +35,7 @@ public class ShapeRenderer : MonoBehaviour
 
         lineRenderer.material = Materials.Instance.LineMaterial;
 
-        Color color = shape.Selected ? new Color(1.0f, 0.64f, 0.0f) : Color.white;
+        UnityEngine.Color color = shape.Selected ? new UnityEngine.Color(1.0f, 0.64f, 0.0f) : UnityEngine.Color.white;
 
         lineRenderer.startColor = color;
         lineRenderer.endColor = color;
@@ -55,20 +57,20 @@ public class ShapeRenderer : MonoBehaviour
         }
 
 
-        int pointCount = shape.Points.Count;
+        List<Vector3> points = shape.Points;
 
-        for (int i = 0; i < pointCount - 1; i++)
+        for (int i = 0; i < points.Count - 1; i++)
         {
-            Vector3 start = shape.Points[i];
-            Vector3 end = shape.Points[i + 1];
+            Vector3 start = points[i];
+            Vector3 end = points[i + 1];
             DrawLine(shape, start, end);
         }
 
         if (shape.IsClosed)
         {
             // Draw closing line from last point to first point
-            Vector3 start = shape.Points[pointCount - 1];
-            Vector3 end = shape.Points[0];
+            Vector3 start = points.Last();
+            Vector3 end = points[0];
             DrawLine(shape, start, end);
         }
     }
