@@ -12,6 +12,20 @@ public class UndoScript : MonoBehaviour
         _undoBtn.onClick.AddListener(Undo);
     }
 
+    // Trigger Undo if CTRL/CMD + Z key combination is pressed
+    void Update()
+    {
+        // Check for CTRL/CMD + Z key combination
+        bool isCtrlOrCmdPressed = Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl) ||
+                                  Input.GetKey(KeyCode.LeftCommand) || Input.GetKey(KeyCode.RightCommand);
+
+        // Not condition to check for Shift key is pressed or not 
+        if (isCtrlOrCmdPressed && Input.GetKeyDown(KeyCode.Z) && !(Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)))
+        {
+            Undo();
+        }
+    }
+
     public void Undo()
     {
         if (CanvasState.Instance.drawState == CanvasState.DrawStates.MODIFY_STATE)
