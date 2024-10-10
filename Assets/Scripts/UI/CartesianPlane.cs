@@ -5,7 +5,7 @@ public class CartesianPlane : MonoBehaviour
     public int gridSize = 10;
     public float lineSpacing = 1f;
     public Material lineMaterial;
-    public float numberZOffset = -0.1f;
+    public float numberZOffset = -0.01f;
     public float lineThickness = 0.02f;
 
     void Start()

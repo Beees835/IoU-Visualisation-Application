@@ -56,5 +56,6 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "IoU-Visualisation-Application.sln"
+    "dotnet.defaultSolution": "IoU-Visualisation-Application.sln",
+    "dotnet.preferCSharpExtension": true
 }
