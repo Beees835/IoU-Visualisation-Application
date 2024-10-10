@@ -13,6 +13,20 @@ public class RedoScript : MonoBehaviour
         _redoBtn.onClick.AddListener(Redo);
     }
 
+    // Trigger Redo if CTRL/CMD + Shift (left and right) + Z key combination is pressed
+    void Update()
+    {
+        // Check for CTRL/CMD + Z key combination
+        bool isCtrlOrCmdPressed = Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl) ||
+                                  Input.GetKey(KeyCode.LeftCommand) || Input.GetKey(KeyCode.RightCommand);
+
+
+        if (isCtrlOrCmdPressed && (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) && Input.GetKeyDown(KeyCode.Z))
+        {
+            Redo();
+        }
+    }
+
     public void Redo()
     {
 
