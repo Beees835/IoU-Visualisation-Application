@@ -57,6 +57,16 @@ public class RedoScript : MonoBehaviour
 
                 startPoint = ActionManager.PointStack.Pop();
                 endPoint = ShapeManager.CurrentShape.Points[0];
+
+                // Another point has since been placed
+                if (startPoint != ShapeManager.CurrentShape.Points[ShapeManager.CurrentShape.Points.Count - 1])
+                {
+                    ActionManager.RedoStack.Clear();
+                    ActionManager.PointStack.Clear();
+                    return;
+                }
+
+
                 ShapeRenderer.DrawLine(ShapeManager.CurrentShape, startPoint, endPoint);
 
                 if (CanvasState.Instance.shapeCount >= CanvasState.MAX_SHAPE_COUNT)
@@ -75,7 +85,7 @@ public class RedoScript : MonoBehaviour
                 ShapeRenderer.RedrawAllShapes();
                 break;
             case ActionManager.UserAction.DELETE_SHAPE:
-                DeleteCurrShapeScript.DeleteCurrShape();
+                DeleteCurrShapeScript.DeleteShape();
                 break;
         }
 

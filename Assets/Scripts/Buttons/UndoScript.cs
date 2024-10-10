@@ -64,6 +64,11 @@ public class UndoScript : MonoBehaviour
             case ActionManager.UserAction.CLOSE_SHAPE:
                 Debug.Log("Undo Shape Close");
 
+                if (ShapeManager.AllShapes.Count >= CanvasState.MAX_SHAPE_COUNT)
+                {
+                    IoUCalculator.Reset();
+                }
+
                 // the shape was closed and locked. need to undo the locked shape and last line drawn
                 if (CanvasState.Instance.shapeCount > 0)
                 {

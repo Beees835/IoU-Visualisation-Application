@@ -6589,7 +6589,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2aad1da4c83c31343af7f65f169c1b0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _deleteCurrShapeBtn: {fileID: 1986146340}
+  _deleteShapeBtn: {fileID: 1986146340}
 --- !u!114 &1986146344
 MonoBehaviour:
   m_ObjectHideFlags: 0
