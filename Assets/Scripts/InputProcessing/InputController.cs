@@ -209,7 +209,7 @@ public class InputController : MonoBehaviour
             }
         }
 
-        if (ShapeManager.SelectedShape != null)
+        if (ShapeManager.SelectedShape != null && CanvasState.Instance.hovering)
         {
             Debug.Log("Deselecting Shape");
             ShapeManager.SelectedShape.Selected = false;

@@ -291,7 +291,6 @@ GameObject:
   - component: {fileID: 104920588}
   - component: {fileID: 104920592}
   - component: {fileID: 104920593}
-  - component: {fileID: 104920594}
   - component: {fileID: 104920596}
   - component: {fileID: 104920597}
   m_Layer: 5
@@ -396,10 +395,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f15c6ec05a9d4cd68c5407eca3d362d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hovering: 0
-  shapeCount: 0
   drawState: 0
   uiState: 
+  hovering: 0
 --- !u!114 &104920593
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -410,18 +408,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 04f2412a9d2734475a3661fea1bc30b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &104920594
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 104920587}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2216c0eeb14bb4e828332844244771b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &104920596
@@ -1787,9 +1773,9 @@ MonoBehaviour:
   panSpeed: 0.3
   minZoom: 5
   maxZoom: 15
-  zoomSlider: {fileID: 1135354966}
-  zoomPercentageText: {fileID: 789793699}
-  cam: {fileID: 0}
+  _zoomSlider: {fileID: 1135354966}
+  _zoomPercentageText: {fileID: 789793699}
+  _cam: {fileID: 0}
   isUpdating: 0
 --- !u!1 &537756272
 GameObject:
@@ -3960,8 +3946,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ea43734344c9d74abadd0db65415ea2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  zoomInBtn: {fileID: 1128811847}
-  cameraController: {fileID: 519420033}
+  _zoomInBtn: {fileID: 1128811847}
+  _cameraController: {fileID: 519420033}
 --- !u!114 &1128811851
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4082,8 +4068,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ec0abfbcfac02d4791c33faa1a07f29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  zoomSlider: {fileID: 1135354966}
-  cameraController: {fileID: 519420033}
+  _zoomSlider: {fileID: 1135354966}
+  _cameraController: {fileID: 519420033}
 --- !u!1 &1190309094
 GameObject:
   m_ObjectHideFlags: 0
@@ -4409,8 +4395,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b09362871dfa3343a3b4bbf26e69c8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  zoomOutBtn: {fileID: 1282835050}
-  cameraController: {fileID: 519420033}
+  _zoomOutBtn: {fileID: 1282835050}
+  _cameraController: {fileID: 519420033}
 --- !u!114 &1282835054
 MonoBehaviour:
   m_ObjectHideFlags: 0

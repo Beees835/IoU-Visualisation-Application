@@ -67,13 +67,8 @@ public class CanvasState : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             drawState = hovering ? DrawStates.DRAW_STATE : DrawStates.LOCK_STATE;
             return;
         }
-        else if (IoUCalculator.IntersectionObject == null)
-        {
-            drawState = DrawStates.LOCK_STATE;
-            IoUCalculator.CalculateIoUForShapes();
-            return;
-        }
-        drawState = hovering ? DrawStates.MODIFY_STATE : DrawStates.LOCK_STATE;
+        IoUCalculator.CalculateIoUForShapes();
+        drawState = DrawStates.MODIFY_STATE;
     }
 
     public void OnPointerEnter(PointerEventData eventData)
