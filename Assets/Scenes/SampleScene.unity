@@ -770,7 +770,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 100, y: -50}
-  m_SizeDelta: {x: 200, y: 50}
+  m_SizeDelta: {x: 200, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &267220453
 CanvasRenderer:
@@ -905,7 +905,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 960, y: -540}
-  m_SizeDelta: {x: 200, y: 100}
+  m_SizeDelta: {x: 400, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &283767672
 MonoBehaviour:
@@ -1408,7 +1408,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ef1ecd27700b10448b4274a1d47625a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tipToShow: Redo Button
+  tipToShow: Redo (CTRL/CMD + SHIFT + Z)
 --- !u!1 &406055129
 GameObject:
   m_ObjectHideFlags: 0
@@ -2713,7 +2713,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.90200007, y: 0.109222226}
   m_AnchorMax: {x: 0.9857708, y: 0.16355558}
-  m_AnchoredPosition: {x: -5.296753, y: -5}
+  m_AnchoredPosition: {x: -5.296875, y: -5}
   m_SizeDelta: {x: 5.609497, y: 7.9469604}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &665681431
@@ -2976,7 +2976,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ef1ecd27700b10448b4274a1d47625a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tipToShow: Reset
+  tipToShow: Reset (CTRL/CMD + R)
 --- !u!1 &684146794
 GameObject:
   m_ObjectHideFlags: 0
@@ -4999,7 +4999,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -49.922974}
+  m_AnchoredPosition: {x: 0, y: -49.92285}
   m_SizeDelta: {x: 0, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1350708908
@@ -7153,7 +7153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ef1ecd27700b10448b4274a1d47625a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tipToShow: Delete Shape
+  tipToShow: 'Delete (Backspace/Delete) '
 --- !u!1 &2060636198
 GameObject:
   m_ObjectHideFlags: 0
@@ -7940,7 +7940,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ef1ecd27700b10448b4274a1d47625a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tipToShow: Undo Button
+  tipToShow: Undo (CTRL/CMD + Z)
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

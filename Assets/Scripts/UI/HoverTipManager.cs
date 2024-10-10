@@ -34,7 +34,7 @@ public class HoverTipManager : MonoBehaviour
 
         
         tipTapWindow.gameObject.SetActive(true); 
-        tipTapWindow.transform.position = new Vector2(position.x + 15, position.y - 10);  // Slight offset to avoid overlap
+        tipTapWindow.transform.position = new Vector2(position.x + 25, position.y - 50);  // Slight offset to avoid overlap
     }
 
     private void HideTip()
