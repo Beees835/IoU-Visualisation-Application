@@ -14,13 +14,11 @@ public class CanvasState : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     // Variables
     public DrawStates drawState = DrawStates.DRAW_STATE;
     public string uiState = "";
-
     public bool hovering;
 
     // Singleton instance
     private static CanvasState _instance;
 
-    // Properties
     public static CanvasState Instance
     {
         get
@@ -40,7 +38,6 @@ public class CanvasState : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         }
     }
 
-    // Awake is called when the script instance is being loaded
     private void Awake()
     {
         if (_instance != null && _instance != this)
@@ -59,7 +56,6 @@ public class CanvasState : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         ShapeManager.CurrentShape = new Shape();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (ShapeManager.CanAddMoreShapes())
@@ -86,5 +82,17 @@ public class CanvasState : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public void Reset()
     {
         drawState = DrawStates.DRAW_STATE;
+    }
+
+    // Save canvas state to XML
+    public void SaveState()
+    {
+        SaveLoadManager.SaveCanvasState(this);
+    }
+
+    // Load canvas state from XML
+    public void LoadState()
+    {
+        SaveLoadManager.LoadCanvasState();
     }
 }

@@ -18,6 +18,14 @@ public class Shape
         IsClosed = isClosed;
     }
 
+    // Constructor to create Shape from ShapeData
+    public Shape(ShapeData data)
+    {
+        IsClosed = data.isClosed;
+        Points = new List<Vector3>(data.points);
+        PrefabType = Materials.GetPrefabType();
+    }
+
     public void AddPoint(Vector3 point, bool animated = false)
     {
         Points.Add(point);
@@ -54,7 +62,6 @@ public class Shape
         return point;
     }
 
-    // General convexity check with custom points
     public static bool IsConvex(List<Vector3> points)
     {
         if (points.Count < 3)
@@ -78,7 +85,7 @@ public class Shape
 
             if (crossProductZ == 0)
             {
-                continue; // Colinear points; skip
+                continue;
             }
 
             if (isConvex == null)
@@ -94,7 +101,6 @@ public class Shape
         return true;
     }
 
-    // Update existing methods to use the new IsConvex method
     public bool IsConvex()
     {
         return IsConvex(Points);
@@ -106,12 +112,10 @@ public class Shape
         return IsConvex(testPoints);
     }
 
-
     public void ClearLines()
     {
         foreach (var line in Lines)
         {
-            // delete the line off the screen
             GameObject.Destroy(line);
         }
         Lines.Clear();

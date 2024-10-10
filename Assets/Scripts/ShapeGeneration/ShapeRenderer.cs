@@ -51,27 +51,28 @@ public class ShapeRenderer : MonoBehaviour
 
     public static void DrawLines(Shape shape)
     {
+        // Clear any existing lines before drawing new ones
         if (shape.Lines.Count > 0)
         {
             shape.ClearLines();
         }
 
-
         List<Vector3> points = shape.Points;
 
+        // Loop through the points and draw a line between each consecutive pair of points
         for (int i = 0; i < points.Count - 1; i++)
         {
             Vector3 start = points[i];
             Vector3 end = points[i + 1];
-            DrawLine(shape, start, end);
+            DrawLine(shape, start, end);  // Draw line between consecutive points
         }
 
-        if (shape.IsClosed)
+        // If the shape is closed, connect the last point to the first point
+        if (shape.IsClosed && points.Count > 1)
         {
-            // Draw closing line from last point to first point
             Vector3 start = points.Last();
             Vector3 end = points[0];
-            DrawLine(shape, start, end);
+            DrawLine(shape, start, end);  // Draw the closing line
         }
     }
 
