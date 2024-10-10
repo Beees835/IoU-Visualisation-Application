@@ -14,7 +14,7 @@ public class DeleteCurrShapeScript : MonoBehaviour
 
     public static void DeleteShape()
     {
-        if (ShapeManager.AllShapes.Count < ShapeManager.MAX_SHAPE_COUNT)
+        if (ShapeManager.CanAddMoreShapes())
         {
             NotificationManager.Instance.ShowMessage("Define all shapes first before attempting deletion");
             return;

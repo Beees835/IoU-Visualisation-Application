@@ -10,6 +10,7 @@ public class Materials : MonoBehaviour
 
     // Singleton instance
     private static Materials _instance;
+    public const float LINE_WIDTH = 0.05f;
 
     // Properties
     public static Materials Instance
@@ -33,9 +34,9 @@ public class Materials : MonoBehaviour
 
     public static GameObject GetPrefabType()
     {
-        return ShapeManager.AllShapes.Count == 0
+        return ShapeManager.GetShapeCount() == 0
             ? Instance.PrefabShape1
-            : ShapeManager.AllShapes.Last().prefabType == Instance.PrefabShape1
+            : ShapeManager.AllShapes.Last().PrefabType == Instance.PrefabShape1
                 ? Instance.PrefabShape2
                 : Instance.PrefabShape1;
     }

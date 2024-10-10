@@ -62,20 +62,18 @@ public class CanvasState : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     // Update is called once per frame
     void Update()
     {
-        if (ShapeManager.AllShapes.Count < ShapeManager.MAX_SHAPE_COUNT)
+        if (ShapeManager.CanAddMoreShapes())
         {
             drawState = hovering ? DrawStates.DRAW_STATE : DrawStates.LOCK_STATE;
             return;
         }
-        else if (IoUCalculator.intersectionObject == null)
+        else if (IoUCalculator.IntersectionObject == null)
         {
             drawState = DrawStates.LOCK_STATE;
             IoUCalculator.CalculateIoUForShapes();
+            return;
         }
-        else
-        {
-            drawState = hovering ? DrawStates.MODIFY_STATE : DrawStates.LOCK_STATE;
-        }
+        drawState = hovering ? DrawStates.MODIFY_STATE : DrawStates.LOCK_STATE;
     }
 
     public void OnPointerEnter(PointerEventData eventData)

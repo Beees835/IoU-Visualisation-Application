@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class ShapeRenderer : MonoBehaviour
 {
-    public static float LineWidth = 0.05f;
 
     public static void DrawShape(Shape shape)
     {
@@ -27,7 +26,6 @@ public class ShapeRenderer : MonoBehaviour
 
     public static void DrawLine(Shape shape, Vector3 start, Vector3 end)
     {
-        //Debug.Log("IS DRAWING LINE");
         GameObject line = new GameObject("Line");
         line.tag = "Line";
 
@@ -43,8 +41,8 @@ public class ShapeRenderer : MonoBehaviour
         lineRenderer.SetPosition(0, start);
         lineRenderer.SetPosition(1, end);
 
-        lineRenderer.startWidth = LineWidth;
-        lineRenderer.endWidth = LineWidth;
+        lineRenderer.startWidth = Materials.LINE_WIDTH;
+        lineRenderer.endWidth = Materials.LINE_WIDTH;
 
         shape.Lines.Add(line);
     }
@@ -77,14 +75,14 @@ public class ShapeRenderer : MonoBehaviour
 
     public static void RenderPoint(Shape shape, Vector3 point)
     {
-        GameObject vertex = Instantiate(shape.prefabType, point, Quaternion.identity);
+        GameObject vertex = Instantiate(shape.PrefabType, point, Quaternion.identity);
         vertex.GetComponent<PointAnimation>().Instant();
         shape.RenderedPoints.Add(vertex);
     }
 
     public static void RenderNewPoint(Shape shape, Vector3 point)
     {
-        GameObject vertex = Instantiate(shape.prefabType, point, Quaternion.identity);
+        GameObject vertex = Instantiate(shape.PrefabType, point, Quaternion.identity);
         vertex.GetComponent<PointAnimation>().Scale();
         shape.RenderedPoints.Add(vertex);
     }

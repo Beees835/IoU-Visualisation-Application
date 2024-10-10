@@ -15,7 +15,7 @@ public class ClearCanvasScript : MonoBehaviour
 
     void ClearCanvas()
     {
-        ShapeManager.DestroyAllShapes();
+        ShapeManager.Reset();
         IoUCalculator.Reset();
         ActionManager.Reset();
         NotificationManager.Instance.ClearMessage();

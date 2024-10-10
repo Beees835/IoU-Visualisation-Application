@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Shape
 {
-    public GameObject prefabType;
+    public GameObject PrefabType;
     public List<Vector3> Points { get; set; } = new List<Vector3>();
     public List<GameObject> RenderedPoints { get; set; } = new List<GameObject>();
     public List<GameObject> Lines { get; set; } = new List<GameObject>();
@@ -13,7 +13,7 @@ public class Shape
 
     public Shape(bool isClosed = false)
     {
-        prefabType = Materials.GetPrefabType();
+        PrefabType = Materials.GetPrefabType();
         IsClosed = isClosed;
     }
 

@@ -25,7 +25,7 @@ public class ShapeGenerator : MonoBehaviour
 
     public static void GenerateShape(int vertexCount)
     {
-        if (ShapeManager.AllShapes.Count >= ShapeManager.MAX_SHAPE_COUNT)
+        if (!ShapeManager.CanAddMoreShapes())
         {
             Debug.Log("Too many shapes already");
             NotificationManager.Instance.ShowMessage("Too many shapes already");

@@ -9,6 +9,16 @@ public class ShapeManager : MonoBehaviour
 
     public const int MAX_SHAPE_COUNT = 2;
 
+    public static int GetShapeCount()
+    {
+        return AllShapes.Count;
+    }
+
+    public static bool CanAddMoreShapes()
+    {
+        return AllShapes.Count < MAX_SHAPE_COUNT;
+    }
+
     public static void StartNewShape()
     {
         if (CurrentShape.Points.Count > 0)
@@ -38,7 +48,7 @@ public class ShapeManager : MonoBehaviour
         shape.ClearLines();
     }
 
-    public static void DestroyAllShapes()
+    private static void DestroyAllShapes()
     {
         foreach (var shape in AllShapes)
         {
@@ -46,7 +56,6 @@ public class ShapeManager : MonoBehaviour
         }
         AllShapes.Clear();
         DestroyShape(CurrentShape);
-        CurrentShape = new Shape();
     }
 
     public static void ClearLines()
@@ -65,5 +74,13 @@ public class ShapeManager : MonoBehaviour
             shape.ClearVertices();
         }
         CurrentShape.ClearVertices();
+    }
+
+
+    public static void Reset()
+    {
+        DestroyAllShapes();
+        CurrentShape = new Shape();
+        SelectedShape = null;
     }
 }

@@ -7,7 +7,7 @@ public class NotificationManager : MonoBehaviour
     // Singleton instance
     public static NotificationManager Instance { get; private set; }
 
-    private TextMeshProUGUI notificationText;
+    private TextMeshProUGUI _notificationText;
     private Coroutine currentCoroutine;
 
     void Awake()
@@ -16,8 +16,8 @@ public class NotificationManager : MonoBehaviour
         {
             Instance = this;
 
-            notificationText = GetComponent<TextMeshProUGUI>();
-            if (notificationText == null)
+            _notificationText = GetComponent<TextMeshProUGUI>();
+            if (_notificationText == null)
             {
                 Debug.LogError("NotificationManager requires a TextMeshProUGUI component on the same GameObject.");
             }
@@ -42,15 +42,15 @@ public class NotificationManager : MonoBehaviour
     private IEnumerator ShowMessageWithDelay(string message, float initialDelay, float displayDuration)
     {
         // Initial invisibility for 0.1 seconds
-        notificationText.text = "";
+        _notificationText.text = "";
         yield return new WaitForSeconds(initialDelay);
 
         // Display the message
-        notificationText.text = message;
+        _notificationText.text = message;
 
         // Clear the message after the display duration
         yield return new WaitForSeconds(displayDuration);
-        notificationText.text = "";
+        _notificationText.text = "";
         currentCoroutine = null;
     }
 
@@ -61,6 +61,6 @@ public class NotificationManager : MonoBehaviour
             StopCoroutine(currentCoroutine);
         }
 
-        notificationText.text = "";
+        _notificationText.text = "";
     }
 }
