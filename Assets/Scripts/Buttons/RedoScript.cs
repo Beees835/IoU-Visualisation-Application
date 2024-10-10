@@ -15,7 +15,7 @@ public class RedoScript : MonoBehaviour
     public void Redo()
     {
 
-        if (ActionManager.RedoStack.Count <= 0 && !ActionManager.canRedo)
+        if (ActionManager.RedoStack.Count <= 0 || !ActionManager.canRedo)
         {
             NotificationManager.Instance.ShowMessage("There's nothing to Redo");
             return;
@@ -66,7 +66,6 @@ public class RedoScript : MonoBehaviour
                     return;
                 }
 
-
                 ShapeRenderer.DrawLine(ShapeManager.CurrentShape, startPoint, endPoint);
 
                 if (CanvasState.Instance.shapeCount >= CanvasState.MAX_SHAPE_COUNT)
@@ -85,7 +84,7 @@ public class RedoScript : MonoBehaviour
                 ShapeRenderer.RedrawAllShapes();
                 break;
             case ActionManager.UserAction.DELETE_SHAPE:
-                DeleteCurrShapeScript.DeleteShape();
+                // Not Implemented
                 break;
         }
 

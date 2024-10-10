@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 public class Materials : MonoBehaviour
@@ -6,7 +7,6 @@ public class Materials : MonoBehaviour
     public GameObject PrefabShape2;
     public GameObject invalidMarkPrefab;
     public Material LineMaterial;
-
 
     // Singleton instance
     private static Materials _instance;
@@ -33,6 +33,10 @@ public class Materials : MonoBehaviour
 
     public static GameObject GetPrefabType()
     {
-        return CanvasState.Instance.shapeCount == 0 ? Materials.Instance.PrefabShape1 : Materials.Instance.PrefabShape2;
+        return ShapeManager.AllShapes.Count == 0
+            ? Instance.PrefabShape1
+            : ShapeManager.AllShapes.Last().prefabType == Instance.PrefabShape1
+                ? Instance.PrefabShape2
+                : Instance.PrefabShape1;
     }
 }

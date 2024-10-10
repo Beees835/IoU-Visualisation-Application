@@ -10,6 +10,10 @@ public class IoUCalculator : MonoBehaviour
     // Method to calculate and display IoU between two shapes from ShapeManager
     public static void CalculateIoUForShapes()
     {
+        if (intersectionObject != null)
+        {
+            Reset();
+        }
 
         List<Shape> allShapes = ShapeManager.AllShapes;
 

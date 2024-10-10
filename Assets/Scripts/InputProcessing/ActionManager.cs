@@ -18,8 +18,6 @@ public class ActionManager : MonoBehaviour
     // Points and Shape Sizes that have been undone
     public static Stack<Vector3> PointStack = new Stack<Vector3>();
     public static Stack<int> ShapeSizeStack = new Stack<int>();
-    public static Stack<bool> DeleteCompletion = new Stack<bool>();
-
 
     public int GetNumberOfActions()
     {
@@ -29,7 +27,9 @@ public class ActionManager : MonoBehaviour
     public static Shape BuildShapeFromStack()
     {
         Shape shape = new Shape();
-        int shapeSize = ActionManager.ShapeSizeStack.Pop();
+        int shapeSize = ShapeSizeStack.Pop();
+        Debug.Log(shapeSize);
+
 
         for (int i = 0; i < shapeSize; i++)
         {
@@ -37,6 +37,7 @@ public class ActionManager : MonoBehaviour
             shape.AddPoint(startPoint);
         }
 
+        Debug.Log(shape.Points.Count);
         return shape;
     }
 

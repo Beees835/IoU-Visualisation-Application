@@ -4,46 +4,52 @@ using UnityEngine.UI;
 public class DeleteCurrShapeScript : MonoBehaviour
 {
 
-    [SerializeField] private Button _deleteCurrShapeBtn;
+    [SerializeField] private Button _deleteShapeBtn;
 
     // Start is called before the first frame update
     void Start()
     {
-        _deleteCurrShapeBtn.onClick.AddListener(DeleteCurrShape);
+        _deleteShapeBtn.onClick.AddListener(DeleteShape);
     }
 
-    public static void DeleteCurrShape()
+    public static void DeleteShape()
     {
-        if (CanvasState.Instance.drawState == CanvasState.DrawStates.MODIFY_STATE)
+        if (ShapeManager.AllShapes.Count < CanvasState.MAX_SHAPE_COUNT)
         {
-            // Remove Intersection Shape
-            IoUCalculator.Reset();
+            NotificationManager.Instance.ShowMessage("Define all shapes first before attempting deletion");
+            return;
         }
 
-        if (ShapeManager.CurrentShape.Points.Count == 0)
+
+        if (ShapeManager.SelectedShape == null)
         {
-            ShapeManager.CurrentShape = ShapeManager.AllShapes[ShapeManager.AllShapes.Count - 1];
-            ShapeManager.AllShapes.RemoveAt(ShapeManager.AllShapes.Count - 1);
-            CanvasState.Instance.shapeCount--;
+            NotificationManager.Instance.ShowMessage("Select a shape to delete. Try double clicking a vertex!");
+            return;
         }
+
+        IoUCalculator.Reset();
+
+        Shape deletionShape = ShapeManager.SelectedShape;
+        ShapeManager.SelectedShape = null;
 
         // Data for Undo/Redo
-        ActionManager.DeleteCompletion.Push(ShapeManager.CurrentShape.IsClosed);
-        ActionManager.ShapeSizeStack.Push(ShapeManager.CurrentShape.Points.Count);
+        ActionManager.ShapeSizeStack.Push(deletionShape.Points.Count);
 
         // Reverse list to ensure points come out in right order when popped
-        ShapeManager.CurrentShape.Points.Reverse();
-        foreach (var point in ShapeManager.CurrentShape.Points)
+        deletionShape.Points.Reverse();
+        foreach (var point in deletionShape.Points)
         {
             ActionManager.PointStack.Push(point);
         }
 
-        if (ShapeManager.AllShapes.Count > -1)
-        {
-            ShapeManager.DestroyShape(ShapeManager.CurrentShape);
-        }
 
-        ShapeManager.CurrentShape.IsClosed = false;
+        // Remove from AllShapes
+        ShapeManager.AllShapes.Remove(deletionShape);
+
+
+        ShapeManager.DestroyShape(deletionShape);
+        CanvasState.Instance.shapeCount--;
+        ShapeManager.CurrentShape = new Shape();
 
         ActionManager.ActionStack.Push(ActionManager.UserAction.DELETE_SHAPE);
         ActionManager.canRedo = false;

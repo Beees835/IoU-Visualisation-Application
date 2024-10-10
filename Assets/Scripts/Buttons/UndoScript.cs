@@ -104,17 +104,12 @@ public class UndoScript : MonoBehaviour
                 ShapeManager.CurrentShape = new Shape();
                 break;
             case ActionManager.UserAction.DELETE_SHAPE:
-                Debug.Log("Undo Delete Partial Shape");
+                Debug.Log("Undo Delete Shape");
 
-                bool shapeCompleted = ActionManager.DeleteCompletion.Pop();
 
                 shape = ActionManager.BuildShapeFromStack();
                 ShapeManager.CurrentShape = shape;
-
-                if (shapeCompleted)
-                {
-                    ShapeManager.StartNewShape();
-                }
+                ShapeManager.StartNewShape();
                 ShapeRenderer.DrawShape(shape);
                 break;
         }
