@@ -209,9 +209,12 @@ public class InputController : MonoBehaviour
             }
         }
 
-        Debug.Log("Deselecting Shape");
-        ShapeManager.SelectedShape.Selected = false;
-        ShapeManager.SelectedShape = null;
+        if (ShapeManager.SelectedShape != null)
+        {
+            Debug.Log("Deselecting Shape");
+            ShapeManager.SelectedShape.Selected = false;
+            ShapeManager.SelectedShape = null;
+        }
         ShapeRenderer.RedrawAllShapes();
 
 
