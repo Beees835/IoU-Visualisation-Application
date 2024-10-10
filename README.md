@@ -13,7 +13,7 @@ Running the Windows Release
 Running the MacOS Release
 - Download the latest MacOS release zip file.
 - Double-click the zip file to extract it.
-- Run the software by opening BuildReleaseDemo.app.
+- Run the software by opening IoUTeamProject.app.
 
 Building From Unity
 Creating a Build From Unity
