@@ -58,6 +58,21 @@ public class CanvasState : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     void Update()
     {
+        // Check for CTRL/CMD key combination
+        bool isCtrlOrCmdPressed = Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl) ||
+                                  Input.GetKey(KeyCode.LeftCommand) || Input.GetKey(KeyCode.RightCommand);
+
+        // trigger save with key bind CTRL + S
+        if (isCtrlOrCmdPressed && Input.GetKeyDown(KeyCode.S))
+        {
+            SaveState();
+            
+        // trigger load with key bind CTRL + O
+        } else if (isCtrlOrCmdPressed && Input.GetKeyDown(KeyCode.O))
+        {
+            LoadState();
+        }
+
         if (ShapeManager.CanAddMoreShapes())
         {
             drawState = hovering ? DrawStates.DRAW_STATE : DrawStates.LOCK_STATE;
