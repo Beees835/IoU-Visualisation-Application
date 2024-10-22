@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,7 +14,7 @@ public class CollapseMenuScript : MonoBehaviour
         _collapseBtn.onClick.AddListener(CollapseMenu);
     }
 
-    public void CollapseMenu()
+    void CollapseMenu()
     {
         _expandedMenu.SetActive(false);
         _collapsedMenu.SetActive(true);

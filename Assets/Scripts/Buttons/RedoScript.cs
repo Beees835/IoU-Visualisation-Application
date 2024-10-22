@@ -27,7 +27,7 @@ public class RedoScript : MonoBehaviour
         }
     }
 
-    public void Redo()
+    void Redo()
     {
 
         if (ActionManager.RedoStack.Count <= 0 || !ActionManager.canRedo)

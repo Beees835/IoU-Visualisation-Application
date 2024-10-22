@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,7 +14,7 @@ public class ExpandMenuScript : MonoBehaviour
         _expandBtn.onClick.AddListener(ExpandMenu);
     }
 
-    public void ExpandMenu()
+    void ExpandMenu()
     {
         _expandedMenu.SetActive(true);
         _collapsedMenu.SetActive(false);

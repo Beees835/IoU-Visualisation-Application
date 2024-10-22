@@ -17,7 +17,7 @@ public class VerticesShapeGen : MonoBehaviour
         _generateButton.onClick.AddListener(GenerateShapeFromInput);
     }
 
-    public void GenerateShapeFromInput()
+    void GenerateShapeFromInput()
     {
         // Get and validate user input
         int vertexCount;

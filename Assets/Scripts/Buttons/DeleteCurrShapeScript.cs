@@ -21,8 +21,7 @@ public class DeleteCurrShapeScript : MonoBehaviour
         }
     }
 
-
-    public static void DeleteShape()
+    void DeleteShape()
     {
         if (ShapeManager.CanAddMoreShapes())
         {

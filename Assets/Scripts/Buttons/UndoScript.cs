@@ -26,7 +26,7 @@ public class UndoScript : MonoBehaviour
         }
     }
 
-    public void Undo()
+    void Undo()
     {
         if (CanvasState.Instance.drawState == CanvasState.DrawStates.MODIFY_STATE)
         {

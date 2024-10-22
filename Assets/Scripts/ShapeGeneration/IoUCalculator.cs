@@ -1,13 +1,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Class encompassing all back-end calculations
+/// </summary>
 public class IoUCalculator : MonoBehaviour
 {
     public static GameObject IntersectionObject;
     private const string DefaultInfo = "Not enough shapes to calculate Intersection over Union";
     public static string IoUInfo = DefaultInfo;
 
-    // Method to calculate and display IoU between two shapes from ShapeManager
+    /// <summary>
+    /// Calculate and display the Intersection over Union between shapes in the ShapeManager
+    /// </summary>
     public static void CalculateIoUForShapes()
     {
         if (IntersectionObject != null)
@@ -63,7 +68,13 @@ public class IoUCalculator : MonoBehaviour
         return result;
     }
 
-    // Method to calculate and display IoU between two polygons
+    /// <summary>
+    /// Calculate the IoU between two shapes
+    /// </summary>
+    /// <param name="area1"></param>
+    /// <param name="area2"></param>
+    /// <param name="intersectionPoints"></param>
+    /// <returns>IoU Metric</returns>
     public static float[] CalculateIoU(float area1, float area2, Vector2[] intersectionPoints)
     {
         float[] iouValues = new float[3];
@@ -84,7 +95,12 @@ public class IoUCalculator : MonoBehaviour
         return iouValues;
     }
 
-    // Method to get intersection points between two polygons
+    /// <summary>
+    /// Method to get intersection points between two polygons
+    /// </summary>
+    /// <param name="poly1"></param>
+    /// <param name="poly2"></param>
+    /// <returns>Vectors encompassing an intersection shape</returns>
     public static Vector2[] GetIntersectionPoints(Vector2[] poly1, Vector2[] poly2)
     {
         List<Vector2> intersectionPoints = new List<Vector2>();
@@ -134,7 +150,10 @@ public class IoUCalculator : MonoBehaviour
         return SortPointsClockwise(intersectionPoints).ToArray();
     }
 
-    // Method to highlight the intersection area
+    /// <summary>
+    /// Highlight a shape defined by a series of points 
+    /// </summary>
+    /// <param name="intersectionPoints">The points of the shape</param>
     private static void HighlightIntersection(Vector2[] intersectionPoints)
     {
         if (IntersectionObject != null)
@@ -186,7 +205,12 @@ public class IoUCalculator : MonoBehaviour
     }
 
 
-    // Supporting method to check if a point is inside a polygon
+    /// <summary>
+    /// Supporting method to check if a point is inside a polygon 
+    /// </summary>
+    /// <param name="point"></param>
+    /// <param name="polygon"></param>
+    /// <returns>Whether the point exists within the convex polygon </returns>
     public static bool IsPointInPolygon(Vector2 point, Vector2[] polygon)
     {
         bool isInside = false;
@@ -207,7 +231,11 @@ public class IoUCalculator : MonoBehaviour
         return isInside;
     }
 
-    // Method to calculate the polygon area
+    /// <summary>
+    /// Calculate the area of a polygon defined by points
+    /// </summary>
+    /// <param name="polygon">Vector defined polygon</param>
+    /// <returns>The approximate area of the shape</returns>
     public static float CalculatePolygonArea(Vector2[] polygon)
     {
         float area = 0f;
@@ -222,7 +250,11 @@ public class IoUCalculator : MonoBehaviour
         return Mathf.Abs(area / 2f);
     }
 
-    // Sort the intersection points in a clockwise order
+    /// <summary>
+    /// Sort the intersection points in a clockwise order 
+    /// </summary>
+    /// <param name="points">The points to sort</param>
+    /// <returns>A list of sorted points</returns>
     private static List<Vector2> SortPointsClockwise(List<Vector2> points)
     {
         Vector2 center = Vector2.zero;
@@ -237,7 +269,14 @@ public class IoUCalculator : MonoBehaviour
         return points;
     }
 
-    // Get the intersection point between two line segments
+    /// <summary>
+    /// Get the intersection point between two line segments 
+    /// </summary>
+    /// <param name="a1"></param>
+    /// <param name="a2"></param>
+    /// <param name="b1"></param>
+    /// <param name="b2"></param>
+    /// <returns>The point of intersection if it exists</returns>
     public static Vector2? GetIntersectionPoint(Vector2 a1, Vector2 a2, Vector2 b1, Vector2 b2)
     {
         Vector2 r = a2 - a1;
@@ -260,6 +299,9 @@ public class IoUCalculator : MonoBehaviour
         return null;
     }
 
+    /// <summary>
+    /// Reset for canvas method
+    /// </summary>
     public static void Reset()
     {
         Destroy(IntersectionObject);

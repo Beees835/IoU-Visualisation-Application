@@ -138,6 +138,7 @@ public class InputController : MonoBehaviour
             return;
         }
 
+        // Move a whole Shape
         if (ShapeManager.SelectedShape != null)
         {
             Vector3 deltaWorld = Cam.ScreenToWorldPoint(new Vector3(dragDelta.x, dragDelta.y, 0)) - Cam.ScreenToWorldPoint(Vector3.zero);
@@ -158,7 +159,6 @@ public class InputController : MonoBehaviour
             testPoints[draggedPointIndex] += new Vector3(deltaWorld.x, deltaWorld.y, 0);
 
             // Check if the shape remains convex after moving the point
-
             if (!Shape.IsConvex(testPoints))
             {
                 Debug.Log("Point movement rejected: shape would not be convex.");
