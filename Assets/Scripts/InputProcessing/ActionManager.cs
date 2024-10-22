@@ -1,8 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Class for the management of actions within undo/redo
+/// </summary>
 public class ActionManager : MonoBehaviour
 {
+    /// <summary>
+    /// Actions that may be partaken within the app
+    /// </summary>
     public enum UserAction
     {
         DRAW_POINT,
@@ -19,11 +25,10 @@ public class ActionManager : MonoBehaviour
     public static Stack<Vector3> PointStack = new Stack<Vector3>();
     public static Stack<int> ShapeSizeStack = new Stack<int>();
 
-    public int GetNumberOfActions()
-    {
-        return ActionStack.Count;
-    }
-
+    /// <summary>
+    /// Build a shape from the shapestack
+    /// </summary>
+    /// <returns>The shape that was built</returns>
     public static Shape BuildShapeFromStack()
     {
         Shape shape = new Shape();
@@ -41,9 +46,14 @@ public class ActionManager : MonoBehaviour
         return shape;
     }
 
+    /// <summary>
+    /// Reset the manager
+    /// </summary>
     public static void Reset()
     {
         ActionStack.Clear();
         RedoStack.Clear();
+        PointStack.Clear();
+        ShapeSizeStack.Clear();
     }
 }

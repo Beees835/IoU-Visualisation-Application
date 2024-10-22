@@ -2,6 +2,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/// <summary>
+/// Class for handling user input with mouse
+/// </summary>
 public class InputController : MonoBehaviour
 {
     public Camera Cam;
@@ -15,6 +18,10 @@ public class InputController : MonoBehaviour
 
     bool doubleClicked = false;
 
+    /// <summary>
+    /// Handle a mouse click
+    /// </summary>
+    /// <param name="context">Callback context</param>
     public void HandleClick(InputAction.CallbackContext context)
     {
         double curClick = context.startTime;
@@ -36,6 +43,9 @@ public class InputController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Select a point if one hasn't been selected
+    /// </summary>
     private void HandlePointSelection()
     {
         if (draggedPointIndex == -1)
@@ -44,6 +54,9 @@ public class InputController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Try add a new point to the current shape
+    /// </summary>
     private void AddNewPoint()
     {
         Vector2 mouseScreenPosition = Mouse.current.position.ReadValue();
@@ -89,7 +102,11 @@ public class InputController : MonoBehaviour
         }
     }
 
-
+    /// <summary>
+    /// Get the position relative to the camera
+    /// </summary>
+    /// <param name="screenPosition">The screen position</param>
+    /// <returns>A vector of the position</returns>
     private Vector3 GetWorldPosition(Vector2 screenPosition)
     {
         Ray ray = Cam.ScreenPointToRay(screenPosition);
@@ -110,7 +127,11 @@ public class InputController : MonoBehaviour
         return worldPosition;
     }
 
-    public void Drag(Vector2 panDelta)
+    /// <summary>
+    /// Try dragging either a shape or a vertex
+    /// </summary>
+    /// <param name="dragDelta">The amount to drag by</param>
+    public void Drag(Vector2 dragDelta)
     {
         if (!isDragging || draggedPointIndex == -1 || selectedShape == null || CanvasState.Instance.drawState == CanvasState.DrawStates.LOCK_STATE)
         {
@@ -119,7 +140,7 @@ public class InputController : MonoBehaviour
 
         if (ShapeManager.SelectedShape != null)
         {
-            Vector3 deltaWorld = Cam.ScreenToWorldPoint(new Vector3(panDelta.x, panDelta.y, 0)) - Cam.ScreenToWorldPoint(Vector3.zero);
+            Vector3 deltaWorld = Cam.ScreenToWorldPoint(new Vector3(dragDelta.x, dragDelta.y, 0)) - Cam.ScreenToWorldPoint(Vector3.zero);
             Vector3 movement = new Vector3(deltaWorld.x, deltaWorld.y, 0);
             for (int i = 0; i < selectedShape.Points.Count; i++)
             {
@@ -128,7 +149,7 @@ public class InputController : MonoBehaviour
         }
         else
         {
-            Vector3 deltaWorld = Cam.ScreenToWorldPoint(new Vector3(panDelta.x, panDelta.y, 0)) - Cam.ScreenToWorldPoint(Vector3.zero);
+            Vector3 deltaWorld = Cam.ScreenToWorldPoint(new Vector3(dragDelta.x, dragDelta.y, 0)) - Cam.ScreenToWorldPoint(Vector3.zero);
 
             // Create a copy of the points to simulate the movement
             List<Vector3> testPoints = new List<Vector3>(selectedShape.Points);
@@ -153,11 +174,13 @@ public class InputController : MonoBehaviour
                 selectedShape.RenderedPoints[draggedPointIndex].transform.position = selectedShape.Points[draggedPointIndex];
             }
         }
-
         IoUCalculator.CalculateIoUForShapes();
         ShapeRenderer.RedrawAllShapes();
     }
 
+    /// <summary>
+    /// Stio draggubg a point 
+    /// </summary>
     public void StopDragging()
     {
         if (isDragging)
@@ -167,6 +190,9 @@ public class InputController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Select a point with single click, or double-click for shape
+    /// </summary>
     private void SelectPoint()
     {
         Vector2 mouseScreenPosition = Mouse.current.position.ReadValue();
@@ -216,7 +242,6 @@ public class InputController : MonoBehaviour
             ShapeManager.SelectedShape = null;
         }
         ShapeRenderer.RedrawAllShapes();
-
 
         if (!dragPointFlag && CanvasState.Instance.hovering)
         {

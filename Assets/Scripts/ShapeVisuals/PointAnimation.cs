@@ -1,6 +1,9 @@
 using System.Collections;
 using UnityEngine;
 
+/// <summary>
+/// Class managing the animation of points
+/// </summary>
 public class PointAnimation : MonoBehaviour
 {
     public float duration = 0.5f;
@@ -18,6 +21,9 @@ public class PointAnimation : MonoBehaviour
         targetScale = originalScale;
     }
 
+    /// <summary>
+    /// Scale a point into existence
+    /// </summary>
     public void Scale()
     {
         noWait = false;
@@ -25,6 +31,7 @@ public class PointAnimation : MonoBehaviour
         scaleCoroutine = StartCoroutine(ScaleUp());
     }
 
+    // Destory a point
     public void Close()
     {
         if (scaleCoroutine != null)
@@ -36,6 +43,9 @@ public class PointAnimation : MonoBehaviour
         scaleCoroutine = StartCoroutine(ScaleDown());
     }
 
+    /// <summary>
+    /// Display a point without animation
+    /// </summary>
     public void Instant()
     {
         noWait = true;
@@ -46,6 +56,7 @@ public class PointAnimation : MonoBehaviour
         }
     }
 
+    // Scale a point back down after scaling up
     public void QuickLife()
     {
         shouldScaleDownAfterScaleUp = true;
@@ -56,6 +67,10 @@ public class PointAnimation : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Actual scale animation
+    /// </summary>
+    /// <returns>Animation enumerator</returns>
     IEnumerator ScaleUp()
     {
         if (!noWait)
@@ -82,6 +97,10 @@ public class PointAnimation : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Actual scale down animation
+    /// </summary>
+    /// <returns>Animation enumerator</returns>
     IEnumerator ScaleDown()
     {
         float time = 0f;
