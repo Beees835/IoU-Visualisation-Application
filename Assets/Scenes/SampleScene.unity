@@ -4653,6 +4653,7 @@ GameObject:
   - component: {fileID: 1212218667}
   - component: {fileID: 1212218671}
   - component: {fileID: 1212218670}
+  - component: {fileID: 1212218672}
   m_Layer: 6
   m_Name: LoadButton
   m_TagString: Untagged
@@ -4723,19 +4724,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1212218668}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 104920592}
-        m_TargetAssemblyTypeName: CanvasState, Scripts
-        m_MethodName: LoadState
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1212218668
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4804,6 +4793,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tipToShow: Open Saved Canvas (CTRL/CMD + O)
+--- !u!114 &1212218672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1212218665}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84583de7a84ff1a45aa45fdfa881c136, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _loadButton: {fileID: 1212218667}
 --- !u!1 &1215937568
 GameObject:
   m_ObjectHideFlags: 0
@@ -6166,6 +6168,7 @@ GameObject:
   - component: {fileID: 1851628621}
   - component: {fileID: 1851628625}
   - component: {fileID: 1851628624}
+  - component: {fileID: 1851628626}
   m_Layer: 6
   m_Name: SaveButton
   m_TagString: Untagged
@@ -6236,19 +6239,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1851628622}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 104920592}
-        m_TargetAssemblyTypeName: CanvasState, Scripts
-        m_MethodName: SaveState
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1851628622
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6317,6 +6308,19 @@ MonoBehaviour:
   m_UseGraphicAlpha: 1
   iterations: 5
   shadowSpread: {x: 1, y: 15}
+--- !u!114 &1851628626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1851628619}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 409d6e4698f675e47b0da1acfd5501c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _saveButton: {fileID: 1851628621}
 --- !u!1 &1871298908
 GameObject:
   m_ObjectHideFlags: 0

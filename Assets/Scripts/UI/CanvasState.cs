@@ -11,6 +11,8 @@ public class CanvasState : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         LOCK_STATE
     };
 
+    public static string savePath;
+
     // Variables
     public DrawStates drawState = DrawStates.DRAW_STATE;
     public string uiState = "";
@@ -53,6 +55,7 @@ public class CanvasState : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     private void Start()
     {
+        savePath = Application.persistentDataPath + "/canvasSave.xml";
         ShapeManager.CurrentShape = new Shape();
     }
 

@@ -79,7 +79,7 @@ public class ShapeManager : MonoBehaviour
     /// Get the shape data from the shape manager
     /// </summary>
     /// <returns>All shape data</returns>
-    public static ShapeData[] GetShapesData()
+    public static List<ShapeData> GetShapesData()
     {
         List<ShapeData> shapesData = new List<ShapeData>();
 
@@ -107,18 +107,18 @@ public class ShapeManager : MonoBehaviour
             shapesData.Add(currentShapeData);
         }
 
-        return shapesData.ToArray();
+        return shapesData;
     }
 
     /// <summary>
     /// Load shapes from shape data
     /// </summary>
     /// <param name="shapesData">The shape data to load</param>
-    public static void LoadShapes(ShapeData[] shapesData)
+    public static void LoadShapes(List<ShapeData> shapesData)
     {
         CanvasState.Instance.ClearCanvas();
 
-        for (int i = 0; i < shapesData.Length; i++)
+        for (int i = 0; i < shapesData.Count; i++)
         {
             ShapeData data = shapesData[i];
             Shape newShape = new Shape(data.isClosed)
@@ -137,7 +137,7 @@ public class ShapeManager : MonoBehaviour
             {
                 AllShapes.Add(newShape);
             }
-            else if (i == shapesData.Length - 1 && !data.isClosed)
+            else if (i == shapesData.Count - 1 && !data.isClosed)
             {
                 CurrentShape = newShape;
             }
