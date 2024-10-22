@@ -103,7 +103,7 @@ public class UndoScript : MonoBehaviour
                     ActionManager.PointStack.Push(point);
                 }
 
-                ShapeManager.DestroyShape(shape);
+                shape.ClearShape();
 
                 ShapeManager.CurrentShape = new Shape();
                 break;

@@ -2,37 +2,41 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+/// <summary>
+/// Data storage class for shapes
+/// Stores both the abstract 'points' and the rendered lines and points
+/// </summary>
 public class Shape
 {
     public GameObject PrefabType;
     public List<Vector3> Points { get; set; } = new List<Vector3>();
     public List<GameObject> RenderedPoints { get; set; } = new List<GameObject>();
     public List<GameObject> Lines { get; set; } = new List<GameObject>();
-    public Stack<Vector3> PrevPoints { get; set; } = new Stack<Vector3>();
     public bool IsClosed { get; set; } = false;
     public bool Selected = false;
 
+    /// <summary>
+    /// Constructor
+    /// </summary>
+    /// <param name="isClosed">Whether the shape should be set as closed</param>
     public Shape(bool isClosed = false)
     {
         PrefabType = Materials.GetPrefabType();
         IsClosed = isClosed;
     }
 
-    // Constructor to create Shape from ShapeData
-    public Shape(ShapeData data)
-    {
-        IsClosed = data.isClosed;
-        Points = new List<Vector3>(data.points);
-        PrefabType = Materials.GetPrefabType();
-    }
-
+    /// <summary>
+    /// Add a point to the shape
+    /// </summary>
+    /// <param name="point">The point to add</param>
+    /// <param name="animated">Whether to play an animation upon adding the point</param>
     public void AddPoint(Vector3 point, bool animated = false)
     {
         Points.Add(point);
 
         if (animated)
         {
-            ShapeRenderer.RenderNewPoint(this, point);
+            ShapeRenderer.RenderPoint(this, point, true);
         }
         else
         {
@@ -40,6 +44,10 @@ public class Shape
         }
     }
 
+    /// <summary>
+    /// Remove the last point added to a shape
+    /// </summary>
+    /// <returns>The vertex of the point</returns>
     public Vector3 RemoveLastPoint()
     {
         Vector3 point = Points.Last();
@@ -53,6 +61,10 @@ public class Shape
         return point;
     }
 
+    /// <summary>
+    /// Remove the last line added to a shape
+    /// </summary>
+    /// <returns>The vertex the line ended with</returns>
     public Vector3 RemoveLastLine()
     {
         Vector3 point = Points.Last();
@@ -62,6 +74,11 @@ public class Shape
         return point;
     }
 
+    /// <summary>
+    /// Check if a set of points returns a convex shape
+    /// </summary>
+    /// <param name="points">The set of points to testr</param>
+    /// <returns>Whether the shape will be convex</returns>
     public static bool IsConvex(List<Vector3> points)
     {
         if (points.Count < 3)
@@ -101,18 +118,21 @@ public class Shape
         return true;
     }
 
-    public bool IsConvex()
-    {
-        return IsConvex(Points);
-    }
-
+    /// <summary>
+    /// Check if a shape is convex with a new point added
+    /// </summary>
+    /// <param name="newPoint"> The point being added</param>
+    /// <returns>Whether the shape will be convex</returns>
     public bool IsConvexWithNewPoint(Vector3 newPoint)
     {
         List<Vector3> testPoints = new List<Vector3>(Points) { newPoint };
         return IsConvex(testPoints);
     }
 
-    public void ClearLines()
+    /// <summary>
+    /// Remove all rendered lines from the current shape, clearing them from the canvas
+    /// </summary>
+    public void ClearRenderedLines()
     {
         foreach (var line in Lines)
         {
@@ -121,7 +141,10 @@ public class Shape
         Lines.Clear();
     }
 
-    public void ClearVertices()
+    /// <summary>
+    /// Remove all rendered vertices from the current shape, clearing them from the canvas
+    /// </summary>
+    public void ClearRenderedVertices()
     {
         foreach (GameObject point in RenderedPoints)
         {
@@ -130,9 +153,12 @@ public class Shape
         RenderedPoints.Clear();
     }
 
+    /// <summary>
+    /// Remove all lines and vertices and clear them from the canvas
+    /// </summary>
     public void ClearShape()
     {
-        ClearLines();
-        ClearVertices();
+        ClearRenderedLines();
+        ClearRenderedVertices();
     }
 }

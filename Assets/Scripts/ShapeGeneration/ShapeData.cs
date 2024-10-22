@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
+/// <summary>
+/// Serialized dataclass for shape information
+/// </summary>
 [System.Serializable]
 public class ShapeData
 {

@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class ConvexHullManager : MonoBehaviour
 {
-    // Convex hull algorithm using Andrew's monotone chain algorithm
+    /// <summary>
+    /// Convex hull algorithm using Andrew's monotone chain algorithm 
+    /// </summary>
+    /// <param name="points">Generate a convex hull from a series of points</param>
+    /// <returns>The convex hull</returns>
     public static List<Vector3> ConvexHull(List<Vector3> points)
     {
         // Remove duplicate points
@@ -12,8 +16,7 @@ public class ConvexHullManager : MonoBehaviour
         points = new List<Vector3>(uniquePoints);
 
         // A single point or empty list is already a convex hull so we can return safely
-        if (points.Count <= 1)
-            return points;
+        if (points.Count <= 1) return points;
 
         // Sort points by x, then by y to prepare for hull construction
         points.Sort((a, b) => a.x == b.x ? a.y.CompareTo(b.y) : a.x.CompareTo(b.x));
@@ -50,18 +53,27 @@ public class ConvexHullManager : MonoBehaviour
         {
             lower = ReduceVertices(lower, points.Count);
         }
-
         return lower;
     }
 
-    // Calculate the cross product of OA and OB vectors
-    // Positive result means counter-clockwise turn
+    /// <summary>
+    /// Calculate the cross product of OA and OB vectors
+    /// </summary>
+    /// <param name="O"></param>
+    /// <param name="A"></param>
+    /// <param name="B"></param>
+    /// <returns>The cross product. Positive result means counter-clockwise turn</returns>
     private static float CrossProduct(Vector2 O, Vector2 A, Vector2 B)
     {
         return (A.x - O.x) * (B.y - O.y) - (A.y - O.y) * (B.x - O.x);
     }
 
-    // Reduce the number of vertices in the convex hull to a desired count
+    /// <summary>
+    /// Reduce the number of vertices in the convex hull to a desired count 
+    /// </summary>
+    /// <param name="vertices">The vertices to reduce</param>
+    /// <param name="desiredCount">The number of vertices to reduce to</param>
+    /// <returns>The reduced vertex count</returns>
     private static List<Vector3> ReduceVertices(List<Vector3> vertices, int desiredCount)
     {
         if (vertices.Count <= desiredCount) return vertices;
@@ -73,7 +85,6 @@ public class ConvexHullManager : MonoBehaviour
             vertices.RemoveAt(removeIndex);
             removeIndex = (removeIndex + 1) % vertices.Count; // Update index cyclically
         }
-
         return vertices;
     }
 }

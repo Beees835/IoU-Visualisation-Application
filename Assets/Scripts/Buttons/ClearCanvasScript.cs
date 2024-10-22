@@ -9,7 +9,7 @@ public class ClearCanvasScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _clearCanvasBtn.onClick.AddListener(ClearCanvas);
+        _clearCanvasBtn.onClick.AddListener(CanvasState.Instance.ClearCanvas);
 
     }
 
@@ -23,16 +23,8 @@ public class ClearCanvasScript : MonoBehaviour
 
         if (isCtrlOrCmdPressed && Input.GetKeyDown(KeyCode.R))
         {
-            ClearCanvas();
+            CanvasState.Instance.ClearCanvas();
         }
     }
 
-    void ClearCanvas()
-    {
-        ShapeManager.Reset();
-        IoUCalculator.Reset();
-        ActionManager.Reset();
-        NotificationManager.Instance.ClearMessage();
-        CanvasState.Instance.Reset();
-    }
 }

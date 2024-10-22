@@ -11,13 +11,13 @@ public class DeleteCurrShapeScript : MonoBehaviour
     {
         _deleteShapeBtn.onClick.AddListener(DeleteShape);
     }
-    
+
     // Trigger DeleteShape if Delete or Backspace key is pressed 
-    void Update() 
-    {    
-        if (Input.GetKey(KeyCode.Delete) || Input.GetKey(KeyCode.Backspace)) 
-        { 
-            DeleteShape(); 
+    void Update()
+    {
+        if (Input.GetKey(KeyCode.Delete) || Input.GetKey(KeyCode.Backspace))
+        {
+            DeleteShape();
         }
     }
 
@@ -56,8 +56,7 @@ public class DeleteCurrShapeScript : MonoBehaviour
         // Remove from AllShapes
         ShapeManager.AllShapes.Remove(deletionShape);
 
-
-        ShapeManager.DestroyShape(deletionShape);
+        deletionShape.ClearShape();
         ShapeManager.CurrentShape = new Shape();
 
         ActionManager.ActionStack.Push(ActionManager.UserAction.DELETE_SHAPE);

@@ -66,9 +66,10 @@ public class CanvasState : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         if (isCtrlOrCmdPressed && Input.GetKeyDown(KeyCode.S))
         {
             SaveState();
-            
-        // trigger load with key bind CTRL + O
-        } else if (isCtrlOrCmdPressed && Input.GetKeyDown(KeyCode.O))
+
+            // trigger load with key bind CTRL + O
+        }
+        else if (isCtrlOrCmdPressed && Input.GetKeyDown(KeyCode.O))
         {
             LoadState();
         }
@@ -97,6 +98,15 @@ public class CanvasState : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public void Reset()
     {
         drawState = DrawStates.DRAW_STATE;
+    }
+
+    public void ClearCanvas()
+    {
+        ShapeManager.Reset();
+        IoUCalculator.Reset();
+        ActionManager.Reset();
+        NotificationManager.Instance.ClearMessage();
+        CanvasState.Instance.Reset();
     }
 
     // Save canvas state to XML

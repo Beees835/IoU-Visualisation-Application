@@ -77,7 +77,7 @@ public class InputController : MonoBehaviour
                 ActionManager.canRedo = false;
             }
             ShapeManager.AddPointToCurrentShape(spawnPosition);
-            ShapeRenderer.DrawLines(ShapeManager.CurrentShape);
+            ShapeRenderer.RedrawAllShapes();
         }
         else
         {

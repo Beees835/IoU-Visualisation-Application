@@ -1,28 +1,47 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Class containing methods for random shape generation
+/// </summary>
 public class ShapeGenerator : MonoBehaviour
 {
+    /// <summary>
+    /// Generate an irregular triangle
+    /// </summary>
     public void GenerateTriangle()
     {
         GenerateShape(3);
     }
 
+    /// <summary>
+    /// Generate an irregular square
+    /// </summary>
     public void GenerateSquare()
     {
         GenerateShape(4);
     }
 
+    /// <summary>
+    /// Generate an irregular pentagon
+    /// </summary>
     public void GeneratePentagon()
     {
         GenerateShape(5);
     }
 
+    /// <summary>
+    /// Generate an irregular hexagon
+    /// </summary>
     public void GenerateHexagon()
     {
         GenerateShape(6);
     }
 
+    /// <summary>
+    /// Generate an irregular convex shape with the given number of vertices
+    /// </summary>
+    /// <param name="vertexCount">The number of vertices the shape should have</param>
     public static void GenerateShape(int vertexCount)
     {
         if (!ShapeManager.CanAddMoreShapes())
@@ -41,16 +60,16 @@ public class ShapeGenerator : MonoBehaviour
 
 
         // Generate convex polygon vertices using ConvexHullManager
-        List<Vector3> vertices3D = GenerateConvexPolygon(vertexCount);
+        List<Vector3> vertices = GenerateConvexPolygon(vertexCount);
 
         Shape shape = new Shape(true);
 
-        foreach (var point in vertices3D)
+        foreach (var point in vertices)
         {
-            shape.AddPoint(point);
+            shape.Points.Add(point);
         }
 
-        AddLines(shape, vertices3D);
+        ShapeRenderer.DrawShape(shape);
 
         Debug.Log($"Created shape with {vertexCount} vertices");
 
@@ -61,6 +80,10 @@ public class ShapeGenerator : MonoBehaviour
         ActionManager.canRedo = false;
     }
 
+    /// <summary>
+    /// Generate a series of points defining a convex shape of 'n' vertices
+    /// </summary>
+    /// <param name="vertexCount">The number of vertices the shape should have</param>
     private static List<Vector3> GenerateConvexPolygon(int vertexCount)
     {
         List<Vector3> points = new List<Vector3>();
@@ -98,17 +121,5 @@ public class ShapeGenerator : MonoBehaviour
 
         // Return only the desired number of points
         return convexHull.GetRange(0, Mathf.Min(vertexCount, convexHull.Count));
-    }
-
-    // Add the LineRenderer to the shape object to draw the edges
-    private static void AddLines(Shape shape, List<Vector3> vertices)
-    {
-        for (int i = 1; i < vertices.Count; i++)
-        {
-            ShapeRenderer.DrawLine(shape, vertices[i - 1], vertices[i]);
-        }
-
-        // add the last line to close the shape
-        ShapeRenderer.DrawLine(shape, vertices[vertices.Count - 1], vertices[0]);
     }
 }

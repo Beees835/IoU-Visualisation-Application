@@ -1,6 +1,9 @@
 using System.Linq;
 using UnityEngine;
 
+/// <summary>
+/// Storage class for instance materials
+/// </summary>
 public class Materials : MonoBehaviour
 {
     public GameObject PrefabShape1;
@@ -32,6 +35,10 @@ public class Materials : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Return a prefab for the current shape
+    /// </summary>
+    /// <returns>A prefab for vertices</returns>
     public static GameObject GetPrefabType()
     {
         return ShapeManager.GetShapeCount() == 0

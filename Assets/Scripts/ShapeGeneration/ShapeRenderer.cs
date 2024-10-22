@@ -2,9 +2,15 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+/// <summary>
+/// Class containing all methods related to rendering shapes to canvas
+/// </summary>
 public class ShapeRenderer : MonoBehaviour
 {
-
+    /// <summary>
+    /// Draw a shape to the canvas 
+    /// </summary>
+    /// <param name="shape">The shape to draw</param>
     public static void DrawShape(Shape shape)
     {
         DrawLines(shape);
@@ -15,10 +21,12 @@ public class ShapeRenderer : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Remove all shapes from the canvas and redraw them
+    /// </summary>
     public static void RedrawAllShapes()
     {
-        ShapeManager.ClearLines();
-        ShapeManager.ClearVertices();
+        ShapeManager.ClearAllShapesFromCanvas();
         foreach (var shape in ShapeManager.AllShapes)
         {
             DrawShape(shape);
@@ -26,6 +34,33 @@ public class ShapeRenderer : MonoBehaviour
         DrawShape(ShapeManager.CurrentShape);
     }
 
+    /// <summary>
+    /// Render a point to canvas
+    /// </summary>
+    /// <param name="shape">The shape to assign the point to</param>
+    /// <param name="point">The point to draw</param>
+    /// <param name="fullAnimation">Whether the full animation should display</param>
+    public static void RenderPoint(Shape shape, Vector3 point, bool fullAnimation = false)
+    {
+        GameObject vertex = Instantiate(shape.PrefabType, point, Quaternion.identity);
+
+        if (fullAnimation)
+        {
+            vertex.GetComponent<PointAnimation>().Scale();
+        }
+        else
+        {
+            vertex.GetComponent<PointAnimation>().Instant();
+        }
+        shape.RenderedPoints.Add(vertex);
+    }
+
+    /// <summary>
+    /// Draw a line to the canvas
+    /// </summary>
+    /// <param name="shape">Shape to assign the line to</param>
+    /// <param name="start">Start point for the line</param>
+    /// <param name="end">End point for the line</param>
     public static void DrawLine(Shape shape, Vector3 start, Vector3 end)
     {
         GameObject line = new GameObject("Line");
@@ -49,12 +84,16 @@ public class ShapeRenderer : MonoBehaviour
         shape.Lines.Add(line);
     }
 
-    public static void DrawLines(Shape shape)
+    /// <summary>
+    /// Draw all lines for a shape
+    /// </summary>
+    /// <param name="shape">The shape to draw from</param>
+    private static void DrawLines(Shape shape)
     {
         // Clear any existing lines before drawing new ones
         if (shape.Lines.Count > 0)
         {
-            shape.ClearLines();
+            shape.ClearRenderedLines();
         }
 
         List<Vector3> points = shape.Points;
@@ -76,21 +115,10 @@ public class ShapeRenderer : MonoBehaviour
         }
     }
 
-    public static void RenderPoint(Shape shape, Vector3 point)
-    {
-        GameObject vertex = Instantiate(shape.PrefabType, point, Quaternion.identity);
-        vertex.GetComponent<PointAnimation>().Instant();
-        shape.RenderedPoints.Add(vertex);
-    }
-
-    public static void RenderNewPoint(Shape shape, Vector3 point)
-    {
-        GameObject vertex = Instantiate(shape.PrefabType, point, Quaternion.identity);
-        vertex.GetComponent<PointAnimation>().Scale();
-        shape.RenderedPoints.Add(vertex);
-    }
-
-    public static void ToggleCoordinates() 
+    /// <summary>
+    /// Toggle the coordinate display
+    /// </summary>
+    public static void ToggleCoordinates()
     {
         CoordinateDisplay.ToggleAllCoordinates();
     }

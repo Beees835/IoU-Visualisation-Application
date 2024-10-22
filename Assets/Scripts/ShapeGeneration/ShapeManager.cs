@@ -1,7 +1,9 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
+/// <summary>
+/// Class for managing shape related details
+/// </summary>
 public class ShapeManager : MonoBehaviour
 {
     public static List<Shape> AllShapes { get; private set; } = new List<Shape>();
@@ -10,16 +12,27 @@ public class ShapeManager : MonoBehaviour
 
     public const int MAX_SHAPE_COUNT = 2;
 
+    /// <summary>
+    /// Return the number of shapes on the canvas
+    /// </summary>
+    /// <returns>The number of shapes on the canvas</returns>
     public static int GetShapeCount()
     {
         return AllShapes.Count;
     }
 
+    /// <summary>
+    /// Determine whether more shapes may be drawn
+    /// </summary>
+    /// <returns>Whether more shapes can be drawn</returns>
     public static bool CanAddMoreShapes()
     {
         return AllShapes.Count < MAX_SHAPE_COUNT;
     }
 
+    /// <summary>
+    /// Start a new shape. Adding the previous to the shape list
+    /// </summary>
     public static void StartNewShape()
     {
         if (CurrentShape.Points.Count > 0)
@@ -30,58 +43,42 @@ public class ShapeManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Add a point to the current shape
+    /// </summary>
+    /// <param name="point">The point to add</param>
     public static void AddPointToCurrentShape(Vector3 point)
     {
         CurrentShape.AddPoint(point, true);
     }
 
-    public static void DestroyShape(Shape shape)
-    {
-        foreach (var prefab in shape.RenderedPoints)
-        {
-            prefab.GetComponent<PointAnimation>().Close();
-            Destroy(prefab);
-        }
-        shape.Points.Clear();
-        shape.RenderedPoints.Clear();
-        shape.ClearLines();
-    }
-
-    private static void DestroyAllShapes()
+    /// <summary>
+    /// Clear all shapes from the canvas
+    /// </summary>
+    public static void ClearAllShapesFromCanvas()
     {
         foreach (var shape in AllShapes)
         {
-            DestroyShape(shape);
+            shape.ClearShape();
         }
-        AllShapes.Clear();
-        DestroyShape(CurrentShape);
+        CurrentShape.ClearShape();
     }
 
-    public static void ClearLines()
-    {
-        foreach (Shape shape in AllShapes)
-        {
-            shape.ClearLines();
-        }
-        CurrentShape.ClearLines();
-    }
-
-    public static void ClearVertices()
-    {
-        foreach (Shape shape in AllShapes)
-        {
-            shape.ClearVertices();
-        }
-        CurrentShape.ClearVertices();
-    }
-
+    /// <summary>
+    /// Reset the shape manager
+    /// </summary>
     public static void Reset()
     {
-        DestroyAllShapes();
+        ClearAllShapesFromCanvas();
+        AllShapes.Clear();
         CurrentShape = new Shape();
         SelectedShape = null;
     }
 
+    /// <summary>
+    /// Get the shape data from the shape manager
+    /// </summary>
+    /// <returns>All shape data</returns>
     public static ShapeData[] GetShapesData()
     {
         List<ShapeData> shapesData = new List<ShapeData>();
@@ -113,10 +110,13 @@ public class ShapeManager : MonoBehaviour
         return shapesData.ToArray();
     }
 
+    /// <summary>
+    /// Load shapes from shape data
+    /// </summary>
+    /// <param name="shapesData">The shape data to load</param>
     public static void LoadShapes(ShapeData[] shapesData)
     {
-        Reset();
-        IoUCalculator.Reset();
+        CanvasState.Instance.ClearCanvas();
 
         for (int i = 0; i < shapesData.Length; i++)
         {
@@ -129,10 +129,8 @@ public class ShapeManager : MonoBehaviour
             // Recreate the shape by adding each point
             foreach (var point in data.points)
             {
-                newShape.AddPoint(point, false);
+                newShape.Points.Add(point);
             }
-
-            ShapeRenderer.DrawLines(newShape);
 
             // If the shape is closed, add it to the list of finished shapes
             if (newShape.IsClosed)
@@ -144,5 +142,6 @@ public class ShapeManager : MonoBehaviour
                 CurrentShape = newShape;
             }
         }
+        ShapeRenderer.RedrawAllShapes();
     }
 }
