@@ -17,11 +17,9 @@ public class LoadScript : MonoBehaviour
 
     void Update()
     {
-        // Check for CTRL/CMD + Z key combination
         bool isCtrlOrCmdPressed = Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl) ||
                                   Input.GetKey(KeyCode.LeftCommand) || Input.GetKey(KeyCode.RightCommand);
 
-        // trigger load with key bind CTRL + O
         if (isCtrlOrCmdPressed && Input.GetKeyDown(KeyCode.O)) Load();
     }
 

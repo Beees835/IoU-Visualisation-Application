@@ -3,9 +3,6 @@ using System.Xml.Serialization;
 using UnityEngine;
 using UnityEngine.UI;
 
-/// <summary>
-/// Script attatched to save button
-/// </summary>
 public class SaveScript : MonoBehaviour
 {
     [SerializeField] private Button _saveButton;
@@ -16,11 +13,9 @@ public class SaveScript : MonoBehaviour
     }
     void Update()
     {
-        // Check for CTRL/CMD + Z key combination
         bool isCtrlOrCmdPressed = Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl) ||
                                   Input.GetKey(KeyCode.LeftCommand) || Input.GetKey(KeyCode.RightCommand);
 
-        // trigger save with key bind CTRL + S
         if (isCtrlOrCmdPressed && Input.GetKeyDown(KeyCode.S)) Save();
     }
 

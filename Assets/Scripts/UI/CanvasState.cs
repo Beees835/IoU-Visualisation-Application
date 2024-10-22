@@ -3,7 +3,6 @@ using UnityEngine.EventSystems;
 
 public class CanvasState : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    // Enum for different states
     public enum DrawStates
     {
         DRAW_STATE,
@@ -13,14 +12,11 @@ public class CanvasState : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public static string savePath;
 
-    // Variables
     public DrawStates drawState = DrawStates.DRAW_STATE;
     public string uiState = "";
     public bool hovering;
 
-    // Singleton instance
     private static CanvasState _instance;
-
     public static CanvasState Instance
     {
         get
@@ -110,17 +106,5 @@ public class CanvasState : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         ActionManager.Reset();
         NotificationManager.Instance.ClearMessage();
         CanvasState.Instance.Reset();
-    }
-
-    // Save canvas state to XML
-    public void SaveState()
-    {
-        SaveLoadManager.SaveCanvasState(this);
-    }
-
-    // Load canvas state from XML
-    public void LoadState()
-    {
-        SaveLoadManager.LoadCanvasState();
     }
 }

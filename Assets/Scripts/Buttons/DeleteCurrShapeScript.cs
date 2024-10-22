@@ -3,24 +3,21 @@ using UnityEngine.UI;
 
 public class DeleteCurrShapeScript : MonoBehaviour
 {
-
     [SerializeField] private Button _deleteShapeBtn;
 
-    // Start is called before the first frame update
     void Start()
     {
         _deleteShapeBtn.onClick.AddListener(DeleteShape);
     }
 
-    // Trigger DeleteShape if Delete or Backspace key is pressed 
     void Update()
     {
-        if (Input.GetKey(KeyCode.Delete) || Input.GetKey(KeyCode.Backspace))
-        {
-            DeleteShape();
-        }
+        if (Input.GetKey(KeyCode.Delete) || Input.GetKey(KeyCode.Backspace)) DeleteShape();
     }
 
+    /// <summary>
+    /// Delete the currently selected shape
+    /// </summary>
     void DeleteShape()
     {
         if (ShapeManager.CanAddMoreShapes())
@@ -51,11 +48,10 @@ public class DeleteCurrShapeScript : MonoBehaviour
             ActionManager.PointStack.Push(point);
         }
 
-
-        // Remove from AllShapes
+        // Remove shape from canvas
         ShapeManager.AllShapes.Remove(deletionShape);
-
         deletionShape.ClearShape();
+
         ShapeManager.CurrentShape = new Shape();
 
         ActionManager.ActionStack.Push(ActionManager.UserAction.DELETE_SHAPE);

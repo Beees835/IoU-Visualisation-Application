@@ -4,29 +4,25 @@ using UnityEngine.UI;
 
 public class RedoScript : MonoBehaviour
 {
-
     [SerializeField] private Button _redoBtn;
 
-    // Start is called before the first frame update
     void Start()
     {
         _redoBtn.onClick.AddListener(Redo);
     }
 
-    // Trigger Redo if CTRL/CMD + Shift (left and right) + Z key combination is pressed
     void Update()
     {
         // Check for CTRL/CMD + Z key combination
         bool isCtrlOrCmdPressed = Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl) ||
                                   Input.GetKey(KeyCode.LeftCommand) || Input.GetKey(KeyCode.RightCommand);
 
-
-        if (isCtrlOrCmdPressed && (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) && Input.GetKeyDown(KeyCode.Z))
-        {
-            Redo();
-        }
+        if (isCtrlOrCmdPressed && (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) && Input.GetKeyDown(KeyCode.Z)) Redo();
     }
 
+    /// <summary>
+    /// Redo a previous action
+    /// </summary>
     void Redo()
     {
 
